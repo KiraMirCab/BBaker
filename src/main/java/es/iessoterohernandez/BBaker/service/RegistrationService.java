@@ -39,7 +39,7 @@ public class RegistrationService {
             UserRole.CLIENT
             )
         );
-        String link = "http://localhost:8083/api/registration?token=" + token;
+        String link = "http://localhost:8080/api/registration?token=" + token;
         emailService.send(request.getEmail(), buildEmail(request.getFirstName(), link));
         return token;
     }

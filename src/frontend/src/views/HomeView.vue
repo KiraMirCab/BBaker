@@ -1,22 +1,39 @@
 <template>
-  <h1>{{ msg }}</h1>
+  <div class="home">
+    <div class="splash-container">
+        <div class="splash">
+          <h1>BBaker's pastry</h1>
+        </div>
+      </div>
+
+      <main class="wrapper">
+
+        <div class="card-container">
+
+          <ProductCard
+            v-for="(product, index) in inventory"
+            :key="product.id"
+            class="card"
+            :index="index"
+            :product="product"
+            :addToCart="addToCart"
+          />
+
+        </div>
+
+      </main>
+  </div>
 </template>
 
 <script>
 
+import ProductCard from '@/components/ProductCard.vue'
+
 export default {
-  name: 'HomeView',
-  data () {
-    return {
-      msg: ''
-    }
-  },
-  mounted () {
-    fetch('/api/messages/hello')
-      .then((response) => response.text())
-      .then((data) => {
-        this.msg = data
-      })
+  name: 'Home',
+  props: ['inventory', 'addToCart'],
+  components: {
+    ProductCard
   }
 }
 </script>

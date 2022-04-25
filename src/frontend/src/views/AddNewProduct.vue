@@ -22,7 +22,7 @@
       </div>
       <div class="form-group">
         <label for="pImage">Image: </label>
-        <input v-model="image" type="image" id="pImage" />
+        <input @change="onFileSelected" type="file" id="pImage" />
         <p class="help-block">
           Please add a picture for the product. Make sure it's not too blury
         </p>
@@ -76,7 +76,7 @@ export default {
   },
   computed: {},
   methods: {
-    async saveProduct () {
+    saveProduct () {
       const newPruduct = {
         name: this.name,
         description: this.description,
@@ -85,7 +85,22 @@ export default {
         discount: this.discount,
         specialTransport: this.specialTransport
       }
-      this.dbProduct = await ProductService.createNewProduct(newPruduct)
+      ProductService.createNewProduct(newPruduct).then((response) => {
+        this.dbProduct = response.data
+      })
+    },
+    onFileSelected (event) {
+      const reader = new FileReader()
+      reader.readAsDataURL(event.target.files[0])
+      reader.onerror = function (error) {
+        console.log('Error: ', error)
+      }
+      reader.onload = () => {
+        this.image = reader.result
+        if (reader.result.length > 16777214) {
+          alert('El fichero es demasiado grande. Intente otro, por favor')
+        }
+      }
     }
   }
 }

@@ -4,7 +4,7 @@
       {{ product.name }}
     </div>
     <div class="card-body">
-      <i class="icofont-10x icofont-{{ product.image }}"></i>
+      <img class="image" :src="product.image" alt="Image from the db" />
       <form>
         <div class="row">
           <div class="cell">

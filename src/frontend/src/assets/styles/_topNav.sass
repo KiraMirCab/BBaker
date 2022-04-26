@@ -6,7 +6,9 @@
 .top-bar-nav
     display: inline-block
 
-.top-bar-link,
+
+.top-bar-link, 
+.top-bar-lang-link,
 .top-bar-cart-link
     span
         display: inline-block
@@ -16,7 +18,8 @@
         font-size: $fontSize
         text-decoration: none
 
-.top-bar-link
+.top-bar-link,
+.top-bar-lang-link
     display: inline-block
     text-decoration: none
     i
@@ -45,3 +48,9 @@
         font-size: 31px
         text-decoration: none
         vertical-align: -4px
+
+.top-bar-lang-link
+    border-left: 1px solid $topNavColor
+    padding-left: 10px
+    &:hover
+        cursor: pointer

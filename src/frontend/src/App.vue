@@ -2,7 +2,7 @@
   <header class="top-bar spread">
         <nav class="top-bar-nav">
           <router-link to="/" class="top-bar-link">
-            <i class="icofont-spoon-and-fork"></i>
+            <img src='./assets/img/icon.png' class="icon-small">
             <span>Home</span>
           </router-link>
           <router-link to="/products" class="top-bar-link">
@@ -18,6 +18,9 @@
         <div @click="toggleSidebar" class="top-bar-cart-link">
           <i class="icofont-cart-alt icofont-1x"></i>
           <span>Cart ({{ totalQuantity }})</span>
+        </div>
+        <div @click="toggleLanguage" class="top-bar-lang-link">
+           <span>{{ language }}</span>
         </div>
       </header>
   <router-view
@@ -45,7 +48,8 @@ export default {
     return {
       showSidebar: false,
       inventory: [],
-      cart: {}
+      cart: {},
+      language: 'ESP'
     }
   },
   computed: {

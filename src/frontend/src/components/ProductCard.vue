@@ -11,7 +11,7 @@
             <label>Descripción:</label>
           </div>
           <div class="cell">
-            <em>{{ product.description }}</em>
+            <em>{{ product.shortDesc }}</em>
           </div>
         </div>
         <div class="row">

@@ -6,6 +6,8 @@
         class="form"
         :checkform="checkform"
         :onFileSelected="onFileSelected"
+        :product="product"
+        @checkform="(dbProduct) => this.product=dbProduct"
         />
     </div>
   </main>
@@ -20,6 +22,7 @@ export default {
   },
   data () {
     return {
+      product: null
     }
   }
 }

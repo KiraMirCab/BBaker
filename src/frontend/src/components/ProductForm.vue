@@ -148,7 +148,7 @@
       /></label>
       <br />
     </div>
-    <button type="submit" @click="checkform" class="submit">Guardar</button>
+    <button type="submit" @click="$emit('checkform', dbProduct)" class="submit">Guardar</button>
   </form>
 </template>
 
@@ -156,6 +156,21 @@
 import ProductService from '@/services/ProductService.js'
 
 export default {
+  props: ['product'],
+  created (product) {
+    if (this.product) {
+      this.name = product.name
+      this.nameENG = product.nameENG
+      this.description = product.description
+      this.descriptionENG = product.descriptionENG
+      this.shortDesc = product.shortDesc
+      this.shortDescENG = product.shortDescENG
+      this.image = product.image
+      this.price = product.price
+      this.discount = product.discount
+      this.specialTransport = product.specialTransport
+    }
+  },
   data () {
     return {
       name: '',
@@ -178,8 +193,10 @@ export default {
   },
   methods: {
     checkform () {
-      if (!this.name === '' && !this.shortDesc === '' && !this.price === '') {
-        console.log('Guardamos TO')
+      if (this.name && this.shortDesc && this.price) {
+        this.errorNombre = false
+        this.errorDesc = false
+        this.errorPrecio = false
         const newPruduct = {
           name: this.name,
           nameENG: this.nameENG,
@@ -192,9 +209,9 @@ export default {
           discount: this.discount,
           specialTransport: this.specialTransport
         }
-        ProductService.createNewProduct(newPruduct).then((response) => {
-          this.dbProduct = response.data
-        })
+        this.dbProduct = newPruduct
+        ProductService.createNewProduct(newPruduct)
+        // .then((response) => {this.dbProduct = response.data})
       } else {
         if (this.name === '') {
           this.errorNombre = true

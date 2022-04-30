@@ -12,7 +12,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 public class Product {
     @Id
@@ -46,6 +45,8 @@ public class Product {
         this.discount = discount;
         this.specialTransport = specialTransport;
     }
+
+    public Product() {}
      
     
 }

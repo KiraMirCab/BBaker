@@ -3,7 +3,7 @@
     <h1>Productos</h1>
     <div class="card-container">
       <ProductCard
-        v-for="(product, index) in inventory.slice(0, 6)"
+        v-for="(product, index) in inventory.filter((product) => !product.active)"
         :key="product.id"
         class="card"
         :index="index"

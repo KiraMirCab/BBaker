@@ -1,0 +1,15 @@
+{   
+    "locale": "ESP",
+    "menu": {
+        "home": "Inicio",
+        "products": "Productos",
+        "past": "Pedidos anteriores",
+        "cart": "Carrito"
+    },
+    "card": {
+        "description": "Descripción",
+        "price": "Precio",
+        "quantity": "Cantidad",
+        "cart": "Al carrito"
+      }
+}

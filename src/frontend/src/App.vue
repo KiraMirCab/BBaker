@@ -3,24 +3,24 @@
         <nav class="top-bar-nav">
           <router-link to="/" class="top-bar-link">
             <img src='./assets/img/icon.png' class="icon-small">
-            <span>Home</span>
+            <span>{{ $t('menu.home') }}</span>
           </router-link>
           <router-link to="/products" class="top-bar-link">
-            <span>Products</span>
+            <span>{{ $t('menu.products') }}</span>
           </router-link>
           <router-link to="/past-orders" class="top-bar-link">
-            <span>Past Orders</span>
+            <span>{{ $t('menu.past') }}</span>
           </router-link>
           <router-link to="/add-new-product" class="top-bar-link">
-            <span>Add a new product</span>
+            <span>Añadir un producto nuevo</span>
           </router-link>
         </nav>
         <div @click="toggleSidebar" class="top-bar-cart-link">
           <i class="icofont-cart-alt icofont-1x"></i>
-          <span>Cart ({{ totalQuantity }})</span>
+          <span>{{ $t('menu.cart') }} ({{ totalQuantity }})</span>
         </div>
         <div @click="toggleLanguage" class="top-bar-lang-link">
-           <span>{{ language }}</span>
+           <span>{{ $t('locale') }}</span>
         </div>
       </header>
   <router-view
@@ -48,8 +48,7 @@ export default {
     return {
       showSidebar: false,
       inventory: [],
-      cart: {},
-      language: 'ESP'
+      cart: {}
     }
   },
   computed: {
@@ -76,6 +75,13 @@ export default {
     },
     removeItem (name) {
       delete this.cart[name]
+    },
+    toggleLanguage () {
+      if (this.$i18n.locale === 'en') {
+        this.$i18n.locale = 'es'
+      } else {
+        this.$i18n.locale = 'en'
+      }
     }
   },
   created () {

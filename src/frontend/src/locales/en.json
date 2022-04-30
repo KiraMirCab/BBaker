@@ -1,0 +1,15 @@
+{
+  "locale": "ENG",
+  "menu": {
+    "home": "Home",
+    "products": "Products",
+    "past": "Past Orders",
+    "cart": "Cart"
+  },
+  "card": {
+    "description": "Description",
+    "price": "Price",
+    "quantity": "Quantity",
+    "cart": "Add to cart"
+  }
+}

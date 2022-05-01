@@ -15,5 +15,13 @@
     "product": {
         "transport": "Este producto requiere un transporte especial, por lo que el gasto del transporte puede ser algo más alto",
         "quantity": "Elige la cantidad"
-    }
+    },
+    "cart": {
+        "product": "Producto",
+        "price": "Precio",
+        "qty": "Cant",
+        "actions": "Acciones",
+        "noitems": "No hay artículos en el carrito",
+        "checkout": "Pasar por caja"
+      }
 }

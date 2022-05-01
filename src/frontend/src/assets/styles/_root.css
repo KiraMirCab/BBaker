@@ -5,8 +5,8 @@
     --topNavColor: #FFFDDE;
     --topBarLinkHoverBackground: #3f3d50;
     --splashTextColor: #736ea7;
-    --cartBackground: #001;
-    --cartTitleBackground: #335;
+    --cartBackground: rgb(45, 45, 66);
+    --cartTitleBackground: rgb(52, 52, 70);
     --footerBackground: #D9D7F1;
     --spashBackground: #390D04;
     --splashTextShadow: rgb(2, 0, 0);

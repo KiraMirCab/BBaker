@@ -15,5 +15,13 @@
   "product": {
     "transport": "This product requires special delivery, so the delivery fee might be higher than usual",
     "quantity": "Chose quantity"
+  },
+  "cart": {
+    "product": "Product",
+    "price": "Price",
+    "qty": "Qty",
+    "actions": "Actions",
+    "noitems": "No items in cart",
+    "checkout": "Checkout"
   }
 }

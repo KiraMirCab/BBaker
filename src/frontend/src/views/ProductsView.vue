@@ -9,6 +9,7 @@
         :index="index"
         :product="product"
         :addToCart="addToCart"
+        :routerPath="routerPath"
       />
     </div>
   </main>
@@ -22,6 +23,11 @@ export default {
   props: ['inventory', 'addToCart'],
   components: {
     ProductCard
+  },
+  data () {
+    return {
+      routerPath: '/update-products/'
+    }
   }
 }
 </script>

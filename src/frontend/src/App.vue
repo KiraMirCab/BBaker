@@ -5,11 +5,11 @@
             <img src='./assets/img/icon.png' class="icon-small">
             <span>{{ $t('menu.home') }}</span>
           </router-link>
-          <router-link to="/products" class="top-bar-link">
-            <span>{{ $t('menu.products') }}</span>
-          </router-link>
           <router-link to="/past-orders" class="top-bar-link">
             <span>{{ $t('menu.past') }}</span>
+          </router-link>
+          <router-link to="/products" class="top-bar-link">
+            <span>Modificar productos</span>
           </router-link>
           <router-link to="/add-new-product" class="top-bar-link">
             <span>Añadir un producto nuevo</span>

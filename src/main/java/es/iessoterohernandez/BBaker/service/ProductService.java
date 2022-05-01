@@ -21,4 +21,8 @@ public class ProductService {
     public Product addNewProduct(Product product){
         return productRepository.save(product);
     }
+
+    public Product getByID(Long id){
+        return productRepository.getById(id);
+    }
 }

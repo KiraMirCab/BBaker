@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import ProductsView from '../views/ProductsView'
 import PastOrders from '../views/PastOrders'
 import AddNewProduct from '../views/AddNewProduct'
+import InfoProduct from '../views/InfoProduct'
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/add-new-product',
     name: 'AddNewProduct',
     component: AddNewProduct
+  },
+  {
+    path: '/info-products/:id',
+    name: 'InfoProduct',
+    component: InfoProduct
   }
 ]
 

@@ -4,6 +4,7 @@ import ProductsView from '../views/ProductsView'
 import PastOrders from '../views/PastOrders'
 import AddNewProduct from '../views/AddNewProduct'
 import InfoProduct from '../views/InfoProduct'
+import NewOrder from '../views/NewOrder'
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/info-products/:id',
     name: 'InfoProduct',
     component: InfoProduct
+  },
+  {
+    path: '/new-order/:id',
+    name: 'NewOrder',
+    component: NewOrder
   }
 ]
 

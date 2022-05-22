@@ -13,8 +13,9 @@
     "bootstrap-vue": "^2.22.0",
     "core-js": "^3.8.3",
     "vue": "^3.2.13",
-    "vue-i18n": "^9.1.9",
-    "vue-router": "^4.0.3"
+    "vue-i18n": "^9.1.10",
+    "vue-router": "^4.0.3",
+    "vue3-datepicker": "^0.3.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -49,6 +50,7 @@
     "rules": {
       "eol-last": 0,
       "vue/multi-word-component-names": 0,
+      "no-unused-vars": "off",
       "no-multiple-empty-lines": [
         "error",
         {

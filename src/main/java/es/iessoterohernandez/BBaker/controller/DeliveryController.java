@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.iessoterohernandez.BBaker.DTO.DeliveryDTO;
 import es.iessoterohernandez.BBaker.model.Delivery;
 import es.iessoterohernandez.BBaker.service.DeliveryService;
 
@@ -21,8 +22,11 @@ public class DeliveryController {
     DeliveryService deliveryService;
 
     @PostMapping("add")
-    public Delivery addNew(@RequestBody Delivery delivery) {
-        return deliveryService.addNewDelivery(delivery);
+    public Delivery addNew(@RequestBody DeliveryDTO deliveryDto) {
+        Delivery delivery = deliveryService.mapToDelivery(deliveryDto);
+        System.out.println("Esto es deliveryyyyy" + delivery.getNote() + " " + delivery.getDate());
+        deliveryService.addNewDelivery(delivery);
+        return delivery;
     }
 
     @GetMapping

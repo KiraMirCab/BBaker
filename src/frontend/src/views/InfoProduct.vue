@@ -58,6 +58,8 @@ export default {
   name: 'InfoProduct',
   props: ['addToCart'],
   components: {},
+  // en el momento de la creación de la página recogo el id del producto de la url
+  // y traigo los datos del producto de la bd
   created () {
     this.id = this.$route.path.split('/')[2]
     this.getProductInfo(this.id)

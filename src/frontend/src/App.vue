@@ -33,6 +33,7 @@
     :cart="cart"
     :inventory="inventory"
     :remove="removeItem"
+    :userID="userID"
   />
 </template>
 
@@ -48,7 +49,8 @@ export default {
     return {
       showSidebar: false,
       inventory: [],
-      cart: {}
+      cart: {},
+      userID: 0
     }
   },
   computed: {
@@ -64,17 +66,20 @@ export default {
         this.inventory = response.data
       })
     },
-    addToCart (name, quantity) {
-      if (!this.cart[name]) this.cart[name] = 0
-      this.cart[name] += quantity
+    getUserID () {
+      // get the userID from the DB and
+    },
+    addToCart (productID, quantity) {
+      if (!this.cart[productID]) this.cart[productID] = 0
+      this.cart[productID] += quantity
       console.log(this.cart)
       quantity = 0
     },
     toggleSidebar () {
       this.showSidebar = !this.showSidebar
     },
-    removeItem (name) {
-      delete this.cart[name]
+    removeItem (productID) {
+      delete this.cart[productID]
     },
     toggleLanguage () {
       if (this.$i18n.locale === 'en') {

@@ -1,6 +1,7 @@
 package es.iessoterohernandez.BBaker.controller;
 
 import java.util.List;
+import org.json.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,27 +11,74 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.iessoterohernandez.BBaker.model.Order;
+import es.iessoterohernandez.BBaker.DTO.OrderODTO;
+import es.iessoterohernandez.BBaker.model.OrderO;
+import es.iessoterohernandez.BBaker.model.OrderProducts;
 import es.iessoterohernandez.BBaker.service.OrderService;
 
 @RestController
-@RequestMapping("/api/order")
+@RequestMapping("/api/BBorder")
 public class OrderController {
-    
+
     @Autowired
     OrderService orderService;
 
     @PostMapping("add")
-    public Order addNew(@RequestBody Order order) {
-        return orderService.addNewOrder(order);
+    public OrderO addNew(@RequestBody OrderODTO orderODTO) {
+        OrderO order = orderService.mapToOrder(orderODTO);
+        OrderO returnedOrder = orderService.addNewOrder(order);
+        List<OrderProducts> orderProducts = orderService.mapToOrderProducts(orderODTO, returnedOrder);
+        orderService.saveOrderProducts(orderProducts);
+        return order;
+    }
+
+    @PostMapping("paid")
+    public int setPaid(@RequestBody String json) {
+        System.out.println("ESTO ES EL BODY" + json);
+        JSONObject obj;
+        Long orderId = (long) 0;
+        Long paidDate = (long) 0;
+        try {
+            obj = new JSONObject(json);
+            orderId = obj.getLong("order_id");
+            paidDate = obj.getLong("paidDate");
+            System.out.println("orderID " + orderId);
+            System.out.println("paidDate " + paidDate);
+        } catch (JSONException e) {
+            System.out.println("CACAAAAAAA");
+            e.printStackTrace();
+        }
+        return orderService.setPaid(orderId, paidDate);
+    }
+
+    @PostMapping("/delete")
+    public int deleteOrderO(@RequestBody String json) {
+        System.out.println("ESTO ES EL BODY" + json);
+        JSONObject obj;
+        Long orderId = (long) 0;
+        try {
+            obj = new JSONObject(json);
+            orderId = obj.getLong("order_id");
+            System.out.println("orderID " + orderId);
+        } catch (JSONException e) {
+            System.out.println("CACAAAAAAA");
+            e.printStackTrace();
+        }
+        return orderService.delete(orderId);
     }
 
     @GetMapping
-    public List<Order> getAll() {
+    public List<OrderO> getAll() {
         return orderService.getAllOrders();
     }
+
     @GetMapping("/{id}")
-    public Order getByID(@PathVariable Long id) {
+    public OrderO getByID(@PathVariable Long id) {
         return orderService.getByID(id);
+    }
+
+    @GetMapping("/products/{id}")
+    public List<OrderProducts> getProductsByOrderID(@PathVariable Long id) {
+        return orderService.getProductsByOrderID(id);
     }
 }

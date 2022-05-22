@@ -23,5 +23,33 @@
     "actions": "Actions",
     "noitems": "No items in cart",
     "checkout": "Checkout"
+  },
+  "newOrder": {
+    "header": "New order nº "
+  },
+  "BBorder": {
+    "header": "Order nº ",
+    "created": "Created ",
+    "name": "Name",
+    "quantity": "Quantity",
+    "price": "Price",
+    "confirm": "Confirm",
+    "pay": "Confirm and pay",
+    "cancel": "Cancel and delete"
+  },
+  "delivery": {
+    "addr": "Address for the delivery",
+    "addrPlaceholder": "Type in the address",
+    "addrError": "Without an address we can't bring you joy",
+    "recipientName": "Name of the Recipient",
+    "nameError": "If we don't know the person, your mother-in-law will hardly share",
+    "recipientPhone": "Recipient's phone number",
+    "phoneError": "We really need this phone number. We hate leaving people without dessert if they're not at home",
+    "phoneFormat": "Phone number format: XXX-XXX-XXX",
+    "note": "Would you like to leave a note?",
+    "notePlaceholder": "Best hours for the delivery? A place difficult to find? Anything you would like to add for the delivery person...",
+    "date": "Delivery Date",
+    "surprise": "Is this a surprise for someone special?",
+    "save": "Save"
   }
 }

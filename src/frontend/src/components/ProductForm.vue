@@ -159,7 +159,7 @@ export default {
       }
     },
     onFileSelected () {
-      const client = filestack.init('AGv54HJ9CQJSpfkqryD3zz')
+      const client = filestack.init(process.env.VUE_APP_FILESTACK_API_KEY)
       const options = {
         onFileSelected: file => {
           // Si el tamaño del archivo es más grande que 1 Mb, la descarga queda rechazada

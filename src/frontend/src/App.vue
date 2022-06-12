@@ -14,6 +14,12 @@
           <router-link to="/add-new-product" class="top-bar-link">
             <span>Añadir un producto nuevo</span>
           </router-link>
+          <router-link to="/orders-now" class="top-bar-link">
+            <span>Pedidos</span>
+          </router-link>
+          <router-link to="/map-deliveries" class="top-bar-link">
+            <span>Entregas en el mapa</span>
+          </router-link>
         </nav>
         <div @click="toggleSidebar" class="top-bar-cart-link">
           <i class="icofont-cart-alt icofont-1x"></i>
@@ -35,6 +41,7 @@
     :remove="removeItem"
     :userID="userID"
   />
+  <vue-confirm-dialog></vue-confirm-dialog>
 </template>
 
 <script>

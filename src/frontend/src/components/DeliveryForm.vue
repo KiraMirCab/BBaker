@@ -128,7 +128,7 @@ export default {
         }
         DeliveryFrontService.createNewDelivery(newDelivery)
         this.visible = false
-        this.$emit('confirm')
+        this.$emit('confirmDel')
       } else {
         if (this.address === '') {
           this.errorAddress = true

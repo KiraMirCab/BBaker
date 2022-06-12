@@ -5,6 +5,8 @@ import PastOrders from '../views/PastOrders'
 import AddNewProduct from '../views/AddNewProduct'
 import InfoProduct from '../views/InfoProduct'
 import NewOrder from '../views/NewOrder'
+import OrdersNow from '../views/OrdersNow'
+import MapDeliveries from '../views/MapDeliveries'
 
 const routes = [
   {
@@ -36,6 +38,16 @@ const routes = [
     path: '/new-order/:id',
     name: 'NewOrder',
     component: NewOrder
+  },
+  {
+    path: '/orders-now',
+    name: 'OrdersNow',
+    component: OrdersNow
+  },
+  {
+    path: '/map-deliveries',
+    name: 'MapDeliveries',
+    component: MapDeliveries
   }
 ]
 

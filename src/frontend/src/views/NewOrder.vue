@@ -1,6 +1,7 @@
 <template>
   <main class="wrapper">
     <h1>{{ $t("newOrder.header") }}{{ id }}</h1>
+    <div id="confirm"></div>
 
     <OrderInfo :orderProducts="orderProducts" />
 
@@ -8,26 +9,19 @@
       <div class="col-md">
         <button @click="confirmOrder()" class="btn btn-light">
           {{ $t("BBorder.confirm") }}
-        </button></div>
+        </button>
+      </div>
       <div class="col-md">
         <button @click="deleteOrder()" class="btn btn-light">
           {{ $t("BBorder.cancel") }}
-        </button></div>
+        </button>
+      </div>
     </div>
 
-    <DeliveryForm
-      v-if="showDeliveryForm"
-      :id="id"
-      :specialTransport="specialTransport"
-      @confirm="confirm"
-    />
+    <DeliveryForm v-if="showDeliveryForm" :id="id" :specialTransport="specialTransport" @confirmDel="confirmDel" />
 
-    <button
-      @click="pay()"
-      class="btn btn-light"
-      v-if="deliverySaved"
-      >
-        {{ $t("BBorder.pay") }}
+    <button @click="pay()" class="btn btn-light" v-if="deliverySaved">
+      {{ $t("BBorder.pay") }}
     </button>
   </main>
 </template>
@@ -37,6 +31,8 @@ import OrderInfo from '@/components/OrderInfo.vue'
 import DeliveryForm from '@/components/DeliveryForm.vue'
 import OrderFrontService from '@/services/OrderFrontService.js'
 import router from '@/router'
+import { defineComponent } from 'vue'
+import { useConfirm } from 'v3confirm'
 
 export default {
   name: 'NewOrder',
@@ -78,25 +74,43 @@ export default {
     },
     deleteOrder () {
       // TODO Mensaje de confirmación
-      const json = { order_id: this.id }
-      OrderFrontService.deleteOrder(json)
-      // TODO mensaje de completarse la accion
-      // TODO arreglar el router
-      this.router.push('Home')
-    },
-    pay () {
-      // TODO Mensaje de confirmación
-      const json = {
-        order_id: this.id,
-        paidDate: Date.now()
-      }
-      OrderFrontService.setPaid(json)
-      // TODO mensaje de completarse la accion
-      router.push('Home')
-    },
-    confirm () {
-      this.deliverySaved = true
+      this.$confirm(
+        {
+          message: 'Are you sure?',
+          button: {
+            no: 'No',
+            yes: 'Yes'
+          },
+          /**
+          * Callback Function
+          * @param {Boolean} confirm
+          */
+          callback: confirm => {
+            if (confirm) {
+              // ... do something
+              const json = { order_id: this.id }
+              OrderFrontService.deleteOrder(json)
+              // TODO mensaje de completarse la accion
+              // TODO arreglar el router
+              this.router.push('Home')
+            }
+          }
+        }
+      )
     }
+  },
+  pay () {
+    // TODO Mensaje de confirmación
+    const json = {
+      order_id: this.id,
+      paidDate: Date.now()
+    }
+    OrderFrontService.setPaid(json)
+    // TODO mensaje de completarse la accion
+    router.push('Home')
+  },
+  confirmDel () {
+    this.deliverySaved = true
   }
 }
 </script>

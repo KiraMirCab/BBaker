@@ -5,7 +5,9 @@ target/
 !**/src/test/**/target/
 DB_creation.sql
 /src/main/resources/application.properties
+/src/frontend/.env
 node_modules
+
 
 ### STS ###
 .apt_generated

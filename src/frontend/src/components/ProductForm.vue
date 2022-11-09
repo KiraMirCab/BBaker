@@ -90,24 +90,13 @@ import ProductService from '@/services/ProductService.js'
 import * as filestack from 'filestack-js'
 
 export default {
-  props: ['product'],
-  created (product) {
-    if (this.product) {
-      this.name = product.name
-      this.nameENG = product.nameENG
-      this.description = product.description
-      this.descriptionENG = product.descriptionENG
-      this.shortDesc = product.shortDesc
-      this.shortDescENG = product.shortDescENG
-      this.image = product.image
-      this.price = product.price
-      this.discount = product.discount
-      this.specialTransport = product.specialTransport
-    }
+  props: {
+    product: Object,
+    pname: String
   },
   data () {
     return {
-      name: '',
+      name: this.pname,
       nameENG: '',
       description: '',
       descriptionENG: '',

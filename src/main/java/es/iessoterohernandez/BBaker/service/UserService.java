@@ -52,7 +52,7 @@ public class UserService implements UserDetailsService{
             user.setId(userId);
             
             if (user.isEnabled()) {
-                LOGGER.info("User is there and IS CONFERMED ALREADY!");
+                LOGGER.info("User is there and IS CONFIRMED ALREADY!");
                 throw new IllegalStateException("email already taken");
             }
         }

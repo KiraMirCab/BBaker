@@ -14,7 +14,9 @@
   },
   "product": {
     "transport": "This product requires special delivery, so the delivery fee might be higher than usual",
-    "quantity": "Chose quantity"
+    "quantity": "Chose quantity",
+    "manage": "Manage products",
+    "update": "Update product nº"
   },
   "cart": {
     "product": "Product",

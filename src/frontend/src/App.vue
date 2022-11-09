@@ -9,7 +9,7 @@
             <span>{{ $t('menu.past') }}</span>
           </router-link>
           <router-link to="/products" class="top-bar-link">
-            <span>Modificar productos</span>
+            <span>{{ $t("product.manage") }}</span>
           </router-link>
           <router-link to="/add-new-product" class="top-bar-link">
             <span>Añadir un producto nuevo</span>
@@ -25,9 +25,14 @@
           <i class="icofont-cart-alt icofont-1x"></i>
           <span>{{ $t('menu.cart') }} ({{ totalQuantity }})</span>
         </div>
+        <div>
         <div @click="toggleLanguage" class="top-bar-lang-link">
            <span>{{ $t('locale') }}</span>
         </div>
+        <div @click="toggleUserMenu" class="top-bar-lang-link">
+          <i class="icofont-broccoli icofont-1x"></i>
+        </div>
+      </div>
       </header>
   <router-view
     :inventory="inventory"
@@ -41,20 +46,26 @@
     :remove="removeItem"
     :userID="userID"
   />
+  <UserMenu
+    v-if="showUserMenu"
+    :userID="userID"
+  />
   <vue-confirm-dialog></vue-confirm-dialog>
 </template>
 
 <script>
 import Sidebar from '@/components/Sidebar.vue'
+import UserMenu from '@/components/UserMenu.vue'
 import ProductService from '@/services/ProductService.js'
 
 export default {
   components: {
-    Sidebar
+    Sidebar, UserMenu
   },
   data () {
     return {
       showSidebar: false,
+      showUserMenu: false,
       inventory: [],
       cart: {},
       userID: 0
@@ -94,6 +105,9 @@ export default {
       } else {
         this.$i18n.locale = 'en'
       }
+    },
+    toggleUserMenu () {
+      this.showUserMenu = !this.showUserMenu
     }
   },
   created () {

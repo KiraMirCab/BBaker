@@ -1,6 +1,6 @@
 <template>
   <main class="wrapper">
-    <h1>Productos</h1>
+    <h1>{{ $t("product.manage") }}</h1>
     <div class="card-container">
       <ProductCard
         v-for="(product, index) in inventory.filter((product) => !product.active)"

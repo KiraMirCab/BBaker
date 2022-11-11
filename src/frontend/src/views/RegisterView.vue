@@ -1,29 +1,29 @@
 <template>
     <main class="wrapper">
-        <h1>Sign up</h1>
+        <h1>{{ $t('user.signUp') }}</h1>
         <div class="container">
             <form @submit.prevent="checkform">
                 <div class="form-group">
-                    <label for="fName">First name:</label>
+                    <label for="fName">{{ $t('user.fName') }}:</label>
                     <input v-model.trim="fName" type="text" id="fName" class="form-control"/>
-                    <p id="fNameHelp" class="error" v-if="errorfName">First name is required</p>
+                    <p id="fNameHelp" class="error" v-if="errorfName">{{ $t('user.error.fName') }}</p>
                 </div>
                 <div class="form-group">
-                    <label for="lName">Last name:</label>
+                    <label for="lName">{{ $t('user.lName') }}:</label>
                     <input v-model.trim="lName" type="text" id="lName" class="form-control"/>
-                    <p id="lNameHelp" class="error" v-if="errorlName">Last name is required</p>
+                    <p id="lNameHelp" class="error" v-if="errorlName">{{ $t('user.error.lName') }}</p>
                 </div>
                 <div class="form-group">
                     <label for="email">Email:</label>
                     <input v-model.trim="email" type="email" id="email" class="form-control"/>
-                    <p id="emailHelp" class="error" v-if="errorEmail">Email is required</p>
+                    <p id="emailHelp" class="error" v-if="errorEmail">{{ $t('user.error.email') }}</p>
                 </div>
                 <div class="form-group">
-                    <label for="pass">Password:</label>
+                    <label for="pass">{{ $t('user.pass') }}:</label>
                     <input v-model.trim="pass" type="text" id="pass" class="form-control"/>
-                    <p id="passHelp" class="error" v-if="errorPass">Password is required</p>
+                    <p id="passHelp" class="error" v-if="errorPass">{{ $t('user.error.pass') }}</p>
                 </div>
-                <button type="submit" @click="checkform" class="submit">Sign up</button>
+                <button type="submit" @click="checkform" class="submit">{{ $t('user.buttonSU') }}</button>
             </form>
         </div>
     </main>
@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     checkform () {
-      if (this.fName && this.lName && this.email && this.pass) {
+      if (this.fName && this.lName && this.email.match('/^S+@S+.S+$/') && this.pass.length >= 4) {
         this.errorfName = false
         this.errorlName = false
         this.errorEmail = false
@@ -67,10 +67,10 @@ export default {
         if (this.lName === '') {
           this.errorlName = true
         }
-        if (this.email === '') {
+        if (!this.email.match('/^S+@S+.S+$/')) {
           this.errorEmail = true
         }
-        if (this.pass === '') {
+        if (this.pass.length < 4) {
           this.errorPass = true
         }
       }

@@ -7,7 +7,10 @@
             <router-link to="/register">
                 <span>Sign up</span>
             </router-link>
-          <div>Sign in</div>
+        <div></div>
+            <router-link to="/login">
+                <span>Sign in</span>
+            </router-link>
           <div>My profile</div>
         </div>
       </div>

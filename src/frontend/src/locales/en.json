@@ -1,5 +1,21 @@
 {
   "locale": "ENG",
+  "user": {
+    "fName": "First name",
+    "lName": "Last name",
+    "pass": "Password",
+    "error": {
+      "fName": "First name is required",
+      "lName": "Last name is required",
+      "email": "Please enter a vaild email address",
+      "pass": "Password shoud be at least 4 characters long",
+      "passReq": "Password is required"
+    },
+    "signUp": "Sign up",
+    "buttonSU": "Sign up",
+    "signIn": "Sign in",
+    "buttonSI": "Sign in"
+  },
   "menu": {
     "home": "Home",
     "products": "Products",

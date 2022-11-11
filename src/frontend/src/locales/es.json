@@ -1,5 +1,21 @@
 {
     "locale": "ESP",
+    "user": {
+        "fName": "Nombre",
+        "lName": "Apellido",
+        "pass": "Contraseña",
+        "error": {
+          "fName": "Nombre es obligatorio",
+          "lName": "Apellido es obligatorio",
+          "email": "Por favor use una dirección de correo electrónico válida",
+          "pass": "Contraseña debe ser de al menos 4 caracteres",
+          "passReq": "Contraseña es obligatoria"
+        },
+        "signUp": "Crea un usuario nuevo",
+        "buttonSU": "Crear",
+        "signIn": "Accede a tu perfil",
+        "buttonSI": "Acceder"
+      },
     "menu": {
         "home": "Inicio",
         "products": "Productos",

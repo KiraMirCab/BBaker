@@ -2,13 +2,19 @@ package es.iessoterohernandez.BBaker.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import es.iessoterohernandez.BBaker.service.JwtFilter;
 
 
 @EnableWebSecurity
@@ -16,6 +22,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     
     @Autowired
     UserDetailsService userService;
+
+    @Autowired
+    JwtFilter jwtFilter;
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -34,6 +43,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         return provider;
     }
 
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
@@ -41,6 +56,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
               //  .antMatchers("/api/admin").hasRole("ADMIN")
               //  .antMatchers("/api/user").hasAnyRole("ADMIN", "CLIENT")
                 .antMatchers("/api/registration").permitAll()
+                .antMatchers("/api/login").permitAll()
                 .antMatchers("/api/products/*").permitAll()
                 .antMatchers("/api/products").permitAll()
                 .antMatchers("/api/BBorder/*").permitAll()
@@ -49,8 +65,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .antMatchers("/api/delivery/*").permitAll()
                 //.hasRole("ADMIN")
                 .anyRequest()
-                .authenticated().and()
-                .formLogin();
+                .authenticated().and().exceptionHandling().and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);;
     }
 
 }

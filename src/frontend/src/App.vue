@@ -2,7 +2,7 @@
   <header class="top-bar spread">
         <nav class="top-bar-nav">
           <router-link to="/" class="top-bar-link">
-            <img src='./assets/img/icon.png' class="icon-small">
+            <i class="icofont-cup-cake icofont-1x"></i>
             <span>{{ $t('menu.home') }}</span>
           </router-link>
           <router-link to="/past-orders" class="top-bar-link">
@@ -25,14 +25,12 @@
           <i class="icofont-cart-alt icofont-1x"></i>
           <span>{{ $t('menu.cart') }} ({{ totalQuantity }})</span>
         </div>
-        <div>
+        <div @click="toggleUserMenu" class="top-bar-user-link">
+          <i class="icofont-user-alt-5" icofont-1x></i>
+        </div>
         <div @click="toggleLanguage" class="top-bar-lang-link">
            <span>{{ $t('locale') }}</span>
         </div>
-        <div @click="toggleUserMenu" class="top-bar-lang-link">
-          <i class="icofont-broccoli icofont-1x"></i>
-        </div>
-      </div>
       </header>
   <router-view
     :inventory="inventory"
@@ -49,6 +47,7 @@
   <UserMenu
     v-if="showUserMenu"
     :userID="userID"
+    :toggle="toggleUserMenu"
   />
   <vue-confirm-dialog></vue-confirm-dialog>
 </template>

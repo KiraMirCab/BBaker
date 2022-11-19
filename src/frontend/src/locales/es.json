@@ -14,8 +14,9 @@
         "signUp": "Crea un usuario nuevo",
         "buttonSU": "Crear",
         "signIn": "Accede a tu perfil",
-        "buttonSI": "Acceder"
-      },
+        "buttonSI": "Acceder",
+        "profile": "Mi perfil"
+    },
     "menu": {
         "home": "Inicio",
         "products": "Productos",

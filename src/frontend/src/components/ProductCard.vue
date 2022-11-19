@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <!--el routerlink está puesto para los elementos principales de la card
-    para redirigir a la página del producto. En la url recoge el id del producto
+    para redirigir a la página del producto. En la url recoge el id del producto.
     El routerPath se recoge de la vista padre en la que se encuentra esta card-->
     <router-link
       :to="routerPath + product.id"
@@ -69,7 +69,7 @@ export default {
   props: ['product', 'index', 'addToCart', 'routerPath'],
   data () {
     return {
-      quantity: 0
+      quantity: 1
     }
   },
   methods: {

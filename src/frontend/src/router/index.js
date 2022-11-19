@@ -10,6 +10,7 @@ import NewOrder from '../views/NewOrder'
 import OrdersNow from '../views/OrdersNow'
 import MapDeliveries from '../views/MapDeliveries'
 import UpdateProduct from '../views/UpdateProduct'
+import Profile from '../views/Profile'
 
 const routes = [
   {
@@ -26,6 +27,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LoginView
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: Profile
   },
   {
     path: '/products',

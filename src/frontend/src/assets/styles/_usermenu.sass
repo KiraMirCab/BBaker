@@ -1,0 +1,43 @@
+.user-menu-container
+    position: fixed
+    overflow: hidden
+    
+.user-menu-container,
+.user
+    top: 0px
+    right: 0px
+    height: 70%
+
+.user
+    background: $topBarLinkHoverBackground
+    color: $topNavColor
+    transition: 1s ease right
+    &.hide
+        right: $usermenuWidth * -1
+
+.user-menu-link
+    span,
+    i
+        display: inline-block
+        padding: 15px 19px
+        color: $topNavColor
+        font-size: $fontSize
+        text-decoration: none
+    span
+        width: 100%
+        &:hover
+            background: $cartBackground
+    i
+        font-size: 30px
+        margin-right: 75px
+
+.user-menu-close
+    background: transparent
+    border: 0px
+    border-radius: $buttonRadius
+    padding: 0px 13px
+    color: $bodyBackground
+    font-size: $fontSize * 2
+    font-weight: bold
+    &:hover
+        background: $cartBackground

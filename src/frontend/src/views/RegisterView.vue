@@ -1,8 +1,9 @@
 <template>
     <main class="wrapper">
-        <h1>{{ $t('user.signUp') }}</h1>
+        <h1 class="center">{{ $t('user.signUp') }}</h1>
         <div class="container">
-            <form @submit.prevent="checkform">
+          <div class="card-container">
+            <form v-if="!requestSent">
                 <div class="form-group">
                     <label for="fName">{{ $t('user.fName') }}:</label>
                     <input v-model.trim="fName" type="text" id="fName" class="form-control"/>
@@ -23,8 +24,18 @@
                     <input v-model.trim="pass" type="text" id="pass" class="form-control"/>
                     <p id="passHelp" class="error" v-if="errorPass">{{ $t('user.error.pass') }}</p>
                 </div>
-                <button type="submit" @click="checkform" class="submit">{{ $t('user.buttonSU') }}</button>
+                <div class="user-cell">
+                    <p>{{ $t('user.yesAcc') }}</p>
+                    <router-link to="/login" class="user-link">
+                    <span>{{ $t('user.buttonSI') }}</span>
+                    </router-link>
+                  </div>
+                <button @click="checkform" class="user-submit">{{ $t('user.buttonSU') }}</button>
             </form>
+            <div v-if="requestSent">
+              <p>{{ $t('user.emailSent') }}</p>
+            </div>
+          </div>
         </div>
     </main>
 </template>
@@ -43,12 +54,13 @@ export default {
       errorfName: false,
       errorlName: false,
       errorEmail: false,
-      errorPass: false
+      errorPass: false,
+      requestSent: false
     }
   },
   methods: {
     checkform () {
-      if (this.fName && this.lName && this.email.match('/^S+@S+.S+$/') && this.pass.length >= 4) {
+      if (this.fName && this.lName && this.email && this.pass.length >= 4) {
         this.errorfName = false
         this.errorlName = false
         this.errorEmail = false
@@ -59,7 +71,10 @@ export default {
           email: this.email,
           password: this.pass
         }
-        UserFrontService.registerNewUser(user).then((response) => { this.token = response.data })
+        UserFrontService.registerNewUser(user).then((response) => {
+          this.token = response.data
+        })
+        this.requestSent = true
       } else {
         if (this.fName === '') {
           this.errorfName = true
@@ -67,7 +82,7 @@ export default {
         if (this.lName === '') {
           this.errorlName = true
         }
-        if (!this.email.match('/^S+@S+.S+$/')) {
+        if (this.email === '') {
           this.errorEmail = true
         }
         if (this.pass.length < 4) {

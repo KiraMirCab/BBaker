@@ -9,13 +9,18 @@
       "lName": "Last name is required",
       "email": "Please enter a vaild email address",
       "pass": "Password shoud be at least 4 characters long",
-      "passReq": "Password is required"
+      "passReq": "Password is required",
+      "wrong": "Wrong credentialas, please try again"
     },
     "signUp": "Sign up",
     "buttonSU": "Sign up",
     "signIn": "Sign in",
     "buttonSI": "Sign in",
-    "profile": "My profile"
+    "profile": "My profile",
+    "noAcc": "Don't have an account?",
+    "yesAcc": "Already have an account?",
+    "logout": "Log Out",
+    "emailSent": "Thank you! We've sent an email to your address to confirm the sign up. Please follow the link we sent you."
   },
   "menu": {
     "home": "Home",

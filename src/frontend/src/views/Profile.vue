@@ -1,21 +1,12 @@
 <template>
     <main class="wrapper">
-        <h1>{{ $t('user.profile') }}</h1>
+        <h1 class="center">{{ $t('user.profile') }}</h1>
         <div class="container">
-            <form>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input v-model.trim="email" type="email" id="email" class="form-control"/>
-                    <p id="emailHelp" class="error" v-if="errorEmail">{{ $t('user.error.email') }}</p>
-                </div>
-                <div class="form-group">
-                    <label for="pass">{{ $t('user.pass') }}:</label>
-                    <input v-model.trim="pass" type="text" id="pass" class="form-control"/>
-                    <p id="passHelp" class="error" v-if="errorPass">{{ $t('user.error.passReq') }}</p>
-                </div>
-                <button type="submit" @click="checkform" class="submit">{{ $t('user.buttonSI') }}</button>
-            </form>
+                <div>
+                  <p>Name : </p>
+                  <p>User's email is : </p>
         </div>
+      </div>
     </main>
 </template>
 
@@ -26,9 +17,7 @@ export default {
   data () {
     return {
       email: '',
-      pass: '',
-      errorEmail: false,
-      errorPass: false
+      pass: ''
     }
   },
   methods: {

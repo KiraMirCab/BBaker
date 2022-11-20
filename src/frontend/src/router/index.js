@@ -31,7 +31,10 @@ const routes = [
   {
     path: '/profile',
     name: 'profile',
-    component: Profile
+    component: Profile,
+    beforeEnter: (to, from) => {
+      if (!localStorage.user) return '/login'
+    }
   },
   {
     path: '/products',

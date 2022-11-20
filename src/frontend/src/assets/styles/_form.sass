@@ -15,7 +15,8 @@
 .input-short
     width: 50%
 
-.submit
+.submit,
+.user-submit
     color: $white
     background-color: $topNavBackground
     border: 2px solid $topBarLinkHoverBackground
@@ -25,5 +26,25 @@
     padding: 10px 20px 10px 20px
     &:hover
         background: $topBarLinkHoverBackground
+
+.user-submit
+    margin-left: 30%
+
 .error
     color: red
+
+.user-cell
+    display: inline-flex
+    justify-content: space-between
+    width: 100%
+
+.user-link
+    text-decoration: none
+    color: $cardTextColor
+    span
+        border: 0px
+        font-size: $fontSize
+        text-decoration: none
+    &:hover
+        color: $cardTextColor
+        text-decoration: underline

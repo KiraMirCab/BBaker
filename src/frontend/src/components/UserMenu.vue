@@ -7,18 +7,23 @@
           <button @click="toggle" class="user-menu-close">&times;</button>
         </div>
         <div>
-            <router-link to="/register" class="user-menu-link">
+            <router-link to="/register" class="user-menu-link" @click="toggle">
                 <span>{{ $t('user.signUp') }}</span>
             </router-link>
-        <div></div>
-            <router-link to="/login" class="user-menu-link">
+        </div>
+        <div v-if="!logged">
+            <router-link to="/login" class="user-menu-link" @click="toggle">
                 <span>{{ $t('user.signIn') }}</span>
             </router-link>
-          <div></div>
-          <router-link to="/profile" class="user-menu-link">
+          </div>
+        <div v-if="logged">
+            <router-link to="/profile" class="user-menu-link" @click="toggle">
                 <span>{{ $t('user.profile') }}</span>
             </router-link>
         </div>
+            <div @click="logUserOut" class="user-menu-link" v-if="logged">
+                <span>{{ $t('user.logout') }}</span>
+            </div>
       </div>
     </aside>
   </template>
@@ -30,9 +35,15 @@ export default {
   props: ['toggle', 'userID'],
   data () {
     return {
+      logged: localStorage.user
     }
   },
   methods: {
+    logUserOut () {
+      localStorage.removeItem('user')
+      this.$router.push('/')
+      this.toggle()
+    }
   }
 }
 </script>

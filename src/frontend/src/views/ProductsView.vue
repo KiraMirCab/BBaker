@@ -1,5 +1,6 @@
 <template>
   <main class="wrapper">
+    <div class="prodcard">
     <h1>{{ $t("product.manage") }}</h1>
     <div class="card-container">
       <ProductCard
@@ -12,6 +13,7 @@
         :routerPath="routerPath"
       />
     </div>
+  </div>
   </main>
 </template>
 

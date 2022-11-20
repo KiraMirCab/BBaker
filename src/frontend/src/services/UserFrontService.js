@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const API_REGISTER_URL = '/api/registration'
+const API_LOGIN_URL = '/api/login'
 
 class UserFrontService {
   getUsers () {
@@ -13,6 +14,10 @@ class UserFrontService {
 
   registerNewUser (json) {
     return axios.post(API_REGISTER_URL, json)
+  }
+
+  loginUser (json) {
+    return axios.post(API_LOGIN_URL, json)
   }
 }
 

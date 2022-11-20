@@ -29,13 +29,9 @@ public class UserLoginController {
 
     @PostMapping("/api/login")
     public String generateJwtToken(@RequestBody AuthRequest authRequest) throws Exception {
-        try {
             authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
             );
-        } catch (Exception e) {
-            throw new Exception("inavalid username/password");
-        }
         return jwtService.generateToken(authRequest.getEmail());
     }
 }

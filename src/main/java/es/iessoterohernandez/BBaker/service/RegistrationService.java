@@ -62,7 +62,7 @@ public class RegistrationService {
         confirmationTokenService.setConfirmedAt(token);
         userService.enableUser(
                 confirmationToken.getUser().getEmail());
-        return "confirmed";
+        return "Your email has been confirmed. Thank you!";
     }
 
     private String buildEmail(String name, String link) {

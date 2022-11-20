@@ -9,13 +9,18 @@
           "lName": "Apellido es obligatorio",
           "email": "Por favor use una dirección de correo electrónico válida",
           "pass": "Contraseña debe ser de al menos 4 caracteres",
-          "passReq": "Contraseña es obligatoria"
+          "passReq": "Contraseña es obligatoria",
+          "wrong": "Credenciales incorrectos, prueba de nuevo"
         },
         "signUp": "Crea un usuario nuevo",
         "buttonSU": "Crear",
         "signIn": "Accede a tu perfil",
         "buttonSI": "Acceder",
-        "profile": "Mi perfil"
+        "profile": "Mi perfil",
+        "noAcc": "No tienes cuenta?",
+        "yesAcc": "Ya tienes una cuenta?",
+        "logout": "Cerrar sesión",
+        "emailSent": "¡Gracias! Hemos enviado un correo a la dirección indicada. Por favor pincha en el enlace que te hemos enviado."
     },
     "menu": {
         "home": "Inicio",

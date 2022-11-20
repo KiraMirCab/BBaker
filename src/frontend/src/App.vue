@@ -1,6 +1,6 @@
 <template>
   <header class="top-bar spread">
-        <nav class="top-bar-nav">
+    <nav class="top-bar-nav">
           <router-link to="/" class="top-bar-link">
             <i class="icofont-cup-cake icofont-1x"></i>
             <span>{{ $t('menu.home') }}</span>
@@ -20,7 +20,8 @@
           <router-link to="/map-deliveries" class="top-bar-link">
             <span>Entregas en el mapa</span>
           </router-link>
-        </nav>
+    </nav>
+    <div class="top-bar-nav">
         <div @click="toggleSidebar" class="top-bar-cart-link">
           <i class="icofont-cart-alt icofont-1x"></i>
           <span>{{ $t('menu.cart') }} ({{ totalQuantity }})</span>
@@ -31,7 +32,8 @@
         <div @click="toggleLanguage" class="top-bar-lang-link">
            <span>{{ $t('locale') }}</span>
         </div>
-      </header>
+    </div>
+  </header>
   <router-view
     :inventory="inventory"
     :addToCart="addToCart"
@@ -48,6 +50,7 @@
     v-if="showUserMenu"
     :userID="userID"
     :toggle="toggleUserMenu"
+    :logged="logged"
   />
   <vue-confirm-dialog></vue-confirm-dialog>
 </template>
@@ -67,7 +70,8 @@ export default {
       showUserMenu: false,
       inventory: [],
       cart: {},
-      userID: 0
+      userID: 0,
+      logged: localStorage.user
     }
   },
   computed: {
@@ -107,6 +111,9 @@ export default {
     },
     toggleUserMenu () {
       this.showUserMenu = !this.showUserMenu
+    },
+    togglelogged () {
+      this.logged = !this.logged
     }
   },
   created () {

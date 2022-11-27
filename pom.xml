@@ -16,8 +16,8 @@
 	<description>BBaker full-stack Spring Boot + Vue.js app</description>
 	<properties>
 		<java.version>17</java.version>
-		<node.version>v16.14.2</node.version>
-		<npm.version>8.5.5</npm.version>
+		<node.version>v16.17.1</node.version>
+		<npm.version>8.15.0</npm.version>
 	</properties>
 	<dependencies>
 		<dependency>

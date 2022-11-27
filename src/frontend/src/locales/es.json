@@ -1,79 +1,79 @@
 {
-    "locale": "ESP",
-    "user": {
-        "fName": "Nombre",
-        "lName": "Apellido",
-        "pass": "Contraseña",
-        "error": {
-          "fName": "Nombre es obligatorio",
-          "lName": "Apellido es obligatorio",
-          "email": "Por favor use una dirección de correo electrónico válida",
-          "pass": "Contraseña debe ser de al menos 4 caracteres",
-          "passReq": "Contraseña es obligatoria",
-          "wrong": "Credenciales incorrectos, prueba de nuevo"
-        },
-        "signUp": "Crea un usuario nuevo",
-        "buttonSU": "Crear",
-        "signIn": "Accede a tu perfil",
-        "buttonSI": "Acceder",
-        "profile": "Mi perfil",
-        "noAcc": "No tienes cuenta?",
-        "yesAcc": "Ya tienes una cuenta?",
-        "logout": "Cerrar sesión",
-        "emailSent": "¡Gracias! Hemos enviado un correo a la dirección indicada. Por favor pincha en el enlace que te hemos enviado."
-    },
-    "menu": {
-        "home": "Inicio",
-        "products": "Productos",
-        "past": "Pedidos anteriores",
-        "cart": "Carrito"
-    },
-    "card": {
-        "description": "Descripción",
-        "price": "Precio",
-        "quantity": "Cantidad",
-        "cart": "Al carrito"
-    },
-    "product": {
-        "transport": "Este producto requiere un transporte especial, por lo que el gasto del transporte puede ser algo más alto",
-        "quantity": "Elige la cantidad",
-        "manage": "Modificar productos",
-        "update": "Modificar los datos del producto nº"
-    },
-    "cart": {
-        "product": "Producto",
-        "price": "Precio",
-        "qty": "Cant",
-        "actions": "Acciones",
-        "noitems": "No hay artículos en el carrito",
-        "checkout": "Pasar por caja"
-    },
-    "newOrder": {
-        "header": "Nuevo pedido nº "
-    },
-    "BBorder": {
-        "header": "Pedido nº ",
-        "created": "Creado ",
-        "name": "Nombre",
-        "quantity": "Cantidad",
-        "price": "Precio",
-        "confirm": "Confirmar",
-        "pay": "Confirmar y pagar",
-        "cancel": "Cancelar y eliminar"
-    },
-    "delivery": {
-      "addr": "Dirección de la entrega",
-      "addrPlaceholder": "Escriba la dirección",
-      "addrError": "Sin saber la dirección no sabremos dónde está la casa que tenemos que llenar de felicidad",
-      "recipientName": "Nombre del destinatario",
-      "nameError": "Si no sabemos el destinatario, tu suegra puede dejarte sin dulce",
-      "recipientPhone": "El número de teléfono del destinatario",
-      "phoneError": "Necesitamos un número de contacto. Odiamos dejar a la gente sin postre si no está en casa",
-      "phoneFormat": "Formato del número de teléfono: XXX-XXX-XXX",
-      "note": "Quiere dejar una nota para el repartidor?",
-      "notePlaceholder": "Las mejores horas de la entrega? Un sitio dificil de encontrar? Cualquier cosa que quiere decirnos...",
-      "date": "Fecha de entrega",
-      "surprise": "Es una sorpresa para alguien especial?",
-      "save": "Guardar"
-    }
+  "locale": "ESP",
+  "user": {
+      "fName": "Nombre",
+      "lName": "Apellido",
+      "pass": "Contraseña",
+      "error": {
+        "fName": "Nombre es obligatorio",
+        "lName": "Apellido es obligatorio",
+        "email": "Por favor use una dirección de correo electrónico válida",
+        "pass": "Contraseña debe ser de al menos 4 caracteres",
+        "passReq": "Contraseña es obligatoria",
+        "wrong": "Credenciales incorrectos, prueba de nuevo"
+      },
+      "signUp": "Crea un usuario nuevo",
+      "buttonSU": "Crear",
+      "signIn": "Accede a tu perfil",
+      "buttonSI": "Acceder",
+      "profile": "Mi perfil",
+      "noAcc": "No tienes cuenta?",
+      "yesAcc": "Ya tienes una cuenta?",
+      "logout": "Cerrar sesión",
+      "emailSent": "¡Gracias! Hemos enviado un correo a la dirección indicada. Por favor pincha en el enlace que te hemos enviado."
+  },
+  "menu": {
+      "home": "Inicio",
+      "products": "Productos",
+      "past": "Pedidos anteriores",
+      "cart": "Carrito"
+  },
+  "card": {
+      "description": "Descripción",
+      "price": "Precio",
+      "quantity": "Cantidad",
+      "cart": "Al carrito"
+  },
+  "product": {
+      "transport": "Este producto requiere un transporte especial, por lo que el gasto del transporte puede ser algo más alto",
+      "quantity": "Elige la cantidad",
+      "manage": "Modificar productos",
+      "update": "Modificar los datos del producto nº"
+  },
+  "cart": {
+      "product": "Producto",
+      "price": "Precio",
+      "qty": "Cant",
+      "actions": "Acciones",
+      "noitems": "No hay artículos en el carrito",
+      "checkout": "Pasar por caja"
+  },
+  "newOrder": {
+      "header": "Nuevo pedido nº "
+  },
+  "BBorder": {
+      "header": "Pedido nº ",
+      "created": "Creado ",
+      "name": "Nombre",
+      "quantity": "Cantidad",
+      "price": "Precio",
+      "confirm": "Confirmar",
+      "pay": "Confirmar y pagar",
+      "cancel": "Cancelar y eliminar"
+  },
+  "delivery": {
+    "addr": "Dirección de la entrega",
+    "addrPlaceholder": "Escriba la dirección",
+    "addrError": "Sin saber la dirección no sabremos dónde está la casa que tenemos que llenar de felicidad",
+    "recipientName": "Nombre del destinatario",
+    "nameError": "Si no sabemos el destinatario, tu suegra puede dejarte sin dulce",
+    "recipientPhone": "El número de teléfono del destinatario",
+    "phoneError": "Necesitamos un número de contacto. Odiamos dejar a la gente sin postre si no está en casa",
+    "phoneFormat": "Formato del número de teléfono: XXX-XXX-XXX",
+    "note": "Quiere dejar una nota para el repartidor?",
+    "notePlaceholder": "Las mejores horas de la entrega? Un sitio dificil de encontrar? Cualquier cosa que quiere decirnos...",
+    "date": "Fecha de entrega",
+    "surprise": "Es una sorpresa para alguien especial?",
+    "save": "Guardar"
+  }
 }

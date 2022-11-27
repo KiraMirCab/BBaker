@@ -9,7 +9,7 @@ import i18n from './i18n'
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
 
-createApp(App)
+createApp(App).use(i18n).use(i18n)
   .use(i18n)
   .use(router)
   .use(VueSweetalert2)

@@ -15,12 +15,12 @@ module.exports = defineConfig({
 
   pluginOptions: {
     i18n: {
-      locale: 'en',
-      fallbackLocale: 'es',
+      locale: 'es',
+      fallbackLocale: 'en',
       localeDir: 'locales',
-      enableLegacy: false,
+      enableLegacy: true,
       runtimeOnly: false,
-      compositionOnly: false,
+      compositionOnly: true,
       fullInstall: true
     }
   }

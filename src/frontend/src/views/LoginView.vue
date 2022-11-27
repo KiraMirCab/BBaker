@@ -51,9 +51,11 @@ export default {
           password: this.pass
         }
         UserFrontService.loginUser(user).then((response) => {
-          this.token = response.data
-          localStorage.setItem('user', this.token)
           console.log(response.data)
+          this.token = response.data.token
+          localStorage.setItem('user', this.token)
+          this.role = response.data.role
+          localStorage.setItem('role', this.role)
           this.$router.push('/profile')
         }).catch((error) => {
           this.errorCred = true

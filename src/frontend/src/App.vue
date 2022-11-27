@@ -5,20 +5,23 @@
             <i class="icofont-cup-cake icofont-1x"></i>
             <span>{{ $t('menu.home') }}</span>
           </router-link>
-          <router-link to="/past-orders" class="top-bar-link">
+          <router-link to="/past-orders" class="top-bar-link" v-if="logged">
             <span>{{ $t('menu.past') }}</span>
           </router-link>
-          <router-link to="/products" class="top-bar-link">
+          <router-link to="/products" class="top-bar-link" v-if="admin">
             <span>{{ $t("product.manage") }}</span>
           </router-link>
-          <router-link to="/add-new-product" class="top-bar-link">
+          <router-link to="/add-new-product" class="top-bar-link" v-if="admin">
             <span>Añadir un producto nuevo</span>
           </router-link>
-          <router-link to="/orders-now" class="top-bar-link">
+          <router-link to="/orders-now" class="top-bar-link" v-if="employee">
             <span>Pedidos</span>
           </router-link>
-          <router-link to="/map-deliveries" class="top-bar-link">
+          <router-link to="/map-deliveries" class="top-bar-link" v-if="delivery">
             <span>Entregas en el mapa</span>
+          </router-link>
+          <router-link to="/find-user" class="top-bar-link" v-if="admin">
+            <span>Listar usuarios</span>
           </router-link>
     </nav>
     <div class="top-bar-nav">
@@ -70,8 +73,13 @@ export default {
       showUserMenu: false,
       inventory: [],
       cart: {},
+      user: '',
       userID: 0,
-      logged: localStorage.user
+      logged: localStorage.user,
+      role: localStorage.role,
+      admin: false,
+      employee: false,
+      delivery: false
     }
   },
   computed: {

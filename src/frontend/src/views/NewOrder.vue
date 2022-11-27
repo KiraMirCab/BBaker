@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <DeliveryForm v-if="showDeliveryForm" :id="id" :specialTransport="specialTransport" @confirmDel="confirmDel" />
+    <DeliveryForm v-if="showDeliveryForm" :id="id" :specialTransport="specialTransport" @clicked="onClickChild" />
 
     <button @click="pay()" class="btn btn-light" v-if="deliverySaved">
       {{ $t("BBorder.pay") }}
@@ -31,8 +31,7 @@ import OrderInfo from '@/components/OrderInfo.vue'
 import DeliveryForm from '@/components/DeliveryForm.vue'
 import OrderFrontService from '@/services/OrderFrontService.js'
 import router from '@/router'
-import { defineComponent } from 'vue'
-import { useConfirm } from 'v3confirm'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'NewOrder',
@@ -70,46 +69,49 @@ export default {
       })
     },
     confirmOrder () {
+      Swal.fire('Now let\'s check your address')
       this.showDeliveryForm = true
     },
     deleteOrder () {
       // TODO Mensaje de confirmación
-      this.$confirm(
-        {
-          message: 'Are you sure?',
-          button: {
-            no: 'No',
-            yes: 'Yes'
-          },
-          /**
-          * Callback Function
-          * @param {Boolean} confirm
-          */
-          callback: confirm => {
-            if (confirm) {
-              // ... do something
-              const json = { order_id: this.id }
-              OrderFrontService.deleteOrder(json)
-              // TODO mensaje de completarse la accion
-              // TODO arreglar el router
-              this.router.push('Home')
-            }
-          }
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "Your order will be cancelled and you won't get these yum-yums!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const json = { order_id: this.id }
+          OrderFrontService.deleteOrder(json)
+          Swal.fire(
+            'Deleted!',
+            'Your order was cancelled',
+            'success'
+          )
+          this.$router.go(-1)
         }
-      )
+      })
     }
   },
   pay () {
-    // TODO Mensaje de confirmación
     const json = {
       order_id: this.id,
       paidDate: Date.now()
     }
     OrderFrontService.setPaid(json)
-    // TODO mensaje de completarse la accion
-    router.push('Home')
+    Swal.fire({
+      icon: 'success',
+      title: 'Thank you!',
+      text: 'The payment was successfull',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    this.$router.go(-1)
   },
-  confirmDel () {
+  onClickChild () {
     this.deliverySaved = true
   }
 }

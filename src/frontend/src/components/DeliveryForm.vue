@@ -69,7 +69,7 @@
       /></label>
       <br />
     </div>
-    <button type="submit" v-if="visible" @click="checkform" class="submit">{{ $t('delivery.save') }}</button>
+    <button type="submit" v-if="saveVisible" @click="checkform" class="submit">{{ $t('delivery.save') }}</button>
   </form>
   </div>
 </template>
@@ -107,11 +107,11 @@ export default {
       errorName: false,
       errorPhone: false,
       availableFrom: ref(new Date()),
-      visible: true
+      saveVisible: true
     }
   },
   methods: {
-    checkform () {
+    checkform (event) {
       if (this.address && this.recipientName && this.recipientPhone) {
         this.errorAddress = false
         this.errorName = false
@@ -127,8 +127,8 @@ export default {
           order_id: this.id
         }
         DeliveryFrontService.createNewDelivery(newDelivery)
-        this.visible = false
-        this.$emit('confirmDel')
+        this.saveVisible = false
+        this.$emit('clicked', 'confirm')
       } else {
         if (this.address === '') {
           this.errorAddress = true

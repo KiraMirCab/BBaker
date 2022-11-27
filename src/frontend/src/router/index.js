@@ -11,6 +11,7 @@ import OrdersNow from '../views/OrdersNow'
 import MapDeliveries from '../views/MapDeliveries'
 import UpdateProduct from '../views/UpdateProduct'
 import Profile from '../views/Profile'
+import FindUser from '../views/FindUser'
 
 const routes = [
   {
@@ -44,12 +45,18 @@ const routes = [
   {
     path: '/past-orders',
     name: 'PastOrders',
-    component: PastOrders
+    component: PastOrders,
+    beforeEnter: (to, from) => {
+      if (!localStorage.user) return '/login'
+    }
   },
   {
     path: '/add-new-product',
     name: 'AddNewProduct',
-    component: AddNewProduct
+    component: AddNewProduct,
+    beforeEnter: (to, from) => {
+      if (!localStorage.user) return '/login'
+    }
   },
   {
     path: '/info-products/:id',
@@ -75,6 +82,11 @@ const routes = [
     path: '/map-deliveries',
     name: 'MapDeliveries',
     component: MapDeliveries
+  },
+  {
+    path: '/find-user',
+    name: 'FindUser',
+    component: FindUser
   }
 ]
 

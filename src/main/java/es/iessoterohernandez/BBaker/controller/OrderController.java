@@ -33,21 +33,16 @@ public class OrderController {
     }
 
     @PostMapping("paid")
-    public int setPaid(@RequestBody String json) {
+    public int setPaid(@RequestBody String json) throws Exception {
         System.out.println("ESTO ES EL BODY" + json);
         JSONObject obj;
         Long orderId = (long) 0;
         Long paidDate = (long) 0;
-        try {
             obj = new JSONObject(json);
             orderId = obj.getLong("order_id");
             paidDate = obj.getLong("paidDate");
             System.out.println("orderID " + orderId);
             System.out.println("paidDate " + paidDate);
-        } catch (JSONException e) {
-            System.out.println("CACAAAAAAA");
-            e.printStackTrace();
-        }
         return orderService.setPaid(orderId, paidDate);
     }
 

@@ -19,6 +19,10 @@ class UserFrontService {
   loginUser (json) {
     return axios.post(API_LOGIN_URL, json)
   }
+
+  getUserRole (json) {
+    return axios.post(API_LOGIN_URL + '/role', json)
+  }
 }
 
 export default new UserFrontService()

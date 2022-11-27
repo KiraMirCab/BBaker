@@ -15,12 +15,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 public class User implements UserDetails{
     @Id
@@ -33,6 +31,8 @@ public class User implements UserDetails{
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
     private boolean enabled = false;
+
+    public User() {}
     
      public User(String firstName, String lastName, String email, String password, UserRole userRole) {
          this.firstName = firstName;

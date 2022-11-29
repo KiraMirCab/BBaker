@@ -4,8 +4,6 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 DB_creation.sql
-/src/main/resources/application.properties
-/src/frontend/.env
 node_modules
 
 

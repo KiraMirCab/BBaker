@@ -2,16 +2,11 @@ import axios from 'axios'
 
 const API_REGISTER_URL = '/api/registration'
 const API_LOGIN_URL = '/api/login'
+const config = {
+  headers: { Authorization: `Bearer ${localStorage.token}` }
+}
 
 class UserFrontService {
-  getUsers () {
-    return axios.get(API_REGISTER_URL)
-  }
-
-  getUser (id) {
-    return axios.get(API_REGISTER_URL + '/' + id)
-  }
-
   registerNewUser (json) {
     return axios.post(API_REGISTER_URL, json)
   }
@@ -20,8 +15,16 @@ class UserFrontService {
     return axios.post(API_LOGIN_URL, json)
   }
 
-  getUserRole (json) {
-    return axios.post(API_LOGIN_URL + '/role', json)
+  getUser (email) {
+    return axios.post(API_LOGIN_URL + '/getuser', email, config)
+  }
+
+  getUsers () {
+    return axios.post(API_LOGIN_URL, config)
+  }
+
+  changeUserRole (json) {
+    return axios.post(API_LOGIN_URL + '/role', json, config)
   }
 }
 

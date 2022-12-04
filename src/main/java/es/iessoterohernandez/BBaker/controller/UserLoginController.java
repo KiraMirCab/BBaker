@@ -1,17 +1,22 @@
 package es.iessoterohernandez.BBaker.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Optional;
 
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.iessoterohernandez.BBaker.model.AuthRequest;
+import es.iessoterohernandez.BBaker.model.ChangeRoleRequest;
+import es.iessoterohernandez.BBaker.model.User;
 import es.iessoterohernandez.BBaker.service.JwtService;
 import es.iessoterohernandez.BBaker.service.UserService;
 
@@ -29,19 +34,25 @@ public class UserLoginController {
     private UserService userService;
     
     @PostMapping
-    public Map generateJwtToken(@RequestBody AuthRequest authRequest) throws Exception {
-        String email = authRequest.getEmail();
+    public String generateJwtToken(@RequestBody AuthRequest authRequest) throws Exception {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
             );
-        HashMap<String, String> jwtYrole = new HashMap<String, String>();
-        jwtYrole.put("token", jwtService.generateToken(authRequest.getEmail()));
-        jwtYrole.put("role",userService.findByEmail(email).name());
-        return jwtYrole;
+        return jwtService.generateToken(authRequest.getEmail());
     }
 
-   // @PostMapping("role")
-    //public int changeRole(@RequestBody ChangeRoleRequest changeRoleRequest) throws Exception {
-     //   return userService.changeRole(changeRoleRequest.getEmail(),changeRoleRequest.getRole());
-    //}
+    @PostMapping("getuser")
+    public Optional <User> getUser(@RequestBody String email) throws Exception {
+        return userService.findByEmail(email);
+    }
+
+    @PostMapping("getusers")
+    public List <User> getUsers() throws Exception {
+        return userService.findAll();
+    }
+
+    @PostMapping("role")
+    public User changeRole(@RequestBody ChangeRoleRequest crl) throws Exception {
+        return userService.changeRole(crl.getEmail(),crl.getRole());
+    }
 }

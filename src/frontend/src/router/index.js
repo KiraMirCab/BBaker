@@ -1,17 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import LoginView from '../views/LoginView'
-import RegisterView from '../views/RegisterView'
-import ProductsView from '../views/ProductsView'
-import PastOrders from '../views/PastOrders'
-import AddNewProduct from '../views/AddNewProduct'
-import InfoProduct from '../views/InfoProduct'
-import NewOrder from '../views/NewOrder'
-import OrdersNow from '../views/OrdersNow'
-import MapDeliveries from '../views/MapDeliveries'
-import UpdateProduct from '../views/UpdateProduct'
-import Profile from '../views/Profile'
-import FindUser from '../views/FindUser'
 
 const routes = [
   {
@@ -22,17 +10,17 @@ const routes = [
   {
     path: '/register',
     name: 'register',
-    component: RegisterView
+    component: () => import(/* webpackChunkName: "about" */ '../views/LoginView.vue')
   },
   {
     path: '/login',
     name: 'login',
-    component: LoginView
+    component: () => import(/* webpackChunkName: "about" */ '../views/RegisterView.vue')
   },
   {
     path: '/profile',
     name: 'profile',
-    component: Profile,
+    component: () => import(/* webpackChunkName: "about" */ '../views/Profile.vue'),
     beforeEnter: (to, from) => {
       if (!localStorage.user) return '/login'
     }
@@ -40,12 +28,12 @@ const routes = [
   {
     path: '/products',
     name: 'products',
-    component: ProductsView
+    component: () => import(/* webpackChunkName: "about" */ '../views/ProductsView.vue')
   },
   {
     path: '/past-orders',
     name: 'PastOrders',
-    component: PastOrders,
+    component: () => import(/* webpackChunkName: "about" */ '../views/PastOrders.vue'),
     beforeEnter: (to, from) => {
       if (!localStorage.user) return '/login'
     }
@@ -53,7 +41,7 @@ const routes = [
   {
     path: '/add-new-product',
     name: 'AddNewProduct',
-    component: AddNewProduct,
+    component: () => import(/* webpackChunkName: "about" */ '../views/AddNewProduct.vue'),
     beforeEnter: (to, from) => {
       if (!localStorage.user) return '/login'
     }
@@ -61,32 +49,32 @@ const routes = [
   {
     path: '/info-products/:id',
     name: 'InfoProduct',
-    component: InfoProduct
+    component: () => import(/* webpackChunkName: "about" */ '../views/InfoProduct.vue')
   },
   {
     path: '/update-products/:id',
     name: 'UpdateProduct',
-    component: UpdateProduct
+    component: () => import(/* webpackChunkName: "about" */ '../views/UpdateProduct.vue')
   },
   {
     path: '/new-order/:id',
     name: 'NewOrder',
-    component: NewOrder
+    component: () => import(/* webpackChunkName: "about" */ '../views/NewOrder.vue')
   },
   {
     path: '/orders-now',
     name: 'OrdersNow',
-    component: OrdersNow
+    component: () => import(/* webpackChunkName: "about" */ '../views/OrdersNow.vue')
   },
   {
     path: '/map-deliveries',
     name: 'MapDeliveries',
-    component: MapDeliveries
+    component: () => import(/* webpackChunkName: "about" */ '../views/MapDeliveries.vue')
   },
   {
     path: '/find-user',
     name: 'FindUser',
-    component: FindUser
+    component: () => import(/* webpackChunkName: "about" */ '../views/FindUser.vue')
   }
 ]
 

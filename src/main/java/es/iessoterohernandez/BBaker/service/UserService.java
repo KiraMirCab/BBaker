@@ -1,6 +1,7 @@
 package es.iessoterohernandez.BBaker.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -76,26 +77,25 @@ public class UserService implements UserDetailsService {
         return userRepository.enableUser(email);
     }
 
-    public UserRole findByEmail(String email) {
-        Optional <User> u = userRepository.findByEmail(email);
-        return u.map(User::getUserRole).orElse(null);
+    public Optional <User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
-    public int changeRole(String email, String role) throws Exception {
-        UserRole u;
-        switch(role) {
-          case "ADMIN":
-            u = UserRole.ADMIN;
-            break;
-          case "DELIVERY":
-            u = UserRole.DELIVERY;
-            break;
-          case "EMPLOYEE":
-            u = UserRole.EMPLOYEE;
-            break;
-          default:
-            u = UserRole.CLIENT;
-        }
-        return userRepository.changeRole(u, email);
+    public User changeRole(String email, UserRole role) throws Exception {
+        Optional<User> dbUser = userRepository.findByEmail(email);
+        boolean userExists = dbUser.isPresent();
+        User user = dbUser.orElse(null);
+        if (userExists) {
+            LOGGER.info("Setting a new role " + role + "to the user" + email);
+            user.setUserRole(role);
+        } else {
+            LOGGER.info("User with this email does not exist!");
+            throw new IllegalStateException("email not registered");
+        } 
+        return userRepository.save(user);
+    }
+
+    public List <User> findAll() {
+        return userRepository.findAll();
     }
 }

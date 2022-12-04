@@ -9,9 +9,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ChangeRoleRequest {
     private String email;
-    private String role;
+    private UserRole role;
 
-    public ChangeRoleRequest(String email, String role) {
+    public ChangeRoleRequest(String email, UserRole role) {
         this.email = email;
         this.role = role;
     }

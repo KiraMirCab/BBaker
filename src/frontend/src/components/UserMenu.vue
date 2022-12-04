@@ -32,7 +32,7 @@
 import router from '@/router'
 
 export default {
-  props: ['toggle', 'userID'],
+  props: ['toggle', 'user'],
   data () {
     return {
       logged: localStorage.user

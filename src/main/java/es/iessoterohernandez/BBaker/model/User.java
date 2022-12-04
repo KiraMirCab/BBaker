@@ -3,6 +3,7 @@ package es.iessoterohernandez.BBaker.model;
 import java.util.Collection;
 import java.util.Collections;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -26,6 +27,7 @@ public class User implements UserDetails{
     private Long id;
     private String firstName;
     private String lastName;
+    @Column(unique=true)
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)

@@ -51,9 +51,10 @@
   />
   <UserMenu
     v-if="showUserMenu"
-    :userID="userID"
+    :user="user"
     :toggle="toggleUserMenu"
-    :logged="logged"
+    :login="logIn"
+    :logout="logOut"
   />
   <vue-confirm-dialog></vue-confirm-dialog>
 </template>
@@ -73,7 +74,7 @@ export default {
       showUserMenu: false,
       inventory: [],
       cart: {},
-      user: '',
+      user: {},
       userID: 0,
       logged: localStorage.user,
       role: localStorage.role,
@@ -94,9 +95,6 @@ export default {
       ProductService.getProducts().then((response) => {
         this.inventory = response.data
       })
-    },
-    getUserID () {
-      // get the userID from the DB and
     },
     addToCart (productID, quantity) {
       if (!this.cart[productID]) this.cart[productID] = 0
@@ -120,8 +118,12 @@ export default {
     toggleUserMenu () {
       this.showUserMenu = !this.showUserMenu
     },
-    togglelogged () {
-      this.logged = !this.logged
+    logIn () {
+      // get the userID from the DB and
+      this.user = {}
+    },
+    logOut () {
+      this.user = {}
     }
   },
   created () {

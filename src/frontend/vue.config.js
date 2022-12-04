@@ -1,5 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
-module.exports = defineConfig({
+module.exports = {
   transpileDependencies: true,
 
   devServer: {
@@ -24,4 +24,4 @@ module.exports = defineConfig({
       fullInstall: true
     }
   }
-})
+}

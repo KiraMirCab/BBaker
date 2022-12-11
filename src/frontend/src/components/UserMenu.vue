@@ -29,10 +29,9 @@
   </template>
 
 <script>
-import router from '@/router'
 
 export default {
-  props: ['toggle', 'user'],
+  props: ['toggle', 'user', 'logout', 'userlogged'],
   data () {
     return {
       logged: localStorage.user
@@ -40,7 +39,10 @@ export default {
   },
   methods: {
     logUserOut () {
+      this.logout()
       localStorage.removeItem('user')
+      this.$router.go()
+      this.userlogged()
       this.$router.push('/')
       this.toggle()
     }

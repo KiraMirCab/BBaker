@@ -1,19 +1,16 @@
 package es.iessoterohernandez.BBaker.controller;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.iessoterohernandez.BBaker.DTO.UserDTO;
 import es.iessoterohernandez.BBaker.model.AuthRequest;
 import es.iessoterohernandez.BBaker.model.ChangeRoleRequest;
 import es.iessoterohernandez.BBaker.model.User;
@@ -42,8 +39,8 @@ public class UserLoginController {
     }
 
     @PostMapping("getuser")
-    public Optional <User> getUser(@RequestBody String email) throws Exception {
-        return userService.findByEmail(email);
+    public UserDTO getUser(@RequestBody AuthRequest authr) throws Exception {
+        return userService.findByEmail(authr.getEmail());
     }
 
     @PostMapping("getusers")

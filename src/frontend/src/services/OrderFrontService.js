@@ -15,6 +15,10 @@ class OrderService {
     return axios.get(API_ORDER_URL + '/products/' + id)
   }
 
+  getMyOrders (id) {
+    return axios.get(API_ORDER_URL + '/myorders/' + id)
+  }
+
   createNewOrder (json) {
     return axios.post(API_ORDER_URL + '/add', json)
   }

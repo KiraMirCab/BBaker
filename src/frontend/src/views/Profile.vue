@@ -3,8 +3,8 @@
         <h1 class="center">{{ $t('user.profile') }}</h1>
         <div class="container">
                 <div>
-                  <p>Name : </p>
-                  <p>User's email is : </p>
+                  <p>Name : {{this.user.userFName}} {{this.user.userLName}}</p>
+                  <p>User's email is : {{this.user.userEmail}}</p>
         </div>
       </div>
     </main>
@@ -16,29 +16,26 @@ import UserFrontService from '@/services/UserFrontService.js'
 export default {
   data () {
     return {
-      email: '',
-      pass: ''
+      user: {},
+      userID: '',
+      email: ''
     }
   },
+  created () {
+    this.getUser()
+  },
   methods: {
-    checkform () {
-      if (this.email.match('/^S+@S+.S+$/') && this.pass) {
-        this.errorEmail = false
-        this.errorPass = false
-        const user = {
-          email: this.email,
-          pass: this.pass
-        }
-        // ProductService.createNewProduct(newPruduct)
-        // .then((response) => {this.dbProduct = response.data})
-      } else {
-        if (!this.email.match('/^S+@S+.S+$/')) {
-          this.errorEmail = true
-        }
-        if (this.pass === '') {
-          this.errorPass = true
-        }
+    getUser () {
+      // get the user from the DB and get the user ID
+      const json = {
+        email: localStorage.useremail,
+        password: 'pass'
       }
+      console.log(json)
+      UserFrontService.getUser(json).then((response) => {
+        this.user = response.data
+        this.userID = this.user.userID
+      })
     }
   }
 }

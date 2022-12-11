@@ -83,7 +83,7 @@ export default {
   components: {
     Datepicker
   },
-  props: ['id', 'specialTransport', 'delivery'],
+  props: ['id', 'specialTransport', 'delivery', 'toggle'],
   created (delivery) {
     if (this.delivery) {
       this.deliveryDate = delivery.deliveryDate
@@ -111,7 +111,7 @@ export default {
     }
   },
   methods: {
-    checkform (event) {
+    checkform () {
       if (this.address && this.recipientName && this.recipientPhone) {
         this.errorAddress = false
         this.errorName = false
@@ -128,7 +128,7 @@ export default {
         }
         DeliveryFrontService.createNewDelivery(newDelivery)
         this.saveVisible = false
-        this.$emit('clicked', 'confirm')
+        this.toggle()
       } else {
         if (this.address === '') {
           this.errorAddress = true

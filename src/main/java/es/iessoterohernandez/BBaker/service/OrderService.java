@@ -35,9 +35,6 @@ public class OrderService {
     UserRepository userRepository;
 
     public OrderO mapToOrder(OrderODTO orderODTO) {
-        //ObjectMapper om = new ObjectMapper();
-		//om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        
         OrderO order = new OrderO();
         order.setCreationDate(orderODTO.getCreationDate());
         order.setPaidDate(orderODTO.getPaidDate());
@@ -47,14 +44,19 @@ public class OrderService {
         } else {
             order.setUser(userRepository.findById(orderODTO.getUser_id()));
         }
-
-        //TypeReference<OrderO> typeReference = new TypeReference <OrderO>(){};
-        //try {
-        //   order = om.readValue(json, typeReference);
-        //} catch (Exception e) {
-        //    System.out.println("Unable to save features: " + e.getMessage());
-        //}
         return order;        
+    }
+
+    public OrderODTO mapToOrderDTO(OrderO order) {
+        OrderODTO odto = new OrderODTO();
+        odto.setCreationDate(order.getCreationDate());
+        odto.setPaidDate(order.getPaidDate());
+        odto.setTotal(order.getTotal());
+        if (order.getUser() != null) {
+            odto.setUser_id(order.getUser().getId());
+        } 
+        odto.setOrderProductsDTO(this.mapToOrderProductsDTO(odto, order));
+        return odto;
     }
 
 
@@ -63,10 +65,8 @@ public class OrderService {
     }
     
     public String saveOrderProducts(List<OrderProducts> orderProducts){
-    System.out.println("voy a guarder ESSSSSSSSSTA LISTA");
-    List<OrderProducts> returnedProducts = orderProductsRepository.saveAll(orderProducts);
-    System.out.println(returnedProducts.toString());
-    return "Yuppi";
+        orderProductsRepository.saveAll(orderProducts);
+        return "Yuppi";
     }
 
     public List<OrderProducts> mapToOrderProducts(OrderODTO orderODTO, OrderO order){
@@ -83,8 +83,32 @@ public class OrderService {
         return orderProducts;
     }
 
+    public List<OrderProductDTO> mapToOrderProductsDTO(OrderODTO orderODTO, OrderO order){
+        List<OrderProducts>orderProducts = orderProductsRepository.findByOrderId(order.getId());
+        List<OrderProductDTO>orderProductDTO = new ArrayList<>();
+       
+        for (OrderProducts op : orderProducts) {
+            OrderProductDTO opDTO = new OrderProductDTO();
+            opDTO.setProduct_id(op.getProduct().getId());
+            opDTO.setPrice(op.getPrice());
+            opDTO.setQuantity(op.getQuantity());
+            orderProductDTO.add(opDTO);
+        }
+        return orderProductDTO;
+    }
+
     public List<OrderO> getAllOrders() {
         return orderRepository.findAll();
+    }
+
+    public List<OrderODTO> getMyOrders(Long id) {
+        List<OrderO> list = orderRepository.findByUser_id(id);
+        List<OrderODTO> myList = new ArrayList<OrderODTO>();
+        for (OrderO order : list) {
+            OrderODTO myOrder = this.mapToOrderDTO(order);
+            myList.add(myOrder);
+        }
+        return myList;
     }
 
     public OrderO getByID(Long id){

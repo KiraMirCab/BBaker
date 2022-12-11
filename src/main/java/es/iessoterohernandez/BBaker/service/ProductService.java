@@ -23,6 +23,7 @@ public class ProductService {
     }
 
     public Product getByID(Long id){
+        System.out.println("GETTING THIIIIIIS");
         return productRepository.getById(id);
     }
 }

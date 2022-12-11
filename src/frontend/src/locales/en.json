@@ -32,13 +32,19 @@
     "description": "Description",
     "price": "Price",
     "quantity": "Quantity",
-    "cart": "Add to cart"
+    "cart": "Add to cart",
+    "details": "Details"
   },
   "product": {
     "transport": "This product requires special delivery, so the delivery fee might be higher than usual",
     "quantity": "Chose quantity",
     "manage": "Manage products",
-    "update": "Update product nº"
+    "update": "Update product nº",
+    "creationDate": "Created on",
+    "total": "Total price",
+    "paid": "Payment",
+    "products": "Purchased yummies",
+    "notpaid": "Not paid yet"
   },
   "cart": {
     "product": "Product",
@@ -53,13 +59,15 @@
   },
   "BBorder": {
     "header": "Order nº ",
-    "created": "Created ",
+    "created": "Created",
     "name": "Name",
     "quantity": "Quantity",
     "price": "Price",
     "confirm": "Confirm",
     "pay": "Confirm and pay",
-    "cancel": "Cancel and delete"
+    "cancel": "Cancel and delete",
+    "back": "Back to my orders",
+    "paid": "Payment made"
   },
   "delivery": {
     "addr": "Address for the delivery",

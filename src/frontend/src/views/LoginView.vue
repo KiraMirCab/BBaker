@@ -32,6 +32,7 @@
 import UserFrontService from '@/services/UserFrontService.js'
 
 export default {
+  props: ['getuser'],
   data () {
     return {
       email: '',
@@ -46,6 +47,7 @@ export default {
       if (this.email && this.pass) {
         this.errorEmail = false
         this.errorPass = false
+        localStorage.setItem('useremail', this.email)
         const user = {
           email: this.email,
           password: this.pass
@@ -54,6 +56,7 @@ export default {
           console.log(response.data)
           this.token = response.data.token
           localStorage.setItem('user', this.token)
+          this.$router.go()
           this.$router.push('/profile')
         }).catch((error) => {
           this.errorCred = true

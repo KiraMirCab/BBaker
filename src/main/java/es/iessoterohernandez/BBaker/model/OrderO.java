@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -29,10 +28,8 @@ public class OrderO {
     @ManyToOne
     @JoinColumn(nullable = true)
     private User user;
-    @OneToMany(mappedBy = "product")
+    @OneToMany
     private List<OrderProducts> orderProducts = new ArrayList<>();
-    @OneToOne(mappedBy = "order")
-    private Delivery delivery;
     
     public OrderO() {}
 

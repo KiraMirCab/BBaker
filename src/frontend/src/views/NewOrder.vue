@@ -18,7 +18,11 @@
       </div>
     </div>
 
-    <DeliveryForm v-if="showDeliveryForm" :id="id" :specialTransport="specialTransport" @clicked="onClickChild" />
+    <DeliveryForm v-if="showDeliveryForm"
+      :id="id"
+      :specialTransport="specialTransport"
+      :toggle="togglePayButton"
+     />
 
     <button @click="pay()" class="btn btn-light" v-if="deliverySaved">
       {{ $t("BBorder.pay") }}
@@ -30,7 +34,6 @@
 import OrderInfo from '@/components/OrderInfo.vue'
 import DeliveryForm from '@/components/DeliveryForm.vue'
 import OrderFrontService from '@/services/OrderFrontService.js'
-import router from '@/router'
 import Swal from 'sweetalert2'
 
 export default {
@@ -94,25 +97,26 @@ export default {
           this.$router.go(-1)
         }
       })
+    },
+    togglePayButton () {
+      this.deliverySaved = !this.deliverySaved
+    },
+    pay () {
+      const json = {
+        order_id: this.id,
+        paidDate: Date.now()
+      }
+      console.log(json)
+      OrderFrontService.setPaid(json)
+      Swal.fire({
+        icon: 'success',
+        title: 'Thank you!',
+        text: 'The payment was successfull',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      this.$router.go(-1)
     }
-  },
-  pay () {
-    const json = {
-      order_id: this.id,
-      paidDate: Date.now()
-    }
-    OrderFrontService.setPaid(json)
-    Swal.fire({
-      icon: 'success',
-      title: 'Thank you!',
-      text: 'The payment was successfull',
-      showConfirmButton: false,
-      timer: 1500
-    })
-    this.$router.go(-1)
-  },
-  onClickChild () {
-    this.deliverySaved = true
   }
 }
 </script>

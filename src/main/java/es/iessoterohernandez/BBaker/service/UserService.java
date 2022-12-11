@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import es.iessoterohernandez.BBaker.DTO.UserDTO;
 import es.iessoterohernandez.BBaker.model.ConfirmationToken;
 import es.iessoterohernandez.BBaker.model.User;
 import es.iessoterohernandez.BBaker.model.UserRole;
@@ -77,8 +78,10 @@ public class UserService implements UserDetailsService {
         return userRepository.enableUser(email);
     }
 
-    public Optional <User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public UserDTO findByEmail(String email) {
+        User dbUser = userRepository.findByEmail(email).orElse(null);
+        UserDTO userDTO = new UserDTO(dbUser.getId(), dbUser.getEmail(), dbUser.getUserRole(), dbUser.getFirstName(), dbUser.getLastName());
+        return userDTO;
     }
 
     public User changeRole(String email, UserRole role) throws Exception {

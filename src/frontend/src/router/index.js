@@ -10,12 +10,12 @@ const routes = [
   {
     path: '/register',
     name: 'register',
-    component: () => import(/* webpackChunkName: "about" */ '../views/LoginView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/RegisterView.vue')
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import(/* webpackChunkName: "about" */ '../views/RegisterView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/LoginView.vue')
   },
   {
     path: '/profile',
@@ -28,7 +28,10 @@ const routes = [
   {
     path: '/products',
     name: 'products',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ProductsView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/ProductsView.vue'),
+    beforeEnter: (to, from) => {
+      if (!localStorage.user) return '/login'
+    }
   },
   {
     path: '/past-orders',

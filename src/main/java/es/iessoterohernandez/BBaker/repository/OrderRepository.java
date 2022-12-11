@@ -1,6 +1,7 @@
 package es.iessoterohernandez.BBaker.repository;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -12,6 +13,8 @@ import es.iessoterohernandez.BBaker.model.OrderO;
 
 public interface OrderRepository extends JpaRepository<OrderO,Integer>{
     OrderO getById(Long id);
+
+    List<OrderO> findByUser_id(Long id);
     
     @Transactional
     @Modifying

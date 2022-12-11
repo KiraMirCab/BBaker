@@ -56,10 +56,14 @@ public class OrderController {
             orderId = obj.getLong("order_id");
             System.out.println("orderID " + orderId);
         } catch (JSONException e) {
-            System.out.println("CACAAAAAAA");
             e.printStackTrace();
         }
         return orderService.delete(orderId);
+    }
+
+    @GetMapping("myorders/{id}")
+    public List<OrderODTO> listMyOrders(@PathVariable Long id) {
+        return orderService.getMyOrders(id);
     }
 
     @GetMapping

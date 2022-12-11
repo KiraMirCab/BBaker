@@ -53,8 +53,8 @@
     v-if="showUserMenu"
     :user="user"
     :toggle="toggleUserMenu"
-    :login="logIn"
     :logout="logOut"
+    :userlogged="toggleLogged"
   />
   <vue-confirm-dialog></vue-confirm-dialog>
 </template>
@@ -63,6 +63,7 @@
 import Sidebar from '@/components/Sidebar.vue'
 import UserMenu from '@/components/UserMenu.vue'
 import ProductService from '@/services/ProductService.js'
+import UserFrontService from './services/UserFrontService'
 
 export default {
   components: {
@@ -76,8 +77,7 @@ export default {
       cart: {},
       user: {},
       userID: 0,
-      logged: localStorage.user,
-      role: localStorage.role,
+      logged: false,
       admin: false,
       employee: false,
       delivery: false
@@ -118,16 +118,49 @@ export default {
     toggleUserMenu () {
       this.showUserMenu = !this.showUserMenu
     },
-    logIn () {
-      // get the userID from the DB and
-      this.user = {}
+    getUser () {
+      // get the user from the DB and get the user ID
+      if (localStorage.user) {
+        const json = {
+          email: localStorage.useremail,
+          password: 'pass'
+        }
+        console.log(json)
+        UserFrontService.getUser(json).then((response) => {
+          this.user = response.data
+          this.userID = this.user.userID
+          localStorage.setItem('user_id', this.user.userID)
+          if (this.user.userRole === 'ADMIN') {
+            this.admin = true
+            this.employee = true
+            this.delivery = true
+          } else if (this.user.userRole === 'EMPLOYEE') {
+            this.employee = true
+          } else if (this.user.userRole === 'DELIVERY') {
+            this.delivery = true
+          } else {
+            this.logged = true
+          }
+        })
+      }
+    },
+    toggleLogged () {
+      this.logged = !this.logged
     },
     logOut () {
       this.user = {}
+      this.userID = ''
+      localStorage.removeItem('useremail')
+      localStorage.removeItem('user_id')
+      this.admin = false
+      this.employee = false
+      this.delivery = false
+      this.logged = false
     }
   },
   created () {
     this.getProducts()
+    this.getUser()
   }
 }
 </script>

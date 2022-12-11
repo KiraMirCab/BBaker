@@ -41,7 +41,6 @@ export default {
   props: ['orderProducts', 'routerPath'],
   data () {
     return {
-
     }
   },
   methods: {
@@ -49,9 +48,9 @@ export default {
       const newDate = new Date(timestamp)
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
       if (this.$i18n.locale === 'es') {
-        return newDate.toLocaleDateString('es-ES', options) + newDate.toLocaleTimeString()
+        return newDate.toLocaleDateString('es-ES', options) + '  ' + newDate.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
       } else {
-        return newDate.toLocaleDateString('en-EN', options) + newDate.toLocaleTimeString()
+        return newDate.toLocaleDateString('en-EN', options) + '  ' + newDate.toLocaleTimeString('en-EN', { hour: '2-digit', minute: '2-digit' })
       }
     }
   }

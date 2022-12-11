@@ -32,13 +32,19 @@
       "description": "Descripción",
       "price": "Precio",
       "quantity": "Cantidad",
-      "cart": "Al carrito"
+      "cart": "Al carrito",
+      "details": "Ver detalles"
   },
   "product": {
       "transport": "Este producto requiere un transporte especial, por lo que el gasto del transporte puede ser algo más alto",
       "quantity": "Elige la cantidad",
       "manage": "Modificar productos",
-      "update": "Modificar los datos del producto nº"
+      "update": "Modificar los datos del producto nº",
+      "creationDate": "Fecha creación",
+      "total": "Precio total",
+      "paid": "Pagado",
+      "products": "Delicias compradas",
+      "notpaid": "No está pagado todavía"
   },
   "cart": {
       "product": "Producto",
@@ -53,13 +59,15 @@
   },
   "BBorder": {
       "header": "Pedido nº ",
-      "created": "Creado ",
+      "created": "Creado",
       "name": "Nombre",
       "quantity": "Cantidad",
       "price": "Precio",
       "confirm": "Confirmar",
       "pay": "Confirmar y pagar",
-      "cancel": "Cancelar y eliminar"
+      "cancel": "Cancelar y eliminar",
+      "back": "Volver a mis pedidos",
+      "paid": "Fecha de pago"
   },
   "delivery": {
     "addr": "Dirección de la entrega",

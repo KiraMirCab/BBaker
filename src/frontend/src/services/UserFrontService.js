@@ -15,8 +15,8 @@ class UserFrontService {
     return axios.post(API_LOGIN_URL, json)
   }
 
-  getUser (email) {
-    return axios.post(API_LOGIN_URL + '/getuser', email, config)
+  getUser (json) {
+    return axios.post(API_LOGIN_URL + '/getuser', json)
   }
 
   getUsers () {
@@ -24,7 +24,7 @@ class UserFrontService {
   }
 
   changeUserRole (json) {
-    return axios.post(API_LOGIN_URL + '/role', json, config)
+    return axios.post(API_LOGIN_URL + '/role', json)
   }
 }
 

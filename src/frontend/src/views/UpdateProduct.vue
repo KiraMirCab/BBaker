@@ -3,11 +3,11 @@
     <h1>{{ $t("product.update") }} {{ this.id }}</h1>
     <div class="container">
       <ProductForm
+        v-if="product"
         class="form"
         :checkform="checkform"
         :onFileSelected="onFileSelected"
         :product="product"
-        :pname="product.name"
         />
     </div>
   </main>
@@ -24,7 +24,7 @@ export default {
   },
   // en el momento de la creación de la página recogo el id del producto de la url
   // y traigo los datos del producto de la bd
-  created () {
+  mounted () {
     this.id = this.$route.path.split('/')[2]
     this.getProductInfo(this.id)
   },

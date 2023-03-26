@@ -52,7 +52,8 @@
       "qty": "Cant",
       "actions": "Acciones",
       "noitems": "No hay artículos en el carrito",
-      "checkout": "Pasar por caja"
+      "checkout": "Pasar por caja",
+      "save": "Añadido al carrito!"
   },
   "newOrder": {
       "header": "Nuevo pedido nº "

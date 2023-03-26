@@ -8,7 +8,7 @@
             <th>{{ $t("product.paid") }}</th>
             <th>{{ $t("product.total") }}</th>
             <th>{{ $t("product.products") }}</th>
-            <th>Actions</th>
+            <th> </th>
           </thead>
           <tbody class="center">
             <tr v-for="(order, i) in orders" :key="i">

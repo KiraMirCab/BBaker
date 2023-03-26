@@ -75,7 +75,8 @@
         <div class="input-group">
           <button @click="onFileSelected" type="file" class="form-control-file" id="pImage">Seleccionar archivo</button>
         </div>
-        <small id="emailHelp" class="form-text text-muted">Añada la imagen del producto</small>
+        <small id="emailHelp" class="form-text text-muted" v-if="imageName === null">Añada la imagen del producto</small>
+        <p class="form-text text-muted" v-if="imageName !== null">{{ this.imageName }}</p>
         <p id="emailHelp" class="error" v-if="errorImagen">
           El fichero es demasiado grande. Intente otro, por favor
         </p>
@@ -90,21 +91,19 @@ import ProductService from '@/services/ProductService.js'
 import * as filestack from 'filestack-js'
 
 export default {
-  props: {
-    product: Object,
-    pname: String
-  },
+  props: ['product'],
   data () {
     return {
-      name: this.pname,
+      name: '',
       nameENG: '',
       description: '',
       descriptionENG: '',
       shortDesc: '',
       shortDescENG: '',
       image: '',
+      imageName: '',
       price: '',
-      discount: '0',
+      discount: 0,
       specialTransport: false,
       dbProduct: '',
       maxLength: 50,
@@ -113,6 +112,9 @@ export default {
       errorPrecio: false,
       errorImagen: false
     }
+  },
+  beforeMount () {
+    this.fillData()
   },
   methods: {
     checkform () {
@@ -147,6 +149,39 @@ export default {
         }
       }
     },
+    fillData () {
+      if (this.product.name) {
+        this.$data.name = this.product.name
+      }
+      if (this.product.nameENG) {
+        this.$data.nameENG = this.product.nameENG
+      }
+      if (this.product.description) {
+        this.$data.description = this.product.description
+      }
+      if (this.product.descriptionENG) {
+        this.$data.descriptionENG = this.product.descriptionENG
+      }
+      if (this.product.shortDesc) {
+        this.$data.shortDesc = this.product.shortDesc
+      }
+      if (this.product.shortDescENG) {
+        this.$data.shortDescENG = this.product.shortDescENG
+      }
+      if (this.product.image) {
+        this.$data.image = this.product.image
+      }
+      if (this.product.discount != null) {
+        this.$data.discount = this.product.discount
+      }
+      if (this.product.price != null) {
+        this.$data.price = this.product.price
+      }
+      if (this.product.specialTransport != null) {
+        this.$data.specialTransport = this.product.specialTransport
+      }
+    },
+
     onFileSelected () {
       const client = filestack.init(process.env.VUE_APP_FILESTACK_API_KEY)
       const options = {
@@ -157,26 +192,12 @@ export default {
           }
         },
         onUploadDone: res => {
-          console.log(res.filesUploaded[0].url)
+          console.log(res.filesUploaded[0])
           this.image = res.filesUploaded[0].url
-          /* if (res == null) {
-            // error
-          } else {
-          } */
+          this.imageName = res.filesUploaded[0].filename
         }
       }
       client.picker(options).open()
-      /*  const reader = new FileReader()
-       reader.readAsDataURL(event.target.files[0])
-       reader.onerror = function (error) {
-         console.log('Error: ', error)
-       }
-       reader.onload = () => {
-         this.image = reader.result
-         if (reader.result.length > 16777214) {
-           this.errorImagen = true
-         }
-       } */
     }
   }
 }

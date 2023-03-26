@@ -68,7 +68,7 @@ export default {
     return {
       id: '',
       product: '',
-      quantity: 0
+      quantity: 1
     }
   },
   methods: {

@@ -41,7 +41,7 @@
         <br />
         <div class="spread">
           <span><strong>Total:</strong> {{ calculateTotal() }}€</span>
-          <button class="btn btn-light" @click="createOrder">{{ $t("cart.checkout") }}</button>
+          <button v-if="Object.keys(this.cart).length !== 0" class="btn btn-light" @click="createOrder">{{ $t("cart.checkout") }}</button>
         </div>
       </div>
     </div>
@@ -53,7 +53,7 @@ import router from '@/router'
 import OrderFrontService from '@/services/OrderFrontService.js'
 
 export default {
-  props: ['toggle', 'cart', 'inventory', 'remove', 'userID'],
+  props: ['toggle', 'cart', 'inventory', 'remove', 'userID', 'emptyCart'],
   data () {
     return {
       quantity: '',
@@ -108,6 +108,7 @@ export default {
       // del pedido con el id del nuevo pedido de la base de datos
       OrderFrontService.createNewOrder(newOrder).then((response) => {
         router.push('/new-order/' + response.data.id)
+        this.emptyCart()
       })
       // cerramos el carrito
       this.toggle()

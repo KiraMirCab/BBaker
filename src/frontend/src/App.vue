@@ -48,6 +48,7 @@
     :inventory="inventory"
     :remove="removeItem"
     :userID="userID"
+    :emptyCart="emptyCart"
   />
   <UserMenu
     v-if="showUserMenu"
@@ -64,6 +65,7 @@ import Sidebar from '@/components/Sidebar.vue'
 import UserMenu from '@/components/UserMenu.vue'
 import ProductService from '@/services/ProductService.js'
 import UserFrontService from './services/UserFrontService'
+import Swal from 'sweetalert2'
 
 export default {
   components: {
@@ -101,12 +103,21 @@ export default {
       this.cart[productID] += quantity
       console.log(this.cart)
       quantity = 0
+      Swal.fire({
+        icon: 'success',
+        title: this.$t('cart.save'),
+        showConfirmButton: false,
+        timer: 1500
+      })
     },
     toggleSidebar () {
       this.showSidebar = !this.showSidebar
     },
     removeItem (productID) {
       delete this.cart[productID]
+    },
+    emptyCart () {
+      this.cart = {}
     },
     toggleLanguage () {
       if (this.$i18n.locale === 'en') {

@@ -4,7 +4,7 @@
     <h1>{{ $t("product.manage") }}</h1>
     <div class="card-container">
       <ProductCard
-        v-for="(product, index) in inventory.filter((product) => !product.active)"
+        v-for="(product, index) in inventory"
         :key="product.id"
         class="card"
         :index="index"
@@ -22,7 +22,7 @@ import ProductCard from '@/components/ProductCard.vue'
 
 export default {
   name: 'Products',
-  props: ['inventory', 'addToCart'],
+  props: ['inventory', 'addToCart', 'getProducts'],
   components: {
     ProductCard
   },
@@ -30,6 +30,9 @@ export default {
     return {
       routerPath: '/update-products/'
     }
+  },
+  created () {
+    this.getProducts()
   }
 }
 </script>

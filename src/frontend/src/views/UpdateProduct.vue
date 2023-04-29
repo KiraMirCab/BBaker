@@ -22,7 +22,7 @@ export default {
   components: {
     ProductForm
   },
-  // en el momento de la creación de la página recogo el id del producto de la url
+  // en el momento de la creación de la página recojo el id del producto de la url
   // y traigo los datos del producto de la bd
   mounted () {
     this.id = this.$route.path.split('/')[2]

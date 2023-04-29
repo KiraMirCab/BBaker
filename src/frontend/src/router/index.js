@@ -31,7 +31,8 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/ProductsView.vue'),
     beforeEnter: (to, from) => {
       if (!localStorage.user) return '/login'
-    }
+    },
+    key: Date.now() // Add dynamic key based on timestame helps to reload the page every time it is accessed
   },
   {
     path: '/past-orders',

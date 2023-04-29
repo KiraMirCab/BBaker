@@ -44,7 +44,8 @@
     "total": "Total price",
     "paid": "Payment",
     "products": "Purchased yummies",
-    "notpaid": "Not paid yet"
+    "notpaid": "Not paid yet",
+    "save": "Product correctly saved"
   },
   "cart": {
     "product": "Product",

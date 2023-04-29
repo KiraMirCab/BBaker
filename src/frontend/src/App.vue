@@ -40,6 +40,7 @@
   <router-view
     :inventory="inventory"
     :addToCart="addToCart"
+    :getProducts="getProducts"
   />
   <Sidebar
     v-if="showSidebar"
@@ -66,6 +67,8 @@ import UserMenu from '@/components/UserMenu.vue'
 import ProductService from '@/services/ProductService.js'
 import UserFrontService from './services/UserFrontService'
 import Swal from 'sweetalert2'
+import useEventsBus from './eventBus'
+import { watch } from 'vue'
 
 export default {
   components: {
@@ -94,9 +97,13 @@ export default {
   },
   methods: {
     getProducts () {
-      ProductService.getProducts().then((response) => {
-        this.inventory = response.data
-      })
+      ProductService.getProducts()
+        .then((response) => {
+          this.inventory = response.data
+        })
+        .catch(error => {
+          console.log(error.response.data)
+        })
     },
     addToCart (productID, quantity) {
       if (!this.cart[productID]) this.cart[productID] = 0
@@ -172,6 +179,10 @@ export default {
   created () {
     this.getProducts()
     this.getUser()
+    // const { bus } = useEventsBus()
+    // watch(() => bus.value.get('product-updated'), (val) => {
+    //   this.getProducts()
+    // })
   }
 }
 </script>

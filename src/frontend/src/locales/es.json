@@ -44,7 +44,8 @@
       "total": "Precio total",
       "paid": "Pagado",
       "products": "Delicias compradas",
-      "notpaid": "No está pagado todavía"
+      "notpaid": "No está pagado todavía",
+      "save": "Producto guardado correctamente"
   },
   "cart": {
       "product": "Producto",

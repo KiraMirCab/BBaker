@@ -89,11 +89,14 @@
 <script>
 import ProductService from '@/services/ProductService.js'
 import * as filestack from 'filestack-js'
+import Swal from 'sweetalert2'
+import useEventsBus from '../eventBus'
 
 export default {
   props: ['product'],
   data () {
     return {
+      id: '',
       name: '',
       nameENG: '',
       description: '',
@@ -123,6 +126,7 @@ export default {
         this.errorDesc = false
         this.errorPrecio = false
         const newPruduct = {
+          id: this.id,
           name: this.name,
           nameENG: this.nameENG,
           shortDesc: this.shortDesc,
@@ -136,7 +140,28 @@ export default {
         }
         this.dbProduct = newPruduct
         ProductService.createNewProduct(newPruduct)
-        // .then((response) => {this.dbProduct = response.data})
+          .then(response => {
+            console.log(response.data)
+            Swal.fire({
+              icon: 'success',
+              title: this.$t('product.save'),
+              showConfirmButton: false,
+              timer: 1500
+            })
+            const eventsBus = useEventsBus()
+            const emit = eventsBus.emit
+            emit('product-updated', true)
+            this.$router.go(-1)
+          })
+          .catch(error => {
+            console.log(error.response.status)
+            console.log(error.response.data)
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: error.response.data.message
+            })
+          })
       } else {
         if (this.name === '') {
           this.errorNombre = true
@@ -150,6 +175,9 @@ export default {
       }
     },
     fillData () {
+      if (this.product.id) {
+        this.$data.id = this.product.id
+      }
       if (this.product.name) {
         this.$data.name = this.product.name
       }

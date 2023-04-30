@@ -14,6 +14,8 @@
         </div>
         <div class="card-title" v-else>{{ product.nameENG }}</div>
       </a>
+      <p class="badge bg-success" v-if="update && product.active">{{ $t("card.active") }}</p>
+      <p class="badge bg-secondary" v-if="update && !product.active">{{ $t("card.notactive") }}</p>
     </router-link>
     <div class="card-body">
       <router-link :to="routerPath + product.id" class="card-link">
@@ -57,7 +59,13 @@
       </form>
     </div>
     <div class="card-footer">
-      <button @click="addToCart(product.name, quantity)" class="btn btn-light">
+      <button v-if="update && product.active" @click="toggleActive()" class="btn btn-dark">
+        {{ $t("card.deactivate") }}
+      </button>
+      <button v-if="update && !product.active" @click="toggleActive()" class="btn btn-light">
+        {{ $t("card.activate") }}
+      </button>
+      <button @click="addToCart(product.name, quantity)" class="btn btn-light ms-auto">
         {{ $t("card.cart") }}
       </button>
     </div>
@@ -65,8 +73,11 @@
 </template>
 
 <script>
+import ProductService from '@/services/ProductService.js'
+import Swal from 'sweetalert2'
+
 export default {
-  props: ['product', 'index', 'addToCart', 'routerPath'],
+  props: ['product', 'index', 'addToCart', 'routerPath', 'update'],
   data () {
     return {
       quantity: 1
@@ -75,6 +86,29 @@ export default {
   methods: {
     onClick () {
       this.$emit('clicked', this.product)
+    },
+    toggleActive () {
+      const newProduct = this.product
+      newProduct.active = !this.product.active
+      ProductService.createNewProduct(newProduct)
+        .then(response => {
+          console.log(response.data)
+          Swal.fire({
+            icon: 'success',
+            title: this.$t('product.save'),
+            showConfirmButton: false,
+            timer: 1500
+          })
+        })
+        .catch(error => {
+          console.log(error.response.status)
+          console.log(error.response.data)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: error.response.data.message
+          })
+        })
     }
   }
 }

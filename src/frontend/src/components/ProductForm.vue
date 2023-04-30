@@ -148,9 +148,9 @@ export default {
               showConfirmButton: false,
               timer: 1500
             })
-            const eventsBus = useEventsBus()
-            const emit = eventsBus.emit
-            emit('product-updated', true)
+            // const eventsBus = useEventsBus()
+            // const emit = eventsBus.emit
+            // emit('product-updated', true)
             this.$router.go(-1)
           })
           .catch(error => {

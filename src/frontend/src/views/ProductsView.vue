@@ -11,6 +11,7 @@
         :product="product"
         :addToCart="addToCart"
         :routerPath="routerPath"
+        :update=true
       />
     </div>
   </div>

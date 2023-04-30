@@ -33,7 +33,11 @@
       "price": "Precio",
       "quantity": "Cantidad",
       "cart": "Al carrito",
-      "details": "Ver detalles"
+      "details": "Ver detalles",
+      "active": "Activo",
+      "notactive": "Desactivado",
+      "activate": "Publicar",
+      "deactivate": "Quitar"
   },
   "product": {
       "transport": "Este producto requiere un transporte especial, por lo que el gasto del transporte puede ser algo más alto",

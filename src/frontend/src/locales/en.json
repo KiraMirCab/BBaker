@@ -33,7 +33,11 @@
     "price": "Price",
     "quantity": "Quantity",
     "cart": "Add to cart",
-    "details": "Details"
+    "details": "Details",
+    "active": "Active",
+    "notactive": "Not active",
+    "activate": "Publish",
+    "deactivate": "Deactivate"
   },
   "product": {
     "transport": "This product requires special delivery, so the delivery fee might be higher than usual",

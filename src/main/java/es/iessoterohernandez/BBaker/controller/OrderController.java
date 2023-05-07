@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.iessoterohernandez.BBaker.DTO.OrderODTO;
+import es.iessoterohernandez.BBaker.DTO.StatusChangeDTO;
 import es.iessoterohernandez.BBaker.model.OrderO;
 import es.iessoterohernandez.BBaker.model.OrderProducts;
+import es.iessoterohernandez.BBaker.model.StatusChange;
 import es.iessoterohernandez.BBaker.service.OrderService;
+import es.iessoterohernandez.BBaker.service.StatusService;
 
 @RestController
 @RequestMapping("/api/BBorder")
@@ -22,6 +25,9 @@ public class OrderController {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    StatusService statusService;
 
     @PostMapping("add")
     public OrderO addNew(@RequestBody OrderODTO orderODTO) {
@@ -44,6 +50,11 @@ public class OrderController {
             System.out.println("orderID " + orderId);
             System.out.println("paidDate " + paidDate);
         return orderService.setPaid(orderId, paidDate);
+    }
+
+    @PostMapping("changestatus")
+    public StatusChange changeStatus(@RequestBody StatusChangeDTO scDTO) throws Exception {
+        return statusService.addNewStatusChange(scDTO);
     }
 
     @PostMapping("/delete")

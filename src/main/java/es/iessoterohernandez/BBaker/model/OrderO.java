@@ -30,7 +30,13 @@ public class OrderO {
     private User user;
     @OneToMany
     private List<OrderProducts> orderProducts = new ArrayList<>();
+    // @ManyToOne
+    // @JoinColumn
+    // private OrderStatus status;
+    // @OneToMany
+    // private List<StatusChange> statusChanges = new ArrayList<>();
     
+
     public OrderO() {}
 
     public OrderO(Long id, Timestamp creationDate, Timestamp paidDate, Double total, User user,
@@ -40,6 +46,9 @@ public class OrderO {
         this.total = total;
         this.user = user;
         this.orderProducts = orderProducts;
+        //, OrderStatus status, List<StatusChange> statusChanges
+        // this.status = status;
+        // this.statusChanges = statusChanges;
     }    
 
     

@@ -75,6 +75,9 @@
     "back": "Back to my orders",
     "paid": "Payment made"
   },
+  "ordersNow": {
+    "header": "All active orders"
+  },
   "delivery": {
     "addr": "Address for the delivery",
     "addrPlaceholder": "Type in the address",

@@ -75,6 +75,9 @@
       "back": "Volver a mis pedidos",
       "paid": "Fecha de pago"
   },
+  "ordersNow": {
+    "header": "Todos los pedidos activos"
+  },
   "delivery": {
     "addr": "Dirección de la entrega",
     "addrPlaceholder": "Escriba la dirección",

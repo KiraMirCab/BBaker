@@ -117,7 +117,9 @@ export default {
     }
   },
   beforeMount () {
-    this.fillData()
+    if (this.product) {
+      this.fillData()
+    }
   },
   methods: {
     checkform () {

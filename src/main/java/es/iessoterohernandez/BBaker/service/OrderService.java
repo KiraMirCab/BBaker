@@ -34,6 +34,9 @@ public class OrderService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    StatusService statusSetService;
+
     public OrderO mapToOrder(OrderODTO orderODTO) {
         OrderO order = new OrderO();
         order.setCreationDate(orderODTO.getCreationDate());
@@ -61,12 +64,15 @@ public class OrderService {
 
 
     public OrderO addNewOrder(OrderO order){
-        return orderRepository.save(order);
+        Long status_id = (long) 1;
+        OrderO newOrder = orderRepository.save(order);
+        statusSetService.addNewStatusChange(status_id, newOrder);
+        return newOrder;
     }
     
     public String saveOrderProducts(List<OrderProducts> orderProducts){
         orderProductsRepository.saveAll(orderProducts);
-        return "Yuppi";
+        return "Order products correctly saved";
     }
 
     public List<OrderProducts> mapToOrderProducts(OrderODTO orderODTO, OrderO order){
@@ -124,12 +130,14 @@ public class OrderService {
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String str = sdf.format(newDate);
         Timestamp paidDateT = Timestamp.valueOf(str);
+        statusSetService.addNewStatusChange((long) 2, getByID(order_id));
         return orderRepository.setPaidDate(paidDateT, order_id);
     }
 
     public int delete(Long id) {
         int deletedOrderProducts = orderProductsRepository.deleteByOrderId(id);
-        return deletedOrderProducts += orderRepository.deleteById(id);
+        int deletedStatusChanges = statusSetService.deleteByOrderId(id);
+        return deletedOrderProducts + deletedStatusChanges + orderRepository.deleteById(id);
     }
 
 }

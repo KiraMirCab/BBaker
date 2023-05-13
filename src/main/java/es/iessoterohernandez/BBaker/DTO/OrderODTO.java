@@ -2,7 +2,6 @@ package es.iessoterohernandez.BBaker.DTO;
 
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Embedded;
@@ -19,7 +18,7 @@ public class OrderODTO {
     private Double total;
     private Long user_id;
     @Embedded
-    private List<OrderProductDTO> orderProductsDTO = new ArrayList<>();   
+    private List<OrderProductDTO> orderProductsDTO;   
 
     public OrderODTO(Timestamp creationDate, Timestamp paidDate, Double total, Long user_id,
             List<OrderProductDTO> orderProductsDTO) {

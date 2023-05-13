@@ -4,7 +4,7 @@ const API_ORDER_URL = '/api/BBorder'
 
 class OrderService {
   getOrders () {
-    return axios.get(API_ORDER_URL)
+    return axios.get(API_ORDER_URL + '/')
   }
 
   getOrderInfo (id) {

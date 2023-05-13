@@ -25,4 +25,7 @@ public interface OrderRepository extends JpaRepository<OrderO,Integer>{
     @Query(value = "update ordero o set o.paid_date = ? where o.id = ?", 
       nativeQuery = true)
     int setPaidDate(Timestamp paidDate, Long id);
+
+    @Query("SELECT o FROM OrderO o JOIN FETCH o.orderProducts")
+    List<OrderO> findAllWithOrderProducts();
 }

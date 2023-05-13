@@ -3,7 +3,10 @@
     <h1>{{ $t("newOrder.header") }}{{ id }}</h1>
     <div id="confirm"></div>
 
-    <OrderInfo :orderProducts="orderProducts" />
+    <OrderInfo
+      :order="order"
+      :orderProducts="orderProducts"
+      />
 
     <div v-if="!showDeliveryForm" class="row">
       <div class="col-md">
@@ -53,6 +56,7 @@ export default {
     return {
       id: '',
       orderProducts: [],
+      order: {},
       specialTransport: false,
       showDeliveryForm: false,
       deliverySaved: false
@@ -61,8 +65,9 @@ export default {
   methods: {
     // extraer la iformación sobre el pedido y los productos incluidos de la bd
     getOrderInfo (id) {
-      OrderFrontService.getOrderProducts(id).then((response) => {
-        this.orderProducts = response.data
+      OrderFrontService.getOrderInfo(id).then((response) => {
+        this.order = response.data
+        this.orderProducts = this.order.orderProducts
         // si alguno de los productos necesita transporte especial se apunta en la variable
         this.orderProducts.forEach(item => {
           if (item.product.specialTransport) {

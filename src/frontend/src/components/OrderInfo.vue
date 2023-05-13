@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-2"> {{ $t("BBorder.created") }}: </div>
-            <div class="col-md"> {{ prettyDate(orderProducts[0].order.creationDate) }} </div>
+            <div class="col-md"> {{ prettyDate(order.creationDate) }} </div>
         </div>
         <div class="row">
             <div class="col-md-2"> {{ $t("menu.products") }}: </div>
@@ -30,7 +30,7 @@
         </div>
         <div class="row">
             <div class="col-md-2"> Total: </div>
-            <div class="col-md"> {{ orderProducts[0].order.total }} €</div>
+            <div class="col-md"> {{ order.total }} €</div>
         </div>
     </div>
 
@@ -38,7 +38,7 @@
 <script>
 export default {
   components: {},
-  props: ['orderProducts', 'routerPath'],
+  props: ['order', 'orderProducts', 'routerPath'],
   data () {
     return {
     }

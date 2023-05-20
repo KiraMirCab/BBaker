@@ -15,7 +15,7 @@ import es.iessoterohernandez.BBaker.DTO.OrderODTO;
 import es.iessoterohernandez.BBaker.DTO.StatusChangeDTO;
 import es.iessoterohernandez.BBaker.model.OrderO;
 import es.iessoterohernandez.BBaker.model.OrderProducts;
-import es.iessoterohernandez.BBaker.model.StatusChange;
+import es.iessoterohernandez.BBaker.model.OrderStatus;
 import es.iessoterohernandez.BBaker.service.OrderService;
 import es.iessoterohernandez.BBaker.service.StatusService;
 
@@ -39,7 +39,7 @@ public class OrderController {
     }
 
     @PostMapping("paid")
-    public int setPaid(@RequestBody String json) throws Exception {
+    public OrderO setPaid(@RequestBody String json) throws Exception {
         System.out.println("ESTO ES EL BODY" + json);
         JSONObject obj;
         Long orderId = (long) 0;
@@ -52,9 +52,9 @@ public class OrderController {
         return orderService.setPaid(orderId, paidDate);
     }
 
-    @PostMapping("changestatus")
-    public StatusChange changeStatus(@RequestBody StatusChangeDTO scDTO) throws Exception {
-        return statusService.addNewStatusChange(scDTO);
+    @PostMapping("change_status")
+    public OrderO changeStatus(@RequestBody StatusChangeDTO scDTO) throws Exception {
+        return statusService.setOrderStatus(scDTO.getStatus_id(), scDTO.getOrder_id());
     }
 
     @PostMapping("/delete")
@@ -90,5 +90,10 @@ public class OrderController {
     @GetMapping("/products/{id}")
     public List<OrderProducts> getProductsByOrderID(@PathVariable Long id) {
         return orderService.getProductsByOrderID(id);
+    }
+
+    @GetMapping("/all_statuses")
+    public List<OrderStatus> getAllStatuses() {
+        return statusService.getAllStatuses();
     }
 }

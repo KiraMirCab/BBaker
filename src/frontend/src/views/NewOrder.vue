@@ -94,6 +94,9 @@ export default {
         if (result.isConfirmed) {
           const json = { order_id: this.id }
           OrderFrontService.deleteOrder(json)
+            .catch(error => {
+              console.log(error.response.data)
+            })
           Swal.fire(
             'Deleted!',
             'Your order was cancelled',

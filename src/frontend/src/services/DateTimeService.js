@@ -24,5 +24,18 @@ export default {
         return newDate.toLocaleDateString('en-EN', options) + '  ' + newDate.toLocaleTimeString('en-EN', { hour: '2-digit', minute: '2-digit' })
       }
     }
+  },
+  prettyDateFromDate (date, locale) {
+    const newDate = new Date(date)
+    const options = { year: 'numeric', month: 'numeric', day: 'numeric' }
+    if (date == null) {
+      return ''
+    } else {
+      if (locale === 'es') {
+        return newDate.toLocaleDateString('es-ES', options)
+      } else {
+        return newDate.toLocaleDateString('en-EN', options)
+      }
+    }
   }
 }

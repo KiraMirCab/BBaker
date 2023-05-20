@@ -68,6 +68,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .antMatchers("/api/BBorder/myorders/*").permitAll()
                 .antMatchers("/api/delivery*").permitAll()
                 .antMatchers("/api/delivery/*").permitAll()
+                .antMatchers("/api/delivery/order/*").permitAll()
                 //.hasRole("ADMIN")
                 .anyRequest()
                 .authenticated().and().exceptionHandling().and().sessionManagement()

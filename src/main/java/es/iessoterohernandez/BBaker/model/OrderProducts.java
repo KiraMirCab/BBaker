@@ -29,7 +29,6 @@ public class OrderProducts {
 
     @ManyToOne
     @JoinColumn
-    @JsonManagedReference
     private Product product;
 
     private double price;

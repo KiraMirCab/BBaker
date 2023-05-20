@@ -38,4 +38,8 @@ public class DeliveryService {
     public Delivery getByID(Long id){
         return deliveryRepository.getById(id);
     }
+
+    public Delivery findbyOrderId(Long id) {
+        return deliveryRepository.findByOrderId(id);
+    }
 }

@@ -30,31 +30,25 @@ public class OrderO {
     private Double total;
     @ManyToOne
     @JoinColumn(nullable = true)
-    @JsonManagedReference
     private User user;
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<OrderProducts> orderProducts;
-
-    // @ManyToOne
-    // @JoinColumn
-    // private OrderStatus status;
-    // @OneToMany
-    // private List<StatusChange> statusChanges = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn
+    private OrderStatus orderStatus;
     
 
     public OrderO() {}
 
     public OrderO(Long id, Timestamp creationDate, Timestamp paidDate, Double total, User user,
-            List<OrderProducts> orderProducts) {
+            List<OrderProducts> orderProducts, OrderStatus orderStatus) {
         this.creationDate = creationDate;
         this.paidDate = paidDate;
         this.total = total;
         this.user = user;
         this.orderProducts = orderProducts;
-        //, OrderStatus status, List<StatusChange> statusChanges
-        // this.status = status;
-        // this.statusChanges = statusChanges;
+        this.orderStatus = orderStatus;
     }    
 
     

@@ -37,4 +37,8 @@ public class DeliveryController {
     public Delivery getByID(@PathVariable Long id) {
         return deliveryService.getByID(id);
     }
+    @GetMapping("/order/{id}")
+    public Delivery findByOrderId(@PathVariable Long id) {
+        return deliveryService.findbyOrderId(id);
+    }
 }

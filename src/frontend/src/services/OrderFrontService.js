@@ -30,6 +30,14 @@ class OrderService {
   deleteOrder (json) {
     return axios.post(API_ORDER_URL + '/delete', json)
   }
+
+  getStatuses () {
+    return axios.get(API_ORDER_URL + '/all_statuses')
+  }
+
+  changeOrderStatus (json) {
+    return axios.post(API_ORDER_URL + '/change_status', json)
+  }
 }
 
 export default new OrderService()

@@ -1,17 +1,10 @@
 package es.iessoterohernandez.BBaker.model;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Getter;
 
@@ -38,9 +31,6 @@ public class Product {
     private int discount;
     private boolean specialTransport;
     private boolean active = false;
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonBackReference
-    private List<OrderProducts> orderProducts;
     
     public Product(String name, String nameENG, String shortDesc, String shortDescENG, String description,
             String descriptionENG, String image, Double price, int discount, boolean specialTransport) {

@@ -62,12 +62,10 @@ public class OrderService {
         return odto;
     }
 
-
     public OrderO addNewOrder(OrderO order){
+        orderRepository.save(order);
         Long status_id = (long) 1;
-        OrderO newOrder = orderRepository.save(order);
-        statusSetService.addNewStatusChange(status_id, newOrder);
-        return newOrder;
+        return statusSetService.setOrderStatus(status_id, order.getId());
     }
     
     public String saveOrderProducts(List<OrderProducts> orderProducts){
@@ -125,13 +123,23 @@ public class OrderService {
         return orderProductsRepository.findByOrderId(id);
     }
 
-    public int setPaid(Long order_id, Long paidDate) {
+    /* Este metodo combierte la fecha del formato Long recibido del frontend
+     * al fromato Timestamp necesario para guardar en la BD,
+     * se asigna al pedido extraído de la BD, y se vuelve a guardar
+     * a través del método 'setOrderStatus' que también actualiza
+     * el estado del pedido
+     */
+    public OrderO setPaid(Long order_id, Long paidDate) {
         Date newDate = new Date(paidDate);
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String str = sdf.format(newDate);
         Timestamp paidDateT = Timestamp.valueOf(str);
-        statusSetService.addNewStatusChange((long) 2, getByID(order_id));
-        return orderRepository.setPaidDate(paidDateT, order_id);
+        OrderO order = orderRepository.getById(order_id);
+        order.setPaidDate(paidDateT);
+        return statusSetService.setOrderStatus((long) 2, order.getId());
+     
+        // statusSetService.addNewStatusChange((long) 2, getByID(order_id));
+        // return orderRepository.setPaidDate(paidDateT, order_id);
     }
 
     public int delete(Long id) {

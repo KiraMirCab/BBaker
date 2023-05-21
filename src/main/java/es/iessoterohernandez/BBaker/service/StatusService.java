@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import es.iessoterohernandez.BBaker.DTO.StatusChangeDTO;
 import es.iessoterohernandez.BBaker.model.OrderO;
 import es.iessoterohernandez.BBaker.model.OrderStatus;
 import es.iessoterohernandez.BBaker.model.StatusChange;
@@ -48,24 +47,6 @@ public class StatusService {
         order.setOrderStatus(status);
         return orderRepository.save(order);
     }
-
-    // /* Este método recoge un objeto StatusChange DTO que contiene
-    //  * id del pedido y el id del estado. 
-    //  * Se recogen el pedido y el estado correspondientes de la BD y
-    //  *   1. se guarda el pedido con el estado nuevo
-    //  *   2. se guarda 
-    //  */
-    // public StatusChange addNewStatusChange (StatusChangeDTO scDTO) {
-    //     OrderO order = orderRepository.getById(scDTO.getOrder_id());
-    //     OrderStatus status = statusRepository.getById(scDTO.getStatus_id());
-    //     order.setOrderStatus(status);
-    //     orderRepository.save(order);
-    //     StatusChange stch = new StatusChange();
-    //     stch.setOrder(order);
-    //     stch.setStatus(status);
-    //     stch.setChangeDate(new Timestamp(System.currentTimeMillis()));
-    //     return statusChangeRepository.save(stch);
-    // }
 
     public int deleteByOrderId(Long id) {
         return statusChangeRepository.deleteByOrderId(id);

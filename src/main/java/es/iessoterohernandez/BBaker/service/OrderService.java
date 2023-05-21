@@ -10,10 +10,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import es.iessoterohernandez.BBaker.DTO.OrderDeliveryDTO;
 import es.iessoterohernandez.BBaker.DTO.OrderODTO;
 import es.iessoterohernandez.BBaker.DTO.OrderProductDTO;
+import es.iessoterohernandez.BBaker.model.Delivery;
 import es.iessoterohernandez.BBaker.model.OrderO;
 import es.iessoterohernandez.BBaker.model.OrderProducts;
+import es.iessoterohernandez.BBaker.repository.DeliveryRepository;
 import es.iessoterohernandez.BBaker.repository.OrderProductsRepository;
 import es.iessoterohernandez.BBaker.repository.OrderRepository;
 import es.iessoterohernandez.BBaker.repository.ProductRepository;
@@ -36,6 +39,9 @@ public class OrderService {
 
     @Autowired
     StatusService statusSetService;
+
+    @Autowired
+    DeliveryRepository deliveryRepository;
 
     public OrderO mapToOrder(OrderODTO orderODTO) {
         OrderO order = new OrderO();
@@ -101,18 +107,42 @@ public class OrderService {
         return orderProductDTO;
     }
 
-    public List<OrderO> getAllOrders() {
-        return orderRepository.findAll();
+    /* Este método recoge todos los pedidos de la BD y adjunto a cada una
+     * la información básica sobre la entrega correspondiente
+     */
+    public List<OrderDeliveryDTO> getAllOrders() {
+        List <OrderO> allOrders = orderRepository.findAll();
+        List <OrderDeliveryDTO> allDeliveryDTOs = new ArrayList<>();
+
+        for (OrderO order : allOrders) {
+            OrderDeliveryDTO odDTO = new OrderDeliveryDTO();
+            odDTO.setOrder(order);
+            try {
+                Delivery delivery = deliveryRepository.findByOrderId(order.getId());
+                odDTO.setDate(delivery.getDate());
+                odDTO.setAddress(delivery.getAddress());
+                odDTO.setSurprise(delivery.isSurprise());
+                odDTO.setSpecialTransport(delivery.isSpecialTransport());
+            } catch (Exception e) {
+                // TODO: handle exception
+                odDTO.setDate(null);
+                odDTO.setAddress(null);
+                odDTO.setSurprise(false);
+                odDTO.setSpecialTransport(false);
+            } 
+            allDeliveryDTOs.add(odDTO);
+        }
+        return allDeliveryDTOs;
     }
 
-    public List<OrderODTO> getMyOrders(Long id) {
-        List<OrderO> list = orderRepository.findByUser_id(id);
-        List<OrderODTO> myList = new ArrayList<OrderODTO>();
-        for (OrderO order : list) {
-            OrderODTO myOrder = this.mapToOrderDTO(order);
-            myList.add(myOrder);
-        }
-        return myList;
+     public List<OrderO> getMyOrders(Long id) {
+        // List<OrderO> list = orderRepository.findByUser_id(id);
+        // List<OrderODTO> myList = new ArrayList<OrderODTO>();
+        // for (OrderO order : list) {
+        //     OrderODTO myOrder = this.mapToOrderDTO(order);
+        //     myList.add(myOrder);
+        // }
+        return orderRepository.findByUser_id(id);
     }
 
     public OrderO getByID(Long id){
@@ -137,9 +167,6 @@ public class OrderService {
         OrderO order = orderRepository.getById(order_id);
         order.setPaidDate(paidDateT);
         return statusSetService.setOrderStatus((long) 2, order.getId());
-     
-        // statusSetService.addNewStatusChange((long) 2, getByID(order_id));
-        // return orderRepository.setPaidDate(paidDateT, order_id);
     }
 
     public int delete(Long id) {

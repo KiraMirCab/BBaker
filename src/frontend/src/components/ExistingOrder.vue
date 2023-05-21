@@ -2,80 +2,66 @@
     <div class="wrapper">
       <div class="container">
         <div class="row">
-            <div class="col-md-2"> {{ $t("BBorder.created") }}:</div>
-            <div class="col-md"> {{ prettyDate(this.order.creationDate) }} </div>
+          <div class="col-md-2"> {{ $t("BBorder.created") }}:</div>
+          <div class="col"> {{ prettyDate(order.creationDate, this.$i18n.locale) }} </div>
         </div>
         <div class="row">
-            <div class="col-md-2"> {{ $t("menu.products") }}: </div>
-            <div class="col-md">
-                <table>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>{{ $t("BBorder.name") }}</th>
-                            <th>{{ $t("BBorder.price") }}</th>
-                            <th>{{ $t("BBorder.quantity") }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(item, i) in this.order.orderProductsDTO" :key="i">
-                            <td><img class="small-image" :src="getImage(item.product_id)" alt="Image from the db" /></td>
-                            <td>{{ getName(item.product_id) }}</td>
-                            <td>{{ item.price }}€</td>
-                            <td>{{ item.quantity }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+          <div class="col-md-2"> {{ $t("BBorder.paid") }}:</div>
+          <div v-if="(order.paidDate !== null)" class="col-md"> {{ prettyDate(order.paidDate, this.$i18n.locale) }} </div>
+          <div v-if="(order.paidDate === null)" class="col-md"> {{ $t("product.notpaid") }} </div>
         </div>
         <div class="row">
-            <div class="col-md-2"> Total: </div>
-            <div class="col-md"> {{ this.order.total }} €</div>
+          <div class="col-md-2 bold"> Total: </div>
+          <div class="col-md bold"> {{ order.total }} €</div>
         </div>
         <div class="row">
-            <div class="col-md-2"> {{ $t("BBorder.paid") }}:</div>
-            <div v-if="(order.paidDate !== null)" class="col-md"> {{ prettyDate(this.order.paidDate) }} </div>
-            <div v-if="(order.paidDate === null)" class="col-md"> {{ $t("product.notpaid") }} </div>
-
+          <div class="col-md-2 bold"> Status: </div>
+          <div class="col-md" v-if="this.$i18n.locale === 'es'"> {{ order.orderStatus.name }}</div>
+          <div class="col-md" v-else> {{ order.orderStatus.nameENG }}</div>
         </div>
+        <div class="row">
+          <table class="table center table-striped">
+            <thead>
+              <tr>
+                <th> </th>
+                <th scope="col">{{ $t("BBorder.name") }}</th>
+                <th scope="col">{{ $t("BBorder.price") }}</th>
+                <th scope="col">{{ $t("BBorder.quantity") }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in order.orderProducts" :key="item.id">
+                <td><img class="small-image" :src="item.product.image" alt="Image from the db" /></td>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.product.price }}€</td>
+                <td>{{ item.quantity }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div v-if="past" class="center">
+          <button @click="toggle()" class="btn btn-dark more-space">
+            {{ $t("BBorder.back") }}
+          </button>
+        </div>
+      </div>
     </div>
-      <button @click="toggle()" class="btn btn-light">
-        {{ $t("BBorder.back") }}
-      </button>
-    </div>
-  </template>
+</template>
 
 <script>
+import DateTimeService from '@/services/DateTimeService'
 
 export default {
   name: 'ExistingOrder',
-  props: ['order', 'inventory', 'toggle'],
+  props: ['order', 'toggle', 'past'],
   data () {
     return {
 
     }
   },
   methods: {
-    prettyDate (timestamp) {
-      const newDate = new Date(timestamp)
-      const options = { year: 'numeric', month: 'short', day: 'numeric' }
-      if (this.$i18n.locale === 'es') {
-        return newDate.toLocaleDateString('es-ES', options) + '  ' + newDate.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
-      } else {
-        return newDate.toLocaleDateString('en-EN', options) + '  ' + newDate.toLocaleTimeString('en-EN', { hour: '2-digit', minute: '2-digit' })
-      }
-    },
-    getName (id) {
-      const product = this.inventory.find(product => product.id === id)
-      if (this.$i18n.locale === 'es') {
-        return product.name
-      } else {
-        return product.nameENG
-      }
-    },
-    getImage (id) {
-      const product = this.inventory.find(product => product.id === id)
-      return product.image
+    prettyDate (timestamp, locale) {
+      return DateTimeService.prettyDate(timestamp, locale)
     }
   }
 }

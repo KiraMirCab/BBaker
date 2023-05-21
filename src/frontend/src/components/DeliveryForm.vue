@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div class="container" v-if="saveVisible">
 
   <form @submit.prevent="checkform">
     <div class="form-group">
@@ -8,14 +8,14 @@
         v-model.trim="address"
         type="text"
         id="addr"
-        class="form-control"
+        class="form-control custom-input"
         :placeholder="$t('delivery.addrPlaceholder')"
       />
       <p class="error" v-if="errorAddress">{{ $t('delivery.addrError') }}</p>
     </div>
 
     <div class="form-group">
-      <label for="rName">{{ $t('delivery.recipientName') }}:</label>
+      <label for="rName">{{ $t('delivery.recipientName') }}: *</label>
       <input
         v-model.trim="recipientName"
         type="text"
@@ -26,7 +26,7 @@
     </div>
 
     <div class="form-group">
-      <label for="rPhone">{{ $t('delivery.recipientPhone') }}:</label>
+      <label for="rPhone">{{ $t('delivery.recipientPhone') }}: *</label>
       <input
         v-model.trim="recipientPhone"
         type="tel"
@@ -34,16 +34,16 @@
         id="rPhone"
         class="form-control"
       />
-      <p>{{ $t('delivery.phoneFormat') }}</p>
+      <small>{{ $t('delivery.phoneFormat') }}</small>
       <p class="error" v-if="errorPhone">{{ $t('delivery.phoneError') }}</p>
     </div>
 
     <div class="form-group">
-      <label for="note">{{ $t('delivery.note') }}: </label>
+      <label for="note">{{ $t('delivery.note') }} </label>
       <textarea
         v-model="note"
         id="note"
-        class="form-control"
+        class="form-control custom-input"
         rows="10"
         :placeholder="$t('delivery.notePlaceholder')"
       ></textarea>
@@ -78,6 +78,7 @@
 import DeliveryFrontService from '@/services/DeliveryFrontService.js'
 import Datepicker from 'vue3-datepicker'
 import { ref } from 'vue'
+import Swal from 'sweetalert2'
 
 export default {
   components: {
@@ -116,19 +117,39 @@ export default {
         this.errorAddress = false
         this.errorName = false
         this.errorPhone = false
-        const newDelivery = {
-          date: this.deliveryDate,
-          address: this.address,
-          recipientName: this.recipientName,
-          recipientPhone: this.recipientPhone,
-          note: this.note,
-          surprise: this.surprise,
-          specialTransport: this.specialTransport,
-          order_id: this.id
-        }
-        DeliveryFrontService.createNewDelivery(newDelivery)
-        this.saveVisible = false
-        this.toggle()
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "The delivery detales can't be changed after you hit the 'Save' button",
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Save!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const newDelivery = {
+              date: this.deliveryDate,
+              address: this.address,
+              recipientName: this.recipientName,
+              recipientPhone: this.recipientPhone,
+              note: this.note,
+              surprise: this.surprise,
+              specialTransport: this.specialTransport,
+              order_id: this.id
+            }
+            DeliveryFrontService.createNewDelivery(newDelivery)
+              .catch(error => {
+                console.log(error.response.data)
+              })
+            Swal.fire(
+              'Delivery detailes saved!',
+              'You will soon get your yum-yums, you only need to pay',
+              'success'
+            )
+            this.saveVisible = false
+            this.toggle()
+          }
+        })
       } else {
         if (this.address === '') {
           this.errorAddress = true

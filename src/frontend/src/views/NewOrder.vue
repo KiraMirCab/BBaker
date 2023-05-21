@@ -1,49 +1,51 @@
 <template>
   <main class="wrapper">
     <h1>{{ $t("newOrder.header") }}{{ id }}</h1>
-    <div id="confirm"></div>
 
-    <OrderInfo
+      <ExistingOrderVue
       :order="order"
-      :orderProducts="orderProducts"
+      :past="false"
       />
 
-    <div v-if="!showDeliveryForm" class="row">
-      <div class="col-md">
-        <button @click="confirmOrder()" class="btn btn-light">
-          {{ $t("BBorder.confirm") }}
-        </button>
+      <div v-if="!showDeliveryForm" class="row">
+        <div class="col-md center more space">
+          <button @click="confirmOrder()" class="btn btn-success more-space">
+            {{ $t("BBorder.confirm") }}
+          </button>
       </div>
-      <div class="col-md">
-        <button @click="deleteOrder()" class="btn btn-light">
+      <div class="col-md center">
+        <button @click="deleteOrder()" class="btn btn-dark more-space">
           {{ $t("BBorder.cancel") }}
         </button>
       </div>
     </div>
 
     <DeliveryForm v-if="showDeliveryForm"
-      :id="id"
-      :specialTransport="specialTransport"
-      :toggle="togglePayButton"
-     />
-
-    <button @click="pay()" class="btn btn-light" v-if="deliverySaved">
-      {{ $t("BBorder.pay") }}
-    </button>
+    :id="id"
+    :specialTransport="specialTransport"
+    :toggle="togglePayButton"
+    />
+    <div class="row">
+      <div class="col center">
+        <button @click="pay()" class="btn btn-success" v-if="deliverySaved">
+          {{ $t("BBorder.pay") }}
+        </button>
+      </div>
+    </div>
   </main>
 </template>
 
 <script>
-import OrderInfo from '@/components/OrderInfo.vue'
 import DeliveryForm from '@/components/DeliveryForm.vue'
 import OrderFrontService from '@/services/OrderFrontService.js'
 import Swal from 'sweetalert2'
+import ExistingOrderVue from '@/components/ExistingOrder.vue'
 
 export default {
   name: 'NewOrder',
   props: [],
   components: {
-    OrderInfo,
+    ExistingOrderVue,
     DeliveryForm
   },
   created () {
@@ -121,7 +123,7 @@ export default {
         title: 'Thank you!',
         text: 'The payment was successfull',
         showConfirmButton: false,
-        timer: 1500
+        timer: 3000
       })
       this.$router.go(-1)
     }

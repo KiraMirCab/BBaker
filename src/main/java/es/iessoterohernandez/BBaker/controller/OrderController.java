@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.iessoterohernandez.BBaker.DTO.OrderDeliveryDTO;
 import es.iessoterohernandez.BBaker.DTO.OrderODTO;
 import es.iessoterohernandez.BBaker.DTO.StatusChangeDTO;
 import es.iessoterohernandez.BBaker.model.OrderO;
@@ -73,12 +74,12 @@ public class OrderController {
     }
 
     @GetMapping("myorders/{id}")
-    public List<OrderODTO> listMyOrders(@PathVariable Long id) {
+    public List<OrderO> listMyOrders(@PathVariable Long id) {
         return orderService.getMyOrders(id);
     }
 
     @GetMapping
-    public List<OrderO> getAll() {
+    public List<OrderDeliveryDTO> getAll() {
         return orderService.getAllOrders();
     }
 

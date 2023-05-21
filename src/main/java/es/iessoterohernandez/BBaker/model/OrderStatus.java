@@ -16,9 +16,10 @@ public class OrderStatus {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private String nameEng;
     private boolean active;
 
-    public OrderStatus(String name, boolean active) {
+    public OrderStatus(String name, String engName, boolean active) {
         this.name = name;
         this.active = active;
     }

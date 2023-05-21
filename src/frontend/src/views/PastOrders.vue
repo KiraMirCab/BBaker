@@ -15,26 +15,20 @@
         <tbody class="center">
           <tr v-for="(order, i) in orders" :key="i">
             <td>{{ i+1 }}</td>
-            <td>{{ prettyDate(order.creationDate) }}</td>
-            <td v-if="(order.paidDate !== null)">{{ prettyDate(order.paidDate) }}</td>
+            <td>{{ prettyDate(order.creationDate, this.$i18n.locale) }}</td>
+            <td v-if="(order.paidDate !== null)">{{ prettyDate(order.paidDate, this.$i18n.locale) }}</td>
             <td v-if="(order.paidDate === null)">{{ $t("product.notpaid") }}</td>
             <td>{{ order.total }}€</td>
             <td>
               <ul class="list-unstyled">
-                <li v-for="product in order.orderProducts" :key="product.id">{{ getName(product.product.id) }} - {{ product.quantity }}</li>
+                <li v-for="product in order.orderProducts" :key="product.id">
+                  <span v-if="this.$i18n.locale === 'es'">{{ product.product.name }} - {{ product.quantity }}</span>
+                  <span v-else>{{ product.product.nameENG }} - {{ product.quantity }}</span>
+                </li>
               </ul>
             </td>
             <td v-if="this.$i18n.locale === 'es'">{{ order.orderStatus.name }}</td>
             <td v-else> {{ this.order.orderStatus.nameENG }}</td>
-              <!-- <td>
-                <table class="table">
-                  <tr v-for="(orderProduct, index) in order.orderProducts" :key="index">
-                    <td>{{ getName(orderProduct[index].product.id) }}</td>
-                    <td>{{ $t("card.price") }}: {{ orderProduct[index].price}}€</td>
-                    <td>{{ $t("card.quantity") }}: {{ orderProduct[index].quantity }}</td>
-                  </tr>
-                </table>
-              </td> -->
             <td class="center">
               <button @click="viewOrder(order)" class="btn btn-light">
                 {{ $t("card.details") }}
@@ -50,7 +44,6 @@
     <ExistingOrderVue
       v-if="orderVisible"
       :order="order"
-      :inventory="inventory"
       :toggle="toggle"
       :past="true"
     />
@@ -59,7 +52,7 @@
 </template>
 <script>
 import OrderFrontService from '@/services/OrderFrontService.js'
-import ProductService from '@/services/ProductService.js'
+import DateTimeService from '@/services/DateTimeService'
 import ExistingOrderVue from '@/components/ExistingOrder.vue'
 
 export default {
@@ -69,14 +62,12 @@ export default {
   data () {
     return {
       orders: [],
-      inventory: [],
       order: '',
       orderVisible: false
     }
   },
   created () {
     this.getMyOrders()
-    this.getAllProducts()
   },
   methods: {
     getMyOrders () {
@@ -85,27 +76,8 @@ export default {
         this.order = response.data[0]
       })
     },
-    getName (id) {
-      const product = this.inventory.find(product => product.id === id)
-      if (this.$i18n.locale === 'es') {
-        return product.name
-      } else {
-        return product.nameENG
-      }
-    },
-    getAllProducts () {
-      ProductService.getProducts().then((response) => {
-        this.inventory = response.data
-      })
-    },
-    prettyDate (timestamp) {
-      const newDate = new Date(timestamp)
-      const options = { year: 'numeric', month: 'long', day: 'numeric' }
-      if (this.$i18n.locale === 'es') {
-        return newDate.toLocaleDateString('es-ES', options) + '  ' + newDate.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
-      } else {
-        return newDate.toLocaleDateString('en-EN', options) + '  ' + newDate.toLocaleTimeString('en-EN', { hour: '2-digit', minute: '2-digit' })
-      }
+    prettyDate (timestamp, locale) {
+      return DateTimeService.prettyDateShort(timestamp, locale)
     },
     viewOrder (order) {
       this.order = order

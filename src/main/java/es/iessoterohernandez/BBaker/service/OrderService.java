@@ -121,12 +121,14 @@ public class OrderService {
                 Delivery delivery = deliveryRepository.findByOrderId(order.getId());
                 odDTO.setDate(delivery.getDate());
                 odDTO.setAddress(delivery.getAddress());
+                odDTO.setNote(delivery.getNote());
                 odDTO.setSurprise(delivery.isSurprise());
                 odDTO.setSpecialTransport(delivery.isSpecialTransport());
             } catch (Exception e) {
                 // TODO: handle exception
                 odDTO.setDate(null);
                 odDTO.setAddress(null);
+                odDTO.setNote(null);
                 odDTO.setSurprise(false);
                 odDTO.setSpecialTransport(false);
             } 

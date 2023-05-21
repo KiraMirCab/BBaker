@@ -1,10 +1,9 @@
 <template>
-    <div class="wrapper">
-      <div class="container">
-        <div class="row padding-10">
-          <div class="col-md-2"> {{ $t("BBorder.created") }}:</div>
-          <div class="col"> {{ prettyDate(order.creationDate, this.$i18n.locale) }} </div>
-        </div>
+    <div class="container">
+      <div class="row padding-10">
+        <div class="col-md-2"> {{ $t("BBorder.created") }}:</div>
+        <div class="col"> {{ prettyDate(order.creationDate, this.$i18n.locale) }} </div>
+      </div>
         <div class="row padding-10">
           <div class="col-md-2"> {{ $t("BBorder.paid") }}:</div>
           <div v-if="(order.paidDate !== null)" class="col-md"> {{ prettyDate(order.paidDate, this.$i18n.locale) }} </div>
@@ -39,13 +38,13 @@
             </tbody>
           </table>
         </div>
-        <div v-if="past" class="center">
-          <button @click="toggle()" class="btn btn-dark more-space">
-            {{ $t("BBorder.back") }}
-          </button>
-        </div>
       </div>
-    </div>
+      <div v-if="past" class="centered">
+        <button @click="toggle()" class="btn btn-dark more-space d-flex align-items-center">
+          <i class="icofont-arrow-left icofont-2x"></i>
+          {{ $t("BBorder.back") }}
+        </button>
+      </div>
 </template>
 
 <script>
@@ -56,7 +55,6 @@ export default {
   props: ['order', 'toggle', 'past'],
   data () {
     return {
-
     }
   },
   methods: {

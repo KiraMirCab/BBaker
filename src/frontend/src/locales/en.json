@@ -72,7 +72,7 @@
     "confirm": "Confirm",
     "pay": "Confirm and pay",
     "cancel": "Cancel and delete",
-    "back": "Back to my orders",
+    "back": "Back to orders",
     "paid": "Payment made"
   },
   "ordersNow": {
@@ -88,9 +88,12 @@
     "phoneError": "We really need this phone number. We hate leaving people without dessert if they're not at home",
     "phoneFormat": "Phone number format: XXX-XXX-XXX",
     "note": "Would you like to leave a note?",
+    "noteShort": "Note",
     "notePlaceholder": "Best hours for the delivery? A place difficult to find? Anything you would like to add for the delivery person...",
     "date": "Delivery Date",
     "surprise": "Is this a surprise for someone special?",
-    "save": "Save"
+    "gift": "It is a surprise present",
+    "save": "Save",
+    "transport": "This delivery requires special transport"
   }
 }

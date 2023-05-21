@@ -35,7 +35,7 @@
           <span>{{ $t('menu.cart') }} ({{ totalQuantity }})</span>
         </div>
         <div @click="toggleUserMenu" class="top-bar-user-link">
-          <i class="icofont-user-alt-5" icofont-1x></i>
+          <i class="icofont-user-alt-5"></i>
         </div>
         <div @click="toggleLanguage" class="top-bar-lang-link">
            <span>{{ $t('locale') }}</span>

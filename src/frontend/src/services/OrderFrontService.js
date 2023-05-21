@@ -38,6 +38,15 @@ class OrderService {
   changeOrderStatus (json) {
     return axios.post(API_ORDER_URL + '/change_status', json)
   }
+
+  getStatusChanges (json) {
+    console.log(json)
+    return axios.post(API_ORDER_URL + '/status_history', json, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+  }
 }
 
 export default new OrderService()

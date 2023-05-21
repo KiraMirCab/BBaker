@@ -51,4 +51,8 @@ public class StatusService {
     public int deleteByOrderId(Long id) {
         return statusChangeRepository.deleteByOrderId(id);
     }
+
+    public List<StatusChange> getStatusChangesByOrderId(Long orderId) {
+        return statusChangeRepository.findByOrderId(orderId);
+    }
 }

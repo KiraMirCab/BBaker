@@ -72,7 +72,7 @@
       "confirm": "Confirmar",
       "pay": "Confirmar y pagar",
       "cancel": "Cancelar y eliminar",
-      "back": "Volver a mis pedidos",
+      "back": "Volver a pedidos",
       "paid": "Fecha de pago"
   },
   "ordersNow": {
@@ -88,9 +88,12 @@
     "phoneError": "Necesitamos un número de contacto. Odiamos dejar a la gente sin postre si no está en casa",
     "phoneFormat": "Formato del número de teléfono: XXX-XXX-XXX",
     "note": "Quiere dejar una nota para el repartidor?",
+    "noteShort": "Nota",
     "notePlaceholder": "Las mejores horas de la entrega? Un sitio dificil de encontrar? Cualquier cosa que quiere decirnos...",
     "date": "Fecha de entrega",
     "surprise": "Es una sorpresa para alguien especial?",
-    "save": "Guardar"
+    "gift": "Es un regalo",
+    "save": "Guardar",
+    "transport": "Esta entrega requiere un transporte especial"
   }
 }

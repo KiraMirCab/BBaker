@@ -1,9 +1,7 @@
 <template>
   <main class="wrapper">
-    <h1>{{ $t("ordersNow.header") }}</h1>
-    <br>
-    <br>
-    <div>
+    <h1 v-if="!orderVisible">{{ $t("ordersNow.header") }}</h1>
+    <div v-if="!orderVisible">
       <table class="table table-striped">
         <thead>
           <tr>
@@ -13,81 +11,91 @@
             <th scope="col">Total price</th>
             <th scope="col">Customer</th>
             <th scope="col">Products and quantities</th>
-            <th scope="col">Date of delivery</th>
+            <th scope="col">Due date</th>
+            <th scope="col">Delivery</th>
             <th scope="col">Current status</th>
             <th scope="col">Change status</th>
-            <th scope="col">Delivery details</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(orderDelivery, index) in orderDeliveries" :key="orderDelivery.order.id">
-            <th scope="row">{{ index + 1 }}</th>
-            <td>{{ prettyDate(orderDelivery.order.creationDate, this.$i18n.locale) }}</td>
-            <td>{{ prettyDate(orderDelivery.order.paidDate, this.$i18n.locale) }}</td>
-            <td>{{ orderDelivery.order.total }} €</td>
-            <td v-if="orderDelivery.order.user != null">{{ orderDelivery.order.user.firstName }} {{ orderDelivery.order.user.lastName }}</td>
-            <td v-if="orderDelivery.order.user == null"> </td>
-            <td>
-              <ul class="list-unstyled">
-                <li v-for="product in orderDelivery.order.orderProducts" :key="product.id">
-                  <span v-if="this.$i18n.locale === 'es'">{{ product.product.name }} - {{ product.quantity }}</span>
-                  <span v-else>{{ product.product.nameENG }} - {{ product.quantity }}</span>
-                </li>
-              </ul>
-            </td>
-            <td v-if="orderDelivery.date != null">{{ prettyDateFromDate(orderDelivery.date) }}</td>
-            <td v-if="orderDelivery.date == null"> </td>
-            <td>{{ orderDelivery.order.orderStatus.name }}</td>
-            <!-- Status change dropdown -->
-            <td>
-              <div class="dropdown">
-                <button
+              <th scope="row">{{ index + 1 }}</th>
+              <td>{{ prettyDate(orderDelivery.order.creationDate, this.$i18n.locale) }}</td>
+              <td>{{ prettyDate(orderDelivery.order.paidDate, this.$i18n.locale) }}</td>
+              <td>{{ orderDelivery.order.total }} €</td>
+              <td v-if="orderDelivery.order.user != null">{{ orderDelivery.order.user.firstName }} {{ orderDelivery.order.user.lastName }}</td>
+              <td v-if="orderDelivery.order.user == null"> </td>
+              <td>
+                <ul class="list-unstyled">
+                  <li v-for="product in orderDelivery.order.orderProducts" :key="product.id">
+                    <span v-if="this.$i18n.locale === 'es'">{{ product.product.name }} - {{ product.quantity }}</span>
+                    <span v-else>{{ product.product.nameENG }} - {{ product.quantity }}</span>
+                  </li>
+                </ul>
+              </td>
+              <td v-if="orderDelivery.date != null">{{ prettyDateFromDate(orderDelivery.date) }}</td>
+              <td v-if="orderDelivery.date == null"> </td>
+              <td>
+                <i v-if="orderDelivery.surprise" class="icofont-gift icofont-2x"></i>
+                <i v-if="orderDelivery.specialTransport" class="icofont-truck-loaded icofont-2x"></i>
+              </td>
+              <td>{{ orderDelivery.order.orderStatus.name }}</td>
+              <!-- Status change dropdown -->
+              <td>
+                <div class="dropdown">
+                  <button
                   class="btn btn-secondary dropdown-toggle"
                   type="button"
                   id="dropdown1"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false">
-                    Change status
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdown1">
-                  <li v-for="status in statuses" :key="status.id">
-                    <a class="dropdown-item" href="#" @click="selectStatus(status, orderDelivery.order.id)">{{ status.name }}</a>
-                  </li>
-                </ul>
-              </div>
-            </td>
-            <!-- Delivery details button -->
-            <td v-if="orderDelivery.date != null">
-              <button
-                class="btn btn-primary"
-                :data-bs-target="'#collapseTarget' + orderDelivery.order.id"
-                data-bs-toggle="collapse">
-                  Show
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                      Change status
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdown1">
+                    <li v-for="status in statuses" :key="status.id">
+                      <a class="dropdown-item" href="#" @click="selectStatus(status, orderDelivery.order.id)">{{ status.name }}</a>
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            <td class="center">
+              <button @click="viewOrder(orderDelivery)" class="btn btn-light">
+                {{ $t("card.details") }}
               </button>
-              <div class="collapse py-2" :id="'collapseTarget' + orderDelivery.order.id">{{ orderDelivery.address }}</div>
             </td>
-            <td v-if="orderDelivery.date == null"> </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Esta sección es visible solamente cuando el usuario quiere ver los detalles del pedido -->
+  <CompleteOrderInfo
+    v-if="orderVisible"
+    :orderDelivery="orderDelivery"
+    :toggle="toggle"
+    :statusChanges="statusChanges"
+  />
   </main>
 </template>
 
 <script>
 import OrderFrontService from '@/services/OrderFrontService'
 import DateTimeService from '@/services/DateTimeService'
-import DeliveryFrontService from '@/services/DeliveryFrontService'
+import CompleteOrderInfo from '@/components/CompleteOrderInfo.vue'
 import Swal from 'sweetalert2'
 
 export default {
   components: {
+    CompleteOrderInfo
   },
   data () {
     return {
       orderDeliveries: [],
       delivery: {},
-      statuses: []
+      statuses: [],
+      orderDelivery: '',
+      statusChanges: [],
+      orderVisible: false
     }
   },
   methods: {
@@ -106,15 +114,6 @@ export default {
         const pQuantity = orderProduct.quantity
         return `${pName} - ${pQuantity}`
       }).join('\n')
-    },
-    findDeliveryByOrderId (id) {
-      DeliveryFrontService.findDeliveryByOrderId(id)
-        .then((response) => {
-          this.delivery = response.data
-        })
-        .catch(error => {
-          console.log(error.response.data)
-        })
     },
     getOrderStatuses () {
       OrderFrontService.getStatuses()
@@ -158,6 +157,24 @@ export default {
     },
     prettyDateFromDate (date, locale) {
       return DateTimeService.prettyDateFromDate(date, locale)
+    },
+    toggle () {
+      this.orderVisible = !this.orderVisible
+    },
+    viewOrder (orderDelivery) {
+      const json = {
+        id: orderDelivery.order.id
+      }
+      OrderFrontService.getStatusChanges(json)
+        .then((response) => {
+          this.statusChanges = response.data
+        })
+        .catch(error => {
+          console.log(error.response.data)
+        })
+      this.orderDelivery = orderDelivery
+      console.log(orderDelivery)
+      this.toggle()
     }
   },
   created () {

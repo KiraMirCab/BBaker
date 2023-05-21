@@ -60,6 +60,7 @@
     </div>
 
     <div class="checkbox">
+      <i class="icofont-gift icofont-2x"></i>
       <label class="form-check-label">
         {{ $t('delivery.surprise') }}
         <input

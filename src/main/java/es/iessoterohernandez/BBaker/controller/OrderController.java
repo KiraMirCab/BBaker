@@ -17,6 +17,7 @@ import es.iessoterohernandez.BBaker.DTO.StatusChangeDTO;
 import es.iessoterohernandez.BBaker.model.OrderO;
 import es.iessoterohernandez.BBaker.model.OrderProducts;
 import es.iessoterohernandez.BBaker.model.OrderStatus;
+import es.iessoterohernandez.BBaker.model.StatusChange;
 import es.iessoterohernandez.BBaker.service.OrderService;
 import es.iessoterohernandez.BBaker.service.StatusService;
 
@@ -41,15 +42,14 @@ public class OrderController {
 
     @PostMapping("paid")
     public OrderO setPaid(@RequestBody String json) throws Exception {
-        System.out.println("ESTO ES EL BODY" + json);
         JSONObject obj;
         Long orderId = (long) 0;
         Long paidDate = (long) 0;
-            obj = new JSONObject(json);
-            orderId = obj.getLong("order_id");
-            paidDate = obj.getLong("paidDate");
-            System.out.println("orderID " + orderId);
-            System.out.println("paidDate " + paidDate);
+        obj = new JSONObject(json);
+        orderId = obj.getLong("order_id");
+        paidDate = obj.getLong("paidDate");
+        System.out.println("orderID " + orderId);
+        System.out.println("paidDate " + paidDate);
         return orderService.setPaid(orderId, paidDate);
     }
 
@@ -60,7 +60,6 @@ public class OrderController {
 
     @PostMapping("/delete")
     public int deleteOrderO(@RequestBody String json) {
-        System.out.println("ESTO ES EL BODY" + json);
         JSONObject obj;
         Long orderId = (long) 0;
         try {
@@ -71,6 +70,15 @@ public class OrderController {
             e.printStackTrace();
         }
         return orderService.delete(orderId);
+    }
+
+    @PostMapping("status_history")
+    public List<StatusChange> getStatusChangeHistory(@RequestBody String json) throws Exception {
+        JSONObject obj;
+        Long orderId = (long) 0;
+        obj = new JSONObject(json);
+        orderId = obj.getLong("id");
+        return statusService.getStatusChangesByOrderId(orderId);
     }
 
     @GetMapping("myorders/{id}")

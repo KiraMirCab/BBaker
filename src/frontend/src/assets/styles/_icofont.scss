@@ -2,7 +2,7 @@
  * @package IcoFont
  * @version 1.0.1
  * @author IcoFont https://icofont.com
- * @copyright Copyright (c) 2015 - 2019 IcoFont
+ * @copyright Copyright (c) 2015 - 2023 IcoFont
  * @license - https://icofont.com/license/
  */
 
@@ -39,9 +39,74 @@
 }
 
 // sass-lint:disable brace-style
-.icofont-user-alt-5:before	{ content: '\ecff'; }
-.icofont-cart-alt:before	{ content: '\eed1'; }
-.icofont-cup-cake:before	{ content: '\eb5f'; }
+.icofont-gift:before  {
+    content: "\ef3c";
+  }
+  
+  .icofont-truck-loaded:before
+  {
+    content: "\ee3c";
+  }
+  
+  .icofont-user-alt-5:before
+  {
+    content: "\ecff";
+  }
+  
+  .icofont-cart-alt:before
+  {
+    content: "\eed1";
+  }
+  
+  .icofont-cup-cake:before
+  {
+    content: "\eb5f";
+  }
+  
+  .icofont-google-map:before
+  {
+    content: "\ed42";
+  }
+  
+  .icofont-search-map:before
+  {
+    content: "\ed16";
+  }
+  
+  .icofont-list:before
+  {
+    content: "\ef72";
+  }
+  
+  .icofont-arrow-left:before
+  {
+    content: "\ea5c";
+  }
+  
+  .icofont-ui-add:before
+  {
+    content: "\ec3e";
+  }
+  
+  .icofont-pen-alt-1:before
+  {
+    content: "\ebef";
+  }
+  
+  .icofont-muffin:before
+  {
+    content: "\efa0";
+  }
+  
+  .icofont-layered-cake:before
+  {
+    content: "\eb74";
+  }
+  
+  .icofont-users-alt-3:before
+  {
+    content: "\ed08";
+  }
 
 .icofont-xs  { font-size: 0.5em;  }
 .icofont-sm  { font-size: 0.75em; }

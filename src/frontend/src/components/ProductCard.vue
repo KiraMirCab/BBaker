@@ -23,11 +23,11 @@
       </router-link>
       <form>
         <router-link :to="routerPath + product.id" class="card-link">
-          <div class="row">
-            <div class="cell">
+          <div class="row padding-top-15">
+            <!-- <div class="cell">
               <label>{{ $t("card.description") }}:</label>
-            </div>
-            <div class="cell">
+            </div> -->
+            <div class="col">
               <em v-if="this.$i18n.locale === 'es'">{{ product.shortDesc }}</em>
               <em v-else>{{ product.shortDescENG }}</em>
             </div>

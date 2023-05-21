@@ -1,20 +1,20 @@
 <template>
     <div class="wrapper">
       <div class="container">
-        <div class="row">
+        <div class="row padding-10">
           <div class="col-md-2"> {{ $t("BBorder.created") }}:</div>
           <div class="col"> {{ prettyDate(order.creationDate, this.$i18n.locale) }} </div>
         </div>
-        <div class="row">
+        <div class="row padding-10">
           <div class="col-md-2"> {{ $t("BBorder.paid") }}:</div>
           <div v-if="(order.paidDate !== null)" class="col-md"> {{ prettyDate(order.paidDate, this.$i18n.locale) }} </div>
           <div v-if="(order.paidDate === null)" class="col-md"> {{ $t("product.notpaid") }} </div>
         </div>
-        <div class="row">
+        <div class="row padding-10">
           <div class="col-md-2 bold"> Total: </div>
           <div class="col-md bold"> {{ order.total }} €</div>
         </div>
-        <div class="row">
+        <div class="row padding-10">
           <div class="col-md-2 bold"> Status: </div>
           <div class="col-md" v-if="this.$i18n.locale === 'es'"> {{ order.orderStatus.name }}</div>
           <div class="col-md" v-else> {{ order.orderStatus.nameENG }}</div>

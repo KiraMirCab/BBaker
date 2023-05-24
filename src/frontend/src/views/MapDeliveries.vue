@@ -1,9 +1,9 @@
 <template>
-    <GoogleMap
-  :api-key="api"
-  style="width: 100%; height: 93vh"
-  :center="center"
-  :zoom="14"
+  <GoogleMap
+    :api-key="api"
+    style="width: 100%; height: 93vh"
+    :center="center"
+    :zoom="14"
   >
     <Marker
         :key="index"
@@ -33,6 +33,7 @@ export default defineComponent({
   },
   mounted () {
     this.geolocate()
+    DeliveryFrontService.geocodeAddress('C/Puerto del Escudo 3, 9D Sevilla')
   },
   methods: {
     getDeliveries () {
@@ -52,19 +53,9 @@ export default defineComponent({
       })
       this.markers = [
         {
-          lat: 21.1594627,
-          lng: 72.6822083,
-          label: 'Surat'
-        },
-        {
-          lat: 23.0204978,
-          lng: 72.4396548,
-          label: 'Ahmedabad'
-        },
-        {
-          lat: 22.2736308,
-          lng: 70.7512555,
-          label: 'Rajkot'
+          lat: 37.3759826,
+          lng: -5.954058499999999,
+          label: 'Rochela'
         }
       ]
     }

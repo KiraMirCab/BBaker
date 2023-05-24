@@ -2,6 +2,55 @@
   <main class="wrapper">
     <h1 v-if="!orderVisible">{{ $t("ordersNow.header") }}</h1>
     <div v-if="!orderVisible">
+      <br>
+      <div class="row">
+
+        <!-- Dropdown para filtrar los pedidos por estado -->
+        <div class="col">
+          <div class="dropdown">
+            <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownFilter"
+            data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Filter by status
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownFilter">
+              <li v-for="status in statuses" :key="status.id">
+                <a class="dropdown-item" href="#" @click="filterByStatus(status)">{{ status.name }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Datepicker para filtrar los pedidos por fecha de la entrega-->
+        <div class="col-6">
+          <div class="row">
+            <div class="col">
+              <label for="date">{{ $t('delivery.date') }}:</label>
+            </div>
+            <div class="col">
+              <datepicker
+              v-model="deliveryDate"
+              :lower-limit="availableFrom"
+              id="date"
+              />
+            </div>
+            <div class="col">
+              <button @click="filterByDeliveryDate(deliveryDate)" class="btn btn-secondary"> Filter </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botón para limpiar la búsqueda -->
+        <div class="col">
+          <button @click="clearFilter()" class="btn btn-secondary">Clear filter</button>
+        </div>
+      </div>
+      <br>
+
+      <!-- Tabla de los pedidos -->
       <table class="table table-striped">
         <thead>
           <tr>
@@ -18,7 +67,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(orderDelivery, index) in orderDeliveries" :key="orderDelivery.order.id">
+          <tr v-for="(orderDelivery, index) in orderDeliveriesToShow" :key="orderDelivery.order.id">
               <th scope="row">{{ index + 1 }}</th>
               <td>{{ prettyDate(orderDelivery.order.creationDate, this.$i18n.locale) }}</td>
               <td>{{ prettyDate(orderDelivery.order.paidDate, this.$i18n.locale) }}</td>
@@ -83,19 +132,24 @@ import OrderFrontService from '@/services/OrderFrontService'
 import DateTimeService from '@/services/DateTimeService'
 import CompleteOrderInfo from '@/components/CompleteOrderInfo.vue'
 import Swal from 'sweetalert2'
+import Datepicker from 'vue3-datepicker'
+import moment from 'moment'
 
 export default {
   components: {
-    CompleteOrderInfo
+    CompleteOrderInfo,
+    Datepicker
   },
   data () {
     return {
       orderDeliveries: [],
+      orderDeliveriesToShow: [],
       delivery: {},
       statuses: [],
       orderDelivery: '',
       statusChanges: [],
-      orderVisible: false
+      orderVisible: false,
+      deliveryDate: ''
     }
   },
   methods: {
@@ -103,6 +157,7 @@ export default {
       OrderFrontService.getOrders()
         .then((response) => {
           this.orderDeliveries = response.data
+          this.orderDeliveriesToShow = response.data
         })
         .catch(error => {
           console.log(error.response.data)
@@ -151,6 +206,20 @@ export default {
           this.$router.go(0)
         }
       })
+    },
+    filterByStatus (status) {
+      this.orderDeliveriesToShow = this.orderDeliveries.filter(orderDelivery => orderDelivery.order.orderStatus.id === status.id)
+    },
+    filterByDeliveryDate (date) {
+      console.log(date)
+      this.orderDeliveriesToShow = this.orderDeliveries.filter(orderDelivery => {
+        const deliveryDate = moment(orderDelivery.date, 'YYYY-MM-DD')
+        const selectedDate = moment(date, 'YYYY-MM-DD')
+        return deliveryDate.isSame(selectedDate)
+      })
+    },
+    clearFilter () {
+      this.orderDeliveriesToShow = this.orderDeliveries
     },
     prettyDate (timestamp, locale) {
       return DateTimeService.prettyDateShort(timestamp, locale)

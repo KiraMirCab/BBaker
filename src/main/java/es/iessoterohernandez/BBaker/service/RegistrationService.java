@@ -2,6 +2,8 @@ package es.iessoterohernandez.BBaker.service;
 
 import java.time.LocalDateTime;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,9 @@ public class RegistrationService {
 
     @Autowired
     EmailService emailService;
+
+    @Autowired
+    private HttpServletRequest httpRequest;
     
     public String register(RegistrationRequest request) {
         boolean isValidEmail = emailValidator.test(request.getEmail());
@@ -39,7 +44,9 @@ public class RegistrationService {
             UserRole.CLIENT
             )
         );
-        String link = "http://localhost:8080/api/registration?token=" + token;
+        String serverHost = httpRequest.getServerName();
+        int serverPort = httpRequest.getServerPort();
+        String link = "http://" + serverHost + ":" + serverPort + "/api/registration?token=" + token;
         emailService.send(request.getEmail(), buildEmail(request.getFirstName(), link));
         return token;
     }

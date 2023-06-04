@@ -53,8 +53,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-              //  .antMatchers("/api/admin").hasRole("ADMIN")
-              //  .antMatchers("/api/user").hasAnyRole("ADMIN", "CLIENT")
                 .antMatchers("/").permitAll()
                 .antMatchers("/*").permitAll()
                 .antMatchers("/img/*").permitAll()
@@ -72,6 +70,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .antMatchers("/api/delivery*").permitAll()
                 .antMatchers("/api/delivery/*").permitAll()
                 .antMatchers("/api/delivery/order/*").permitAll()
+                //  .antMatchers("/api/admin").hasRole("ADMIN")
+                //  .antMatchers("/api/user").hasAnyRole("ADMIN", "CLIENT")
                 //.hasRole("ADMIN")
                 .anyRequest()
                 .authenticated().and().exceptionHandling().and().sessionManagement()

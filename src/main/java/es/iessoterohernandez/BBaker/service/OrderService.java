@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +45,7 @@ public class OrderService {
     @Autowired
     DeliveryRepository deliveryRepository;
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(OrderService.class);
     public OrderO mapToOrder(OrderODTO orderODTO) {
         OrderO order = new OrderO();
         order.setCreationDate(orderODTO.getCreationDate());
@@ -55,7 +58,7 @@ public class OrderService {
         }
         return order;        
     }
-
+    
     public OrderODTO mapToOrderDTO(OrderO order) {
         OrderODTO odto = new OrderODTO();
         odto.setCreationDate(order.getCreationDate());
@@ -67,14 +70,16 @@ public class OrderService {
         odto.setOrderProductsDTO(this.mapToOrderProductsDTO(odto, order));
         return odto;
     }
-
+    
     public OrderO addNewOrder(OrderO order){
+        LOGGER.info("Añadiendo nuevo pedido: {}", order);
         orderRepository.save(order);
         Long status_id = (long) 1;
         return statusSetService.setOrderStatus(status_id, order.getId());
     }
     
     public String saveOrderProducts(List<OrderProducts> orderProducts){
+        LOGGER.info("Guardando productos del pedido");
         orderProductsRepository.saveAll(orderProducts);
         return "Order products correctly saved";
     }
@@ -125,12 +130,12 @@ public class OrderService {
                 odDTO.setSurprise(delivery.isSurprise());
                 odDTO.setSpecialTransport(delivery.isSpecialTransport());
             } catch (Exception e) {
-                // TODO: handle exception
                 odDTO.setDate(null);
                 odDTO.setAddress(null);
                 odDTO.setNote(null);
                 odDTO.setSurprise(false);
                 odDTO.setSpecialTransport(false);
+                LOGGER.error("Error al obtener la entrega para el pedido con ID {}: {}", order.getId(), e.getMessage());
             } 
             allDeliveryDTOs.add(odDTO);
         }
@@ -138,12 +143,6 @@ public class OrderService {
     }
 
      public List<OrderO> getMyOrders(Long id) {
-        // List<OrderO> list = orderRepository.findByUser_id(id);
-        // List<OrderODTO> myList = new ArrayList<OrderODTO>();
-        // for (OrderO order : list) {
-        //     OrderODTO myOrder = this.mapToOrderDTO(order);
-        //     myList.add(myOrder);
-        // }
         return orderRepository.findByUser_id(id);
     }
 
@@ -162,6 +161,7 @@ public class OrderService {
      * el estado del pedido
      */
     public OrderO setPaid(Long order_id, Long paidDate) {
+        LOGGER.info("Estableciendo pago para el pedido con ID: {}", order_id);
         Date newDate = new Date(paidDate);
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String str = sdf.format(newDate);
@@ -170,11 +170,11 @@ public class OrderService {
         order.setPaidDate(paidDateT);
         return statusSetService.setOrderStatus((long) 2, order.getId());
     }
-
+    
     public int delete(Long id) {
+        LOGGER.info("Eliminando pedido con ID: {}", id);
         int deletedOrderProducts = orderProductsRepository.deleteByOrderId(id);
         int deletedStatusChanges = statusSetService.deleteByOrderId(id);
         return deletedOrderProducts + deletedStatusChanges + orderRepository.deleteById(id);
-    }
-
+    }    
 }

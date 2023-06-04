@@ -7,7 +7,7 @@
           <button @click="toggle" class="user-menu-close">&times;</button>
         </div>
         <div>
-            <router-link to="/register" class="user-menu-link" @click="toggle">
+            <router-link to="/register/client" class="user-menu-link" @click="toggle">
                 <span>{{ $t('user.signUp') }}</span>
             </router-link>
         </div>
@@ -31,18 +31,15 @@
 <script>
 
 export default {
-  props: ['toggle', 'user', 'logout', 'userlogged'],
+  props: ['toggle', 'logout', 'logged'],
   data () {
     return {
-      logged: localStorage.user
     }
   },
   methods: {
     logUserOut () {
       this.logout()
-      localStorage.removeItem('user')
       this.$router.go()
-      this.userlogged()
       this.$router.push('/')
       this.toggle()
     }

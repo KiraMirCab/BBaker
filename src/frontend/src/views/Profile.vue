@@ -2,23 +2,29 @@
     <main class="wrapper">
         <h1 class="center">{{ $t('user.profile') }}</h1>
         <div class="container">
-                <div>
-                  <p>Name : {{this.user.userFName}} {{this.user.userLName}}</p>
-                  <p>User's email is : {{this.user.userEmail}}</p>
+          <div class="row padding-10">
+            <div class="col-md-2 bold"> Name: </div>
+            <div class="col-md">{{this.user.userFName}} {{this.user.userLName}}</div>
+          </div>
+          <div class="row padding-10">
+            <div class="col-md-2 bold"> Email: </div>
+            <div class="col-md">{{this.user.userEmail}}</div>
+          </div>
+          <!-- El rol del usuario solo se mostrará cuando no es cliente -->
+          <div v-if="this.user.userRole !== 'CLIENT'" class="row padding-10">
+            <div class="col-md-2 bold"> Permissons: </div>
+            <div class="col-md">{{this.user.userRole}}</div>
+          </div>
         </div>
-      </div>
     </main>
 </template>
 
 <script>
-import UserFrontService from '@/services/UserFrontService.js'
 
 export default {
   data () {
     return {
-      user: {},
-      userID: '',
-      email: ''
+      user: {}
     }
   },
   created () {
@@ -26,16 +32,7 @@ export default {
   },
   methods: {
     getUser () {
-      // get the user from the DB and get the user ID
-      const json = {
-        email: localStorage.useremail,
-        password: 'pass'
-      }
-      console.log(json)
-      UserFrontService.getUser(json).then((response) => {
-        this.user = response.data
-        this.userID = this.user.userID
-      })
+      this.user = JSON.parse(localStorage.user)
     }
   }
 }

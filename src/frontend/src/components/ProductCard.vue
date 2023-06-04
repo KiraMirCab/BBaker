@@ -19,7 +19,9 @@
     </router-link>
     <div class="card-body">
       <router-link :to="routerPath + product.id" class="card-link">
-        <img class="image" :src="product.image" alt="Image from the db" />
+        <!-- Si el producto no tiene una foto asociada, se usará una default.jpg -->
+        <img v-if="product.image" class="image" :src="product.image" alt="Image from the db" />
+        <img v-else class="image" :src="require('../assets/img/default.jpg')" alt="Image from the db" />
       </router-link>
       <form>
         <router-link :to="routerPath + product.id" class="card-link">
@@ -65,7 +67,7 @@
       <button v-if="update && !product.active" @click="toggleActive()" class="btn btn-light">
         {{ $t("card.activate") }}
       </button>
-      <button @click="addToCart(product.name, quantity)" class="btn btn-light ms-auto">
+      <button v-if="!update" @click="addToCart(product.name, quantity)" class="btn btn-light ms-auto">
         {{ $t("card.cart") }}
       </button>
     </div>

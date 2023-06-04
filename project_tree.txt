@@ -1,0 +1,163 @@
+BBaker
+├── mvnw
+├── mvnw.cmd
+├── node_modules
+├── package.json
+├── package-lock.json
+├── pom.xml
+├── Procfile
+├── README.md
+├── src
+│   ├── frontend
+│   │   ├── babel.config.js
+│   │   ├── dist
+│   │   │   ├── css
+│   │   │   ├── favicon.ico
+│   │   │   ├── fonts
+│   │   │   ├── img
+│   │   │   ├── index.html
+│   │   │   └── js
+│   │   ├── jsconfig.json
+│   │   ├── node
+│   │   ├── node_modules
+│   │   ├── package.json
+│   │   ├── package-lock.json
+│   │   ├── public
+│   │   │   ├── favicon.ico
+│   │   │   └── index.html
+│   │   ├── README.md
+│   │   ├── src
+│   │   │   ├── App.vue
+│   │   │   ├── assets
+│   │   │   │   ├── img
+│   │   │   │   └── styles
+│   │   │   ├── components
+│   │   │   │   ├── CompleteOrderInfo.vue
+│   │   │   │   ├── DeliveryForm.vue
+│   │   │   │   ├── ExistingOrder.vue
+│   │   │   │   ├── ProductCard.vue
+│   │   │   │   ├── ProductForm.vue
+│   │   │   │   ├── Sidebar.vue
+│   │   │   │   └── UserMenu.vue
+│   │   │   ├── eventBus.js
+│   │   │   ├── i18n.js
+│   │   │   ├── locales
+│   │   │   │   ├── en.json
+│   │   │   │   └── es.json
+│   │   │   ├── main.js
+│   │   │   ├── router
+│   │   │   │   └── index.js
+│   │   │   ├── services
+│   │   │   │   ├── DateTimeService.js
+│   │   │   │   ├── DeliveryFrontService.js
+│   │   │   │   ├── OrderFrontService.js
+│   │   │   │   ├── ProductService.js
+│   │   │   │   └── UserFrontService.js
+│   │   │   └── views
+│   │   │       ├── AddNewProduct.vue
+│   │   │       ├── FindUser.vue
+│   │   │       ├── HomeView.vue
+│   │   │       ├── InfoProduct.vue
+│   │   │       ├── LoginView.vue
+│   │   │       ├── MapDeliveries.vue
+│   │   │       ├── NewOrder.vue
+│   │   │       ├── OrdersNow.vue
+│   │   │       ├── PastOrders.vue
+│   │   │       ├── ProductsView.vue
+│   │   │       ├── Profile.vue
+│   │   │       ├── RegisterView.vue
+│   │   │       └── UpdateProduct.vue
+│   │   ├── static.json
+│   │   └── vue.config.js
+│   ├── main
+│   │   ├── java
+│   │   │   └── es
+│   │   │       └── iessoterohernandez
+│   │   │           └── BBaker
+│   │   │               ├── BBakerApplication.java
+│   │   │               ├── config
+│   │   │               │   └── WebConfig.java
+│   │   │               ├── controller
+│   │   │               │   ├── DeliveryController.java
+│   │   │               │   ├── MainController.java
+│   │   │               │   ├── OrderController.java
+│   │   │               │   ├── ProductController.java
+│   │   │               │   ├── UserLoginController.java
+│   │   │               │   └── UserRegistrationController.java
+│   │   │               ├── DTO
+│   │   │               │   ├── DeliveryDTO.java
+│   │   │               │   ├── OrderDeliveryDTO.java
+│   │   │               │   ├── OrderODTO.java
+│   │   │               │   ├── OrderProductDTO.java
+│   │   │               │   ├── StatusChangeDTO.java
+│   │   │               │   └── UserDTO.java
+│   │   │               ├── model
+│   │   │               │   ├── AuthRequest.java
+│   │   │               │   ├── ChangeRoleRequest.java
+│   │   │               │   ├── ConfirmationToken.java
+│   │   │               │   ├── Delivery.java
+│   │   │               │   ├── OrderO.java
+│   │   │               │   ├── OrderProducts.java
+│   │   │               │   ├── OrderStatus.java
+│   │   │               │   ├── Product.java
+│   │   │               │   ├── RegistrationRequest.java
+│   │   │               │   ├── StatusChange.java
+│   │   │               │   ├── User.java
+│   │   │               │   └── UserRole.java
+│   │   │               ├── repository
+│   │   │               │   ├── ConfirmationTokenRepository.java
+│   │   │               │   ├── DeliveryRepository.java
+│   │   │               │   ├── OrderProductsRepository.java
+│   │   │               │   ├── OrderRepository.java
+│   │   │               │   ├── OrderStatusRepository.java
+│   │   │               │   ├── ProductRepository.java
+│   │   │               │   ├── StatusChangeRepository.java
+│   │   │               │   └── UserRepository.java
+│   │   │               ├── security
+│   │   │               │   ├── PasswordEncoder.java
+│   │   │               │   └── SecurityConfiguration.java
+│   │   │               └── service
+│   │   │                   ├── ConfirmationTokenService.java
+│   │   │                   ├── DeliveryService.java
+│   │   │                   ├── EmailService.java
+│   │   │                   ├── EmailValidator.java
+│   │   │                   ├── JwtFilter.java
+│   │   │                   ├── JwtService.java
+│   │   │                   ├── OrderService.java
+│   │   │                   ├── ProductService.java
+│   │   │                   ├── RegistrationService.java
+│   │   │                   ├── StatusService.java
+│   │   │                   └── UserService.java
+│   │   └── resources
+│   │       ├── application-local.properties
+│   │       ├── application-production.properties
+│   │       ├── application.properties
+│   │       ├── static
+│   │       └── templates
+│   └── test
+│       └── java
+│           └── es
+├── system.properties
+└── target
+    ├── BBaker-0.0.1-SNAPSHOT.jar
+    ├── classes
+    │   ├── application-local.properties
+    │   ├── application-production.properties
+    │   ├── application.properties
+    │   ├── es
+    │   │   └── iessoterohernandez
+    │   └── static
+    │       ├── css
+    │       ├── favicon.ico
+    │       ├── fonts
+    │       ├── img
+    │       ├── index.html
+    │       └── js
+    ├── generated-sources
+    ├── generated-test-sources
+    ├── maven-archiver
+    ├── maven-status
+    ├── surefire-reports
+    └── test-classes
+        └── es
+            └── iessoterohernandez

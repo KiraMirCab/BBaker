@@ -1,6 +1,6 @@
 <template>
     <main class="wrapper">
-        <h1 class="center">{{ $t('user.signUp') }}</h1>
+        <h1 class="center">{{ $t('user.signUp') }} {{ role }}</h1>
         <div class="container">
           <div class="card-container">
             <form v-if="!requestSent">
@@ -51,6 +51,7 @@ export default {
       fName: '',
       lName: '',
       token: '',
+      role: '',
       errorfName: false,
       errorlName: false,
       errorEmail: false,
@@ -69,7 +70,8 @@ export default {
           firstName: this.fName,
           lastName: this.lName,
           email: this.email,
-          password: this.pass
+          password: this.pass,
+          role: this.role
         }
         UserFrontService.registerNewUser(user).then((response) => {
           this.token = response.data
@@ -90,6 +92,9 @@ export default {
         }
       }
     }
+  },
+  created () {
+    this.role = this.$route.params.role
   }
 }
 </script>

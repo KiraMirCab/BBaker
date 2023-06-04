@@ -8,77 +8,89 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/register',
+    path: '/register/:role(admin|employee|client|delivery)',
     name: 'register',
-    component: () => import(/* webpackChunkName: "about" */ '../views/RegisterView.vue')
+    component: () => import(/* webpackChunkName: "register" */ '../views/RegisterView.vue')
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import(/* webpackChunkName: "about" */ '../views/LoginView.vue')
+    component: () => import(/* webpackChunkName: "login" */ '../views/LoginView.vue')
   },
   {
     path: '/profile',
     name: 'profile',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Profile.vue'),
+    component: () => import(/* webpackChunkName: "profile" */ '../views/Profile.vue'),
     beforeEnter: (to, from) => {
-      if (!localStorage.user) return '/login'
+      if (!localStorage.token) return '/login'
     }
   },
   {
     path: '/products',
     name: 'products',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ProductsView.vue'),
+    component: () => import(/* webpackChunkName: "products" */ '../views/ProductsView.vue'),
     beforeEnter: (to, from) => {
-      if (!localStorage.user) return '/login'
+      if (!localStorage.token) return '/login'
     },
-    key: Date.now() // Add dynamic key based on timestame helps to reload the page every time it is accessed
+    key: Date.now() // Recarga la pagina cada vez que se accede a esta ruta
   },
   {
     path: '/past-orders',
     name: 'PastOrders',
-    component: () => import(/* webpackChunkName: "about" */ '../views/PastOrders.vue'),
+    component: () => import(/* webpackChunkName: "past-orders" */ '../views/PastOrders.vue'),
     beforeEnter: (to, from) => {
-      if (!localStorage.user) return '/login'
+      if (!localStorage.token) return '/login'
     }
   },
   {
     path: '/add-new-product',
     name: 'AddNewProduct',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AddNewProduct.vue'),
+    component: () => import(/* webpackChunkName: "add-new-product" */ '../views/AddNewProduct.vue'),
     beforeEnter: (to, from) => {
-      if (!localStorage.user) return '/login'
+      if (!localStorage.token) return '/login'
     }
   },
   {
     path: '/info-products/:id',
     name: 'InfoProduct',
-    component: () => import(/* webpackChunkName: "about" */ '../views/InfoProduct.vue')
+    component: () => import(/* webpackChunkName: "info-product" */ '../views/InfoProduct.vue')
   },
   {
     path: '/update-products/:id',
     name: 'UpdateProduct',
-    component: () => import(/* webpackChunkName: "about" */ '../views/UpdateProduct.vue')
+    component: () => import(/* webpackChunkName: "update-product" */ '../views/UpdateProduct.vue'),
+    beforeEnter: (to, from) => {
+      if (!localStorage.token) return '/login'
+    }
   },
   {
     path: '/new-order/:id',
     name: 'NewOrder',
-    component: () => import(/* webpackChunkName: "about" */ '../views/NewOrder.vue')
+    component: () => import(/* webpackChunkName: "new-order" */ '../views/NewOrder.vue')
   },
   {
     path: '/orders-now',
     name: 'OrdersNow',
-    component: () => import(/* webpackChunkName: "about" */ '../views/OrdersNow.vue')
+    component: () => import(/* webpackChunkName: "orders-now" */ '../views/OrdersNow.vue'),
+    beforeEnter: (to, from) => {
+      if (!localStorage.token) return '/login'
+    }
   },
   {
     path: '/map-deliveries',
     name: 'MapDeliveries',
-    component: () => import(/* webpackChunkName: "about" */ '../views/MapDeliveries.vue')
+    component: () => import(/* webpackChunkName: "map-deliveries" */ '../views/MapDeliveries.vue'),
+    beforeEnter: (to, from) => {
+      if (!localStorage.token) return '/login'
+    }
   },
   {
     path: '/find-user',
     name: 'FindUser',
-    component: () => import(/* webpackChunkName: "about" */ '../views/FindUser.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/FindUser.vue'),
+    beforeEnter: (to, from) => {
+      if (!localStorage.token) return '/login'
+    }
   }
 ]
 

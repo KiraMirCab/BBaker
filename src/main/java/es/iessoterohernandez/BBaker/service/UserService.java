@@ -23,7 +23,7 @@ import es.iessoterohernandez.BBaker.repository.UserRepository;
 @Service
 public class UserService implements UserDetailsService {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     UserRepository userRepository;
@@ -37,7 +37,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User with emal " + email + " not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario con email " + email + " no encontrado"));
     }
 
     public String signUpUser(User user) {
@@ -45,18 +45,18 @@ public class UserService implements UserDetailsService {
         boolean userExists = dbUser.isPresent();
 
         if (!userExists) {
-            LOGGER.info("User is not there!");
+            LOGGER.info("¡El usuario no existe!");
             String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
             user.setPassword(encodedPassword);
 
             userRepository.save(user);
         } else {
-            LOGGER.info("User is there and isn't confirmed yet!");
+            LOGGER.info("¡El usuario existe pero aún no está confirmado!");
             Long userId = dbUser.map(User::getId).orElse(null);
             user.setId(userId);
 
             if (user.isEnabled()) {
-                LOGGER.info("User is there and IS CONFIRMED ALREADY!");
+                LOGGER.info("¡El usuario existe y YA ESTÁ CONFIRMADO!");
                 throw new IllegalStateException("email already taken");
             }
         }
@@ -68,7 +68,7 @@ public class UserService implements UserDetailsService {
                 LocalDateTime.now(),
                 LocalDateTime.now().plusMinutes(15),
                 user);
-        LOGGER.info("creating a new Token: " + confirmationToken.getToken());
+        LOGGER.info("Creando un nuevo Token: " + confirmationToken.getToken());
         confirmationTokenService.saveConfirmationToken(confirmationToken);
 
         return token;
@@ -81,6 +81,7 @@ public class UserService implements UserDetailsService {
     public UserDTO findByEmail(String email) {
         User dbUser = userRepository.findByEmail(email).orElse(null);
         UserDTO userDTO = new UserDTO(dbUser.getId(), dbUser.getEmail(), dbUser.getUserRole(), dbUser.getFirstName(), dbUser.getLastName());
+        System.out.println(dbUser.getUserRole());
         return userDTO;
     }
 
@@ -89,16 +90,16 @@ public class UserService implements UserDetailsService {
         boolean userExists = dbUser.isPresent();
         User user = dbUser.orElse(null);
         if (userExists) {
-            LOGGER.info("Setting a new role " + role + "to the user" + email);
+            LOGGER.info("Estableciendo un nuevo rol " + role + " para el usuario " + email);
             user.setUserRole(role);
         } else {
-            LOGGER.info("User with this email does not exist!");
+            LOGGER.info("¡El usuario con este email no existe!");
             throw new IllegalStateException("email not registered");
         } 
         return userRepository.save(user);
     }
 
-    public List <User> findAll() {
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 

@@ -5,7 +5,7 @@
             <i class="icofont-cup-cake"></i>
             <span>{{ $t('menu.home') }}</span>
           </router-link>
-          <router-link to="/past-orders" class="top-bar-link" v-if="logged">
+          <router-link to="/past-orders" class="top-bar-link" v-if="client">
             <span>{{ $t('menu.past') }}</span>
           </router-link>
           <router-link to="/products" class="top-bar-link" v-if="admin">
@@ -30,7 +30,7 @@
           </router-link>
     </nav>
     <div class="top-bar-nav">
-        <div @click="toggleSidebar" class="top-bar-cart-link">
+        <div @click="toggleSidebar" class="top-bar-cart-link" v-if="client">
           <i class="icofont-cart-alt"></i>
           <span>{{ $t('menu.cart') }} ({{ totalQuantity }})</span>
         </div>
@@ -58,10 +58,9 @@
   />
   <UserMenu
     v-if="showUserMenu"
-    :user="user"
     :toggle="toggleUserMenu"
     :logout="logOut"
-    :userlogged="toggleLogged"
+    :logged="this.logged"
   />
   <vue-confirm-dialog></vue-confirm-dialog>
 </template>
@@ -70,10 +69,7 @@
 import Sidebar from '@/components/Sidebar.vue'
 import UserMenu from '@/components/UserMenu.vue'
 import ProductService from '@/services/ProductService.js'
-import UserFrontService from './services/UserFrontService'
 import Swal from 'sweetalert2'
-import useEventsBus from './eventBus'
-import { watch } from 'vue'
 
 export default {
   components: {
@@ -90,7 +86,8 @@ export default {
       logged: false,
       admin: false,
       employee: false,
-      delivery: false
+      delivery: false,
+      client: false
     }
   },
   computed: {
@@ -142,52 +139,51 @@ export default {
       this.showUserMenu = !this.showUserMenu
     },
     getUser () {
-      // get the user from the DB and get the user ID
-      if (localStorage.user) {
-        const json = {
-          email: localStorage.useremail,
-          password: 'pass'
+      // este método pone un listener pendiente de los cambio del usuario
+      this.emitter.on('loggedUser', eventData => {
+        this.updateUser()
+      })
+    },
+    updateUser () {
+      const userData = localStorage.getItem('user')
+      if (userData) {
+        this.user = JSON.parse(userData)
+        this.userID = this.user.userID
+        this.logged = true
+
+        // Actualiza valores de admin, employee, delivery y client based on user role
+        if (this.user.userRole === 'ADMIN') {
+          this.admin = true
+          this.employee = true
+          this.delivery = true
+        } else if (this.user.userRole === 'EMPLOYEE') {
+          this.employee = true
+        } else if (this.user.userRole === 'DELIVERY') {
+          this.delivery = true
+          this.employee = true
+        } else if (this.user.userRole === 'CLIENT') {
+          this.client = true
         }
-        console.log(json)
-        UserFrontService.getUser(json).then((response) => {
-          this.user = response.data
-          this.userID = this.user.userID
-          localStorage.setItem('user_id', this.user.userID)
-          if (this.user.userRole === 'ADMIN') {
-            this.admin = true
-            this.employee = true
-            this.delivery = true
-          } else if (this.user.userRole === 'EMPLOYEE') {
-            this.employee = true
-          } else if (this.user.userRole === 'DELIVERY') {
-            this.delivery = true
-          } else {
-            this.logged = true
-          }
-        })
+      } else {
+        this.user = {}
+        this.admin = false
+        this.employee = false
+        this.delivery = false
+        this.client = false
+        this.userID = ''
+        this.logged = false
       }
     },
-    toggleLogged () {
-      this.logged = !this.logged
-    },
     logOut () {
-      this.user = {}
-      this.userID = ''
-      localStorage.removeItem('useremail')
-      localStorage.removeItem('user_id')
-      this.admin = false
-      this.employee = false
-      this.delivery = false
-      this.logged = false
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+      this.getUser()
     }
   },
   created () {
     this.getProducts()
+    this.updateUser()
     this.getUser()
-    // const { bus } = useEventsBus()
-    // watch(() => bus.value.get('product-updated'), (val) => {
-    //   this.getProducts()
-    // })
   }
 }
 </script>

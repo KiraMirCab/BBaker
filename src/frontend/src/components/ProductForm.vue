@@ -66,14 +66,17 @@
       </div>
     </div>
     <div class="checkbox">
+      <i class="icofont-truck-loaded icofont-2x padding-10"></i>
       <label class="form-check-label">
         Necesita transporte especial?
-        <input type="checkbox" v-model="specialTransport" class="form-check-input" /></label>
+        <input type="checkbox" v-model="specialTransport" class="form-check-input" />
+      </label>
     </div>
+    <br>
       <div class="form-group">
         <label for="pImage">Imagen: </label>
         <div class="input-group">
-          <button @click="onFileSelected" type="file" class="form-control-file" id="pImage">Seleccionar archivo</button>
+          <button @click="onFileSelect" type="button" class="form-control-file" id="pImage">Seleccionar archivo</button>
         </div>
         <small id="emailHelp" class="form-text text-muted" v-if="imageName === null">Añada la imagen del producto</small>
         <p class="form-text text-muted" v-if="imageName !== null">{{ this.imageName }}</p>
@@ -81,8 +84,8 @@
           El fichero es demasiado grande. Intente otro, por favor
         </p>
       </div>
-      <br />
-    <button type="submit" @click="$emit('checkform', dbProduct)" class="submit">Guardar</button>
+      <br>
+    <button type="submit" class="submit">Guardar</button>
   </form>
 </template>
 
@@ -90,7 +93,6 @@
 import ProductService from '@/services/ProductService.js'
 import * as filestack from 'filestack-js'
 import Swal from 'sweetalert2'
-import useEventsBus from '../eventBus'
 
 export default {
   props: ['product'],
@@ -212,12 +214,12 @@ export default {
       }
     },
 
-    onFileSelected () {
+    onFileSelect () {
       const client = filestack.init(process.env.VUE_APP_FILESTACK_API_KEY)
       const options = {
-        onFileSelected: file => {
+        onFileSelected (file) {
           // Si el tamaño del archivo es más grande que 1 Mb, la descarga queda rechazada
-          if (file.size > 1048576) {
+          if (!file.size > 1048576) {
             this.errorImagen = true
           }
         },

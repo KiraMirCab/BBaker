@@ -21,7 +21,7 @@
                     </router-link>
                   </div>
                 <p class="error" v-if="errorCred">{{ $t('user.error.wrong') }}</p>
-                <button type="submit" @click="checkform" class="user-submit">{{ $t('user.buttonSI') }}</button>
+                <button type="submit" class="user-submit">{{ $t('user.buttonSI') }}</button>
             </form>
           </div>
         </div>
@@ -32,7 +32,6 @@
 import UserFrontService from '@/services/UserFrontService.js'
 
 export default {
-  props: ['getuser'],
   data () {
     return {
       email: '',
@@ -47,20 +46,30 @@ export default {
       if (this.email && this.pass) {
         this.errorEmail = false
         this.errorPass = false
-        localStorage.setItem('useremail', this.email)
         const user = {
           email: this.email,
           password: this.pass
         }
+        console.log('this is checkform method in loginView')
         UserFrontService.loginUser(user).then((response) => {
           console.log(response.data)
-          this.token = response.data.token
-          localStorage.setItem('user', this.token)
-          this.$router.go()
-          this.$router.push('/profile')
+          // si la respuesta del backend ha sido correcta,
+          // nos devuelve el token que guardamos en local storage
+          localStorage.setItem('token', response.data)
+          // recibimos los datos del usuario desde el backend
+          // y emitimos el objeto user con sus datos
+          UserFrontService.getUser(user).then((response) => {
+            console.log(response.data)
+            localStorage.setItem('user', JSON.stringify(response.data))
+            this.emitter.emit('loggedUser', response.data)
+            this.$router.push('/profile')
+          }).catch((error) => {
+            this.errorCred = true
+            console.log(error)
+          })
         }).catch((error) => {
           this.errorCred = true
-          console.log(error.response)
+          console.log(error)
         })
       } else {
         if (!this.email) {

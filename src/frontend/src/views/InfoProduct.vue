@@ -8,7 +8,8 @@
         <h1 v-else class="center">{{ product.nameENG }}</h1>
       </div>
       <div class="prodcard-body">
-        <img :src="product.image" alt="Image from the db" class="image"/>
+        <img v-if="product.image" :src="product.image" alt="Image from the db" class="image"/>
+        <img v-else :src="require('../assets/img/default.jpg')" alt="Image from the db" class="image"/>
         <p v-if="this.$i18n.locale === 'es'" class="catchy">{{ product.shortDesc }}</p>
         <p v-else class="catchy">{{ product.shortDescENG }}</p>
         <p v-if="this.$i18n.locale === 'es'" class="long">{{ product.description }}</p>

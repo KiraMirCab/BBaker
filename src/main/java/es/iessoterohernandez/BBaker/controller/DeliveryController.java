@@ -41,4 +41,8 @@ public class DeliveryController {
     public Delivery findByOrderId(@PathVariable Long id) {
         return deliveryService.findbyOrderId(id);
     }
+    @GetMapping("/ready")
+    public List<Delivery> findAllReadyDeliveries(){
+        return deliveryService.allReadyForDelivery();
+    }
 }

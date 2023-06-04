@@ -26,12 +26,12 @@ public class EmailService {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,"utf-8");
             helper.setText(email,true);
             helper.setTo(to);
-            helper.setSubject("Confirm your email");
+            helper.setSubject("Confirma tu correo electrónico");
             helper.setFrom("confirmation@bbaker.io");
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
-            LOGGER.error("failed to send email", e);
-            throw new IllegalStateException("failed to send email");
+            LOGGER.error("Error al enviar el correo electrónico", e);
+            throw new IllegalStateException("Error al enviar el correo electrónico");
         }
     }
 }

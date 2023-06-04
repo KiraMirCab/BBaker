@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     getMyOrders () {
-      OrderFrontService.getMyOrders(localStorage.user_id).then((response) => {
+      OrderFrontService.getMyOrders(JSON.parse(localStorage.user).userID).then((response) => {
         this.orders = response.data
         this.order = response.data[0]
       })

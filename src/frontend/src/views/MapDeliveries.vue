@@ -28,19 +28,20 @@ export default defineComponent({
     return {
       api: process.env.VUE_APP_GOOGLE_API_KEY,
       center: { lat: 37.36250205559738, lng: -6.034784330451754 },
+      deliveries: [],
       markers: []
     }
   },
   mounted () {
     this.geolocate()
-    DeliveryFrontService.geocodeAddress('C/Puerto del Escudo 3, 9D Sevilla')
+    this.getDeliveries()
   },
   methods: {
     getDeliveries () {
-      DeliveryFrontService.getDeliveries().then((response) => {
-        const deliveries = response.data
-        deliveries.forEach(element => {
-          this.markers.push(element.address)
+      DeliveryFrontService.getReadytDeliveries().then((response) => {
+        this.deliveries = response.data
+        this.deliveries.forEach(element => {
+          this.geocode(element.address)
         })
       })
     },
@@ -51,17 +52,21 @@ export default defineComponent({
           lng: position.coords.longitude
         }
       })
-      this.markers = [
-        {
-          lat: 37.3759826,
-          lng: -5.954058499999999,
-          label: 'Rochela'
-        }
-      ]
+    },
+    geocode (address) {
+      DeliveryFrontService.geocodeAddress(address)
+        .then((response) => {
+          console.log(response)
+          const results = response.data.results
+          if (results.length > 0) {
+            const location = results[0].geometry.location
+            this.markers.push(location)
+          }
+        })
+        .catch(error => {
+          console.log('Error geocoding address: ', error.message)
+        })
     }
-  },
-  created () {
-    // this.getDeliveries()
   }
 })
 </script>

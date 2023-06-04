@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,29 +32,41 @@ public class RegistrationService {
 
     @Autowired
     private HttpServletRequest httpRequest;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationService.class);
+
     
     public String register(RegistrationRequest request) {
-        boolean isValidEmail = emailValidator.test(request.getEmail());
-        if (!isValidEmail) {
-            throw new IllegalStateException("email " + request.getEmail() + " not valid");
+        try {
+            boolean isValidEmail = emailValidator.test(request.getEmail());
+            if (!isValidEmail) {
+                throw new IllegalStateException("email " + request.getEmail() + " not valid");
+            }
+            String token = userService.signUpUser(new User(
+                request.getFirstName(),
+                request.getLastName(),
+                request.getEmail(),
+                request.getPassword(),
+                UserRole.valueOf(request.getRole().toUpperCase())
+            ));
+            
+            String serverHost = httpRequest.getServerName();
+            int serverPort = httpRequest.getServerPort();
+            String link = "http://" + serverHost + ":" + serverPort + "/api/registration?token=" + token;
+            emailService.send(request.getEmail(), buildEmail(request.getFirstName(), link));
+            
+            LOGGER.info("Registrado con éxito. Token: {}", token);
+            
+            return token;
+        } catch (IllegalArgumentException e) {
+            LOGGER.error("Error al convertir el valor del rol a enum: {}", e.getMessage());
+            throw new IllegalArgumentException("Valor de rol no válido");
         }
-        String token = userService.signUpUser(new User(
-            request.getFirstName(),
-            request.getLastName(),
-            request.getEmail(),
-            request.getPassword(),
-            UserRole.CLIENT
-            )
-        );
-        String serverHost = httpRequest.getServerName();
-        int serverPort = httpRequest.getServerPort();
-        String link = "http://" + serverHost + ":" + serverPort + "/api/registration?token=" + token;
-        emailService.send(request.getEmail(), buildEmail(request.getFirstName(), link));
-        return token;
     }
-
+    
     @Transactional
     public String confirmToken(String token) {
+        LOGGER.info("Confirmación del token: {}", token);
         ConfirmationToken confirmationToken = confirmationTokenService.getToken(token).orElseThrow(() ->
                         new IllegalStateException("token not found"));
 

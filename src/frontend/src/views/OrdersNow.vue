@@ -89,6 +89,7 @@
                 <i v-if="orderDelivery.specialTransport" class="icofont-truck-loaded icofont-2x"></i>
               </td>
               <td>{{ orderDelivery.order.orderStatus.name }}</td>
+
               <!-- Status change dropdown -->
               <td>
                 <div class="dropdown">
